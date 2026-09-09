@@ -1,0 +1,130 @@
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { theme: { extend: { "colors": { "surface-container": "#f2ecf3", "surface-variant": "#e7e0e8", "on-tertiary-fixed-variant": "#0030c7", "on-primary-fixed-variant": "#3323cc", "inverse-surface": "#322f35", "secondary": "#6340cb", "primary": "#3525cd", "surface-container-high": "#ede6ee", "tertiary-container": "#1d48f8", "error-container": "#ffdad6", "primary-container": "#4f46e5", "secondary-fixed": "#e7deff", "on-error-container": "#93000a", "on-surface": "#1d1b20", "on-error": "#ffffff", "on-background": "#1d1b20", "on-surface-variant": "#464555", "inverse-on-surface": "#f5eff6", "primary-fixed": "#e2dfff", "surface-container-highest": "#e7e0e8", "surface-tint": "#4d44e3", "surface-container-low": "#f8f1f9", "tertiary-fixed": "#dee0ff", "error": "#ba1a1a", "on-secondary-container": "#fffbff", "on-tertiary-container": "#d5d9ff", "on-secondary-fixed-variant": "#4d25b5", "tertiary-fixed-dim": "#bac3ff", "primary-fixed-dim": "#c3c0ff", "on-tertiary": "#ffffff", "on-secondary-fixed": "#1f0060", "tertiary": "#0031cb", "on-primary-fixed": "#0f0069", "on-primary-container": "#dad7ff", "surface-dim": "#ded8e0", "surface": "#fef7ff", "on-tertiary-fixed": "#00115a", "surface-container-lowest": "#ffffff", "background": "#fef7ff", "outline": "#777587", "on-secondary": "#ffffff", "surface-bright": "#fef7ff", "secondary-fixed-dim": "#ccbdff", "inverse-primary": "#c3c0ff", "outline-variant": "#c7c4d8", "secondary-container": "#7c5ce6", "on-primary": "#ffffff" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "md": "16px", "unit": "4px", "3xl": "64px", "xs": "4px", "gutter": "24px", "lg": "24px", "xl": "32px", "sm": "8px", "2xl": "48px", "container-max": "1280px", "margin-mobile": "16px" }, "fontFamily": { "display-lg-mobile": ["Inter"], "headline-md": ["Inter"], "body-lg": ["Inter"], "headline-lg": ["Inter"], "display-lg": ["Inter"], "body-md": ["Inter"], "label-sm": ["Inter"], "label-md": ["Inter"], "title-lg": ["Inter"] }, "fontSize": { "display-lg-mobile": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}], "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}], "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}], "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}], "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}], "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}], "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}], "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}], "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "500"}] } } } }</script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/></head><body class="bg-background font-body-md text-on-background"><nav class="absolute top-0 w-full z-50"><div class="h-20 max-w-container-max mx-auto px-gutter flex items-center justify-between"><div class="flex items-center gap-sm"><img alt="LumoraSpace Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Xlp4DF3aKexCX4tB2EEgzqknOia6wj8j34pQt4zgsauZa98lguqONu2nrB5KyMjJW_Vs0g4oRYelZMrqe9BKWA88AVZPetR8XSBhsm9VP9FLtEH2p8kvPxOLU-MLlzmoBZtaLRMcp9OhoHhKorqiq1VDSjTLNNayjM-NabSyJSLOzxn1oKYQP3_dsUZLOQ98u1mqAOkwD-2h-Rixn_q695S7GzaeZklbN5XjQaczZWSf6AUl1xOANNFm8"/><span class="font-title-lg text-title-lg text-on-surface">LumoraSpace</span></div><a class="flex items-center gap-xs font-label-md text-label-md text-on-surface-variant hover:text-primary transition-all" data-path="landing" href="#"><span class="material-symbols-outlined text-[20px]">arrow_back</span>Back to site</a></div></nav><main class="flex items-center justify-center min-h-screen"><div class="flex flex-col w-full h-full justify-center items-center px-margin-mobile md:px-gutter pb-2xl pt-3xl md:pt-3xl">
+<div class="w-full max-w-md mx-auto flex flex-col gap-xl">
+<div class="flex flex-col gap-sm text-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">Step 2 of 3</span>
+<h1 class="font-display-lg-mobile text-display-lg-mobile md:font-display-lg md:text-display-lg text-on-surface">What are you looking to achieve?</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Select the option that best describes your primary goal with LumoraSpace.</p>
+</div>
+<form class="flex flex-col gap-md w-full" id="goal-form">
+<label class="relative flex items-center justify-between p-lg rounded-xl bg-surface-container border border-surface-container cursor-pointer transition-all hover:bg-surface-container-high peer-checked:border-primary peer-checked:bg-primary-fixed-dim" onkeydown="if(event.key === 'Enter' || event.key === ' ') { event.preventDefault(); this.querySelector('input').click(); }" tabindex="0">
+<input class="peer sr-only" name="goal" type="radio" value="build-skills"/>
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-on-surface-variant peer-checked:text-primary transition-colors">school</span>
+<span class="font-title-lg text-title-lg text-on-surface peer-checked:text-on-primary-fixed-variant transition-colors">Build job-ready skills</span>
+</div>
+<div class="w-6 h-6 rounded-full border border-outline-variant flex items-center justify-center peer-checked:border-primary peer-checked:bg-primary transition-all">
+<span class="material-symbols-outlined text-white text-[16px] opacity-0 peer-checked:opacity-100 transition-opacity">check</span>
+</div>
+<div class="absolute inset-0 rounded-xl pointer-events-none border border-transparent peer-checked:border-primary transition-all duration-300"></div>
+</label>
+<label class="relative flex items-center justify-between p-lg rounded-xl bg-surface-container border border-surface-container cursor-pointer transition-all hover:bg-surface-container-high peer-checked:border-primary peer-checked:bg-primary-fixed-dim" onkeydown="if(event.key === 'Enter' || event.key === ' ') { event.preventDefault(); this.querySelector('input').click(); }" tabindex="0">
+<input class="peer sr-only" name="goal" type="radio" value="switch-careers"/>
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-on-surface-variant peer-checked:text-primary transition-colors">route</span>
+<span class="font-title-lg text-title-lg text-on-surface peer-checked:text-on-primary-fixed-variant transition-colors">Switch careers</span>
+</div>
+<div class="w-6 h-6 rounded-full border border-outline-variant flex items-center justify-center peer-checked:border-primary peer-checked:bg-primary transition-all">
+<span class="material-symbols-outlined text-white text-[16px] opacity-0 peer-checked:opacity-100 transition-opacity">check</span>
+</div>
+<div class="absolute inset-0 rounded-xl pointer-events-none border border-transparent peer-checked:border-primary transition-all duration-300"></div>
+</label>
+<label class="relative flex items-center justify-between p-lg rounded-xl bg-surface-container border border-surface-container cursor-pointer transition-all hover:bg-surface-container-high peer-checked:border-primary peer-checked:bg-primary-fixed-dim" onkeydown="if(event.key === 'Enter' || event.key === ' ') { event.preventDefault(); this.querySelector('input').click(); }" tabindex="0">
+<input class="peer sr-only" name="goal" type="radio" value="improve-skills"/>
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-on-surface-variant peer-checked:text-primary transition-colors">trending_up</span>
+<span class="font-title-lg text-title-lg text-on-surface peer-checked:text-on-primary-fixed-variant transition-colors">Improve my current skills</span>
+</div>
+<div class="w-6 h-6 rounded-full border border-outline-variant flex items-center justify-center peer-checked:border-primary peer-checked:bg-primary transition-all">
+<span class="material-symbols-outlined text-white text-[16px] opacity-0 peer-checked:opacity-100 transition-opacity">check</span>
+</div>
+<div class="absolute inset-0 rounded-xl pointer-events-none border border-transparent peer-checked:border-primary transition-all duration-300"></div>
+</label>
+<label class="relative flex items-center justify-between p-lg rounded-xl bg-surface-container border border-surface-container cursor-pointer transition-all hover:bg-surface-container-high peer-checked:border-primary peer-checked:bg-primary-fixed-dim" onkeydown="if(event.key === 'Enter' || event.key === ' ') { event.preventDefault(); this.querySelector('input').click(); }" tabindex="0">
+<input class="peer sr-only" name="goal" type="radio" value="build-projects"/>
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-on-surface-variant peer-checked:text-primary transition-colors">code_blocks</span>
+<span class="font-title-lg text-title-lg text-on-surface peer-checked:text-on-primary-fixed-variant transition-colors">Build practical projects</span>
+</div>
+<div class="w-6 h-6 rounded-full border border-outline-variant flex items-center justify-center peer-checked:border-primary peer-checked:bg-primary transition-all">
+<span class="material-symbols-outlined text-white text-[16px] opacity-0 peer-checked:opacity-100 transition-opacity">check</span>
+</div>
+<div class="absolute inset-0 rounded-xl pointer-events-none border border-transparent peer-checked:border-primary transition-all duration-300"></div>
+</label>
+<label class="relative flex items-center justify-between p-lg rounded-xl bg-surface-container border border-surface-container cursor-pointer transition-all hover:bg-surface-container-high peer-checked:border-primary peer-checked:bg-primary-fixed-dim" onkeydown="if(event.key === 'Enter' || event.key === ' ') { event.preventDefault(); this.querySelector('input').click(); }" tabindex="0">
+<input class="peer sr-only" name="goal" type="radio" value="explore-tech"/>
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-on-surface-variant peer-checked:text-primary transition-colors">explore</span>
+<span class="font-title-lg text-title-lg text-on-surface peer-checked:text-on-primary-fixed-variant transition-colors">Explore a new technology</span>
+</div>
+<div class="w-6 h-6 rounded-full border border-outline-variant flex items-center justify-center peer-checked:border-primary peer-checked:bg-primary transition-all">
+<span class="material-symbols-outlined text-white text-[16px] opacity-0 peer-checked:opacity-100 transition-opacity">check</span>
+</div>
+<div class="absolute inset-0 rounded-xl pointer-events-none border border-transparent peer-checked:border-primary transition-all duration-300"></div>
+</label>
+<div class="mt-lg pt-lg border-t border-surface-container-highest flex justify-end">
+<button class="bg-primary text-on-primary font-label-md text-label-md px-xl py-md rounded-lg flex items-center gap-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2" disabled="" id="continue-btn" type="button">
+          Continue
+          <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+</div>
+</form>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('goal-form');
+      const continueBtn = document.getElementById('continue-btn');
+      const radios = form.querySelectorAll('input[type="radio"]');
+
+      // Update styling and button state based on selection
+      function updateSelectionState() {
+        let isSelected = false;
+        radios.forEach(radio => {
+          const label = radio.closest('label');
+          if (radio.checked) {
+            isSelected = true;
+            label.classList.add('border-primary', 'bg-primary-fixed-dim');
+            label.classList.remove('border-surface-container', 'bg-surface-container');
+            
+            // Trigger a subtle pulse animation on selection
+            label.animate([
+              { transform: 'scale(1)' },
+              { transform: 'scale(1.02)' },
+              { transform: 'scale(1)' }
+            ], {
+              duration: 200,
+              easing: 'ease-in-out'
+            });
+
+          } else {
+            label.classList.remove('border-primary', 'bg-primary-fixed-dim');
+            label.classList.add('border-surface-container', 'bg-surface-container');
+          }
+        });
+        
+        continueBtn.disabled = !isSelected;
+      }
+
+      radios.forEach(radio => {
+        radio.addEventListener('change', updateSelectionState);
+      });
+
+      // Handle continue button click (simulated)
+      continueBtn.addEventListener('click', () => {
+        if (!continueBtn.disabled) {
+          const selectedValue = form.querySelector('input[name="goal"]:checked').value;
+          console.log(`Proceeding to Step 3 with goal: ${selectedValue}`);
+          // Add loading state to button
+          continueBtn.innerHTML = '<span class="material-symbols-outlined animate-spin text-[20px]">progress_activity</span> Processing...';
+          continueBtn.disabled = true;
+          
+          setTimeout(() => {
+             continueBtn.innerHTML = 'Continue <span class="material-symbols-outlined text-[20px]">arrow_forward</span>';
+             continueBtn.disabled = false;
+          }, 1000);
+        }
+      });
+    });
+  </script>
+</div></main></body></html>

@@ -1,0 +1,386 @@
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"primary-fixed":"#e2dfff","surface-container":"#f2ecf3","primary-fixed-dim":"#c3c0ff","inverse-primary":"#c3c0ff","primary":"#3525cd","outline-variant":"#c7c4d8","error":"#ba1a1a","tertiary-fixed":"#dee0ff","on-tertiary-fixed-variant":"#0030c7","on-primary-fixed":"#0f0069","on-error-container":"#93000a","on-secondary":"#ffffff","secondary-container":"#7c5ce6","surface-container-high":"#ede6ee","tertiary-fixed-dim":"#bac3ff","surface-container-low":"#f8f1f9","surface-tint":"#4d44e3","on-primary-fixed-variant":"#3323cc","surface-container-lowest":"#ffffff","secondary-fixed":"#e7deff","surface-dim":"#ded8e0","error-container":"#ffdad6","surface-container-highest":"#e7e0e8","surface":"#fef7ff","outline":"#777587","on-secondary-container":"#fffbff","secondary-fixed-dim":"#ccbdff","on-error":"#ffffff","surface-bright":"#fef7ff","on-primary-container":"#dad7ff","on-background":"#1d1b20","on-surface-variant":"#464555","secondary":"#6340cb","on-secondary-fixed-variant":"#4d25b5","on-primary":"#ffffff","tertiary":"#0031cb","on-secondary-fixed":"#1f0060","primary-container":"#4f46e5","surface-variant":"#e7e0e8","on-tertiary-fixed":"#00115a","on-tertiary-container":"#d5d9ff","background":"#fef7ff","on-tertiary":"#ffffff","inverse-on-surface":"#f5eff6","tertiary-container":"#1d48f8","on-surface":"#1d1b20","inverse-surface":"#322f35"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"container-max":"1280px","xl":"32px","3xl":"64px","md":"16px","2xl":"48px","unit":"4px","xs":"4px","sm":"8px","lg":"24px","gutter":"24px","margin-mobile":"16px"},"fontFamily":{"body-md":["Inter"],"label-sm":["Inter"],"headline-md":["Inter"],"body-lg":["Inter"],"title-lg":["Inter"],"display-lg-mobile":["Inter"],"headline-lg":["Inter"],"label-md":["Inter"],"display-lg":["Inter"]},"fontSize":{"body-md":["16px",{"lineHeight":"24px","fontWeight":"400"}],"label-sm":["12px",{"lineHeight":"16px","fontWeight":"600"}],"headline-md":["24px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"600"}],"body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}],"title-lg":["20px",{"lineHeight":"28px","fontWeight":"500"}],"display-lg-mobile":["36px",{"lineHeight":"44px","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-lg":["32px",{"lineHeight":"40px","letterSpacing":"-0.01em","fontWeight":"600"}],"label-md":["14px",{"lineHeight":"20px","letterSpacing":"0.01em","fontWeight":"500"}],"display-lg":["48px",{"lineHeight":"56px","letterSpacing":"-0.02em","fontWeight":"700"}]}}}}</script><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/></head><body class="bg-surface font-body-md text-body-md text-on-surface"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-low flex flex-col z-50 shadow-[0_1px_8px_rgba(0,0,0,0.04)] overflow-y-auto"><div class="px-lg py-xl flex items-center gap-md"><img alt="LumoraSpace" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Xlp4DF3aKexCX4tB2EEgzqknOia6wj8j34pQt4zgsauZa98lguqONu2nrB5KyMjJW_Vs0g4oRYelZMrqe9BKWA88AVZPetR8XSBhsm9VP9FLtEH2p8kvPxOLU-MLlzmoBZtaLRMcp9OhoHhKorqiq1VDSjTLNNayjM-NabSyJSLOzxn1oKYQP3_dsUZLOQ98u1mqAOkwD-2h-Rixn_q695S7GzaeZklbN5XjQaczZWSf6AUl1xOANNFm8"/><span class="font-headline-md text-headline-md text-on-surface sr-only">LumoraSpace</span></div><nav class="flex-1 px-md flex flex-col gap-xs" data-active-classes="bg-primary-container text-on-primary-container font-medium"><a aria-current="page" class="flex items-center gap-md px-md py-sm rounded-xl transition-colors bg-primary-container text-on-primary-container font-medium" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span class="font-label-md text-label-md">Dashboard</span></a><a class="flex items-center gap-md px-md py-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="users" href="#"><span class="material-symbols-outlined text-[20px]">group</span><span class="font-label-md text-label-md">Users</span></a><a class="flex items-center gap-md px-md py-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="programs" href="#"><span class="material-symbols-outlined text-[20px]">school</span><span class="font-label-md text-label-md">Programs</span></a><a class="flex items-center gap-md px-md py-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="batches" href="#"><span class="material-symbols-outlined text-[20px]">layers</span><span class="font-label-md text-label-md">Batches</span></a><a class="flex items-center gap-md px-md py-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="enrollments" href="#"><span class="material-symbols-outlined text-[20px]">assignment_ind</span><span class="font-label-md text-label-md">Enrollments</span></a><a class="flex items-center gap-md px-md py-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="mentors" href="#"><span class="material-symbols-outlined text-[20px]">psychology</span><span class="font-label-md text-label-md">Mentors</span></a><a class="flex items-center gap-md px-md py-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="curriculum" href="#"><span class="material-symbols-outlined text-[20px]">menu_book</span><span class="font-label-md text-label-md">Curriculum</span></a><a class="flex items-center gap-md px-md py-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="assessments" href="#"><span class="material-symbols-outlined text-[20px]">quiz</span><span class="font-label-md text-label-md">Assessments</span></a><a class="flex items-center gap-md px-md py-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="certificates" href="#"><span class="material-symbols-outlined text-[20px]">workspace_premium</span><span class="font-label-md text-label-md">Certificates</span></a><a class="flex items-center gap-md px-md py-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="analytics" href="#"><span class="material-symbols-outlined text-[20px]">monitoring</span><span class="font-label-md text-label-md">Analytics</span></a><a class="flex items-center gap-md px-md py-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="payments" href="#"><span class="material-symbols-outlined text-[20px]">payments</span><span class="font-label-md text-label-md">Payments</span></a><div class="my-md h-px bg-outline-variant opacity-30"></div><a class="flex items-center gap-md px-md py-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="notifications" href="#"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="font-label-md text-label-md">Notifications</span></a><a class="flex items-center gap-md px-md py-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="settings" href="#"><span class="material-symbols-outlined text-[20px]">settings</span><span class="font-label-md text-label-md">Settings</span></a></nav><div class="px-md py-lg mt-auto"><div class="flex items-center gap-md p-sm bg-surface-container rounded-xl"><img alt="Admin Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1XujAG1ats9FGROvsBtsUlcw44TA0SULW3NZEkXPUoEGHKbON4FH6eFXuIt62lSjvTyXpVorwvdNhf2lPjDOEbAp39vJ6oJbdSKGI5cmMr7dKY4NSIBHjyQ4ftOyYDTc2lwIic-K3h9tQGzf3zQgsl84odZ0yVGdkcv5jgjLk7F6VMahDYq7jtBSfD9cs5lGL_VZy9v7rioM-sev__woRnlpKTtRyp08oYelkaHt3T19ClPW2b5xgD8A7cV"/><div class="overflow-hidden"><p class="font-label-md text-label-md text-on-surface truncate">Admin User</p><p class="text-[12px] text-on-surface-variant truncate">LumoraSpace Team</p></div></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/80 backdrop-blur-xl z-40 flex items-center justify-between px-lg"><div class="flex items-center gap-md"><span class="material-symbols-outlined text-on-surface-variant">search</span><span class="text-on-surface-variant font-body-md">Search records...</span></div><div class="flex items-center gap-lg"><span class="material-symbols-outlined text-on-surface-variant cursor-pointer">help_outline</span><span class="material-symbols-outlined text-on-surface-variant cursor-pointer">apps</span></div></header><main class="pt-16 min-h-screen"><div class="flex flex-col w-full p-8 bg-surface text-on-surface space-y-12 pb-32">
+<div class="flex items-center justify-between">
+<div>
+<h1 class="font-display-lg text-display-lg text-on-surface">Dashboard</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">Overview of your LumoraSpace platform.</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant z-10 text-[20px]">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container rounded-full focus:outline-none focus:ring-2 focus:ring-primary w-64 transition-all duration-300 group-hover:bg-surface-container-high placeholder:text-on-surface-variant font-body-md text-body-md" placeholder="Global Search..." type="text"/>
+</div>
+<div class="flex bg-surface-container rounded-full p-1 items-center font-label-md text-label-md">
+<button class="px-4 py-1.5 rounded-full text-on-surface-variant hover:text-on-surface transition-colors focus:outline-none">7d</button>
+<button class="px-4 py-1.5 rounded-full bg-primary text-on-primary shadow-sm transition-colors focus:outline-none">30d</button>
+<button class="px-4 py-1.5 rounded-full text-on-surface-variant hover:text-on-surface transition-colors focus:outline-none">90d</button>
+</div>
+<button class="w-10 h-10 rounded-full bg-surface-container hover:bg-surface-container-high flex items-center justify-center transition-colors relative focus:outline-none group">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-on-surface transition-colors">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-error ring-2 ring-surface group-hover:ring-surface-container-high transition-colors"></span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-12 gap-6">
+<div class="col-span-12 xl:col-span-8 flex flex-col space-y-6">
+<div class="bg-error-container text-on-error-container p-6 rounded-2xl shadow-sm relative overflow-hidden group">
+<div class="absolute -right-8 -top-8 w-32 h-32 bg-error/10 rounded-full blur-2xl"></div>
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">warning</span>
+<h2 class="font-title-lg text-title-lg text-on-error-container">Needs Attention</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="bg-surface/50 p-4 rounded-xl flex flex-col gap-3 justify-between">
+<div class="flex items-start justify-between">
+<span class="font-display-lg-mobile text-display-lg-mobile text-error">14</span>
+<span class="material-symbols-outlined text-on-error-container/60">assignment_turned_in</span>
+</div>
+<p class="font-label-md text-label-md">Assignments waiting for review</p>
+<button class="mt-2 text-left font-label-md text-label-md text-error hover:text-on-error-container transition-colors flex items-center gap-1 group/btn">
+              View Reviews <span class="material-symbols-outlined text-[16px] group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+<div class="bg-surface/50 p-4 rounded-xl flex flex-col gap-3 justify-between">
+<div class="flex items-start justify-between">
+<span class="font-display-lg-mobile text-display-lg-mobile text-error">8</span>
+<span class="material-symbols-outlined text-on-error-container/60">person_off</span>
+</div>
+<p class="font-label-md text-label-md">Learners not assigned to a mentor</p>
+<button class="mt-2 text-left font-label-md text-label-md text-error hover:text-on-error-container transition-colors flex items-center gap-1 group/btn">
+              Assign Mentors <span class="material-symbols-outlined text-[16px] group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+<div class="bg-surface/50 p-4 rounded-xl flex flex-col gap-3 justify-between">
+<div class="flex items-start justify-between">
+<span class="font-display-lg-mobile text-display-lg-mobile text-error">3</span>
+<span class="material-symbols-outlined text-on-error-container/60">workspace_premium</span>
+</div>
+<p class="font-label-md text-label-md">Failed certificate generations</p>
+<button class="mt-2 text-left font-label-md text-label-md text-error hover:text-on-error-container transition-colors flex items-center gap-1 group/btn">
+              Investigate <span class="material-symbols-outlined text-[16px] group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-surface-container-lowest p-5 rounded-2xl shadow-sm flex flex-col gap-2 hover:-translate-y-1 transition-transform duration-300">
+<div class="flex items-center justify-between">
+<span class="material-symbols-outlined text-primary bg-primary-container/20 p-2 rounded-lg">group</span>
+<span class="bg-primary-container text-on-primary-container px-2 py-0.5 rounded-full font-label-sm text-label-sm flex items-center gap-0.5"><span class="material-symbols-outlined text-[12px]">trending_up</span> 2.1%</span>
+</div>
+<p class="font-label-md text-label-md text-on-surface-variant mt-2">Total Learners</p>
+<h3 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">12,450</h3>
+</div>
+<div class="bg-surface-container-lowest p-5 rounded-2xl shadow-sm flex flex-col gap-2 hover:-translate-y-1 transition-transform duration-300">
+<div class="flex items-center justify-between">
+<span class="material-symbols-outlined text-secondary bg-secondary-container/20 p-2 rounded-lg">local_fire_department</span>
+<span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full font-label-sm text-label-sm flex items-center gap-0.5"><span class="material-symbols-outlined text-[12px]">trending_up</span> 8.4%</span>
+</div>
+<p class="font-label-md text-label-md text-on-surface-variant mt-2">Active Learners</p>
+<h3 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">1,248</h3>
+</div>
+<div class="bg-surface-container-lowest p-5 rounded-2xl shadow-sm flex flex-col gap-2 hover:-translate-y-1 transition-transform duration-300">
+<div class="flex items-center justify-between">
+<span class="material-symbols-outlined text-tertiary bg-tertiary-container/20 p-2 rounded-lg">school</span>
+<span class="bg-surface-variant text-on-surface-variant px-2 py-0.5 rounded-full font-label-sm text-label-sm">Total</span>
+</div>
+<p class="font-label-md text-label-md text-on-surface-variant mt-2">Active Programs</p>
+<h3 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">12</h3>
+</div>
+<div class="bg-surface-container-lowest p-5 rounded-2xl shadow-sm flex flex-col gap-2 hover:-translate-y-1 transition-transform duration-300">
+<div class="flex items-center justify-between">
+<span class="material-symbols-outlined text-primary bg-primary-container/20 p-2 rounded-lg">psychology</span>
+<span class="bg-surface-variant text-on-surface-variant px-2 py-0.5 rounded-full font-label-sm text-label-sm">Total</span>
+</div>
+<p class="font-label-md text-label-md text-on-surface-variant mt-2">Active Mentors</p>
+<h3 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">48</h3>
+</div>
+</div>
+</div>
+<div class="col-span-12 xl:col-span-4 flex flex-col gap-6">
+<div class="bg-surface-container-low rounded-2xl p-6 shadow-sm flex flex-col h-full relative overflow-hidden group">
+<div class="absolute -right-16 -top-16 w-48 h-48 bg-primary/5 rounded-full blur-3xl transition-transform duration-700 group-hover:scale-125"></div>
+<h2 class="font-title-lg text-title-lg text-on-surface mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">bolt</span> Quick Actions
+          </h2>
+<div class="flex flex-col gap-3 relative z-10">
+<button class="w-full bg-surface-container-lowest hover:bg-primary hover:text-on-primary p-4 rounded-xl flex items-center gap-4 transition-all duration-300 shadow-sm group/btn focus:outline-none text-left">
+<span class="material-symbols-outlined bg-surface-variant text-on-surface-variant group-hover/btn:bg-primary-container group-hover/btn:text-on-primary-container p-2 rounded-lg transition-colors">person_add</span>
+<div class="flex-1">
+<p class="font-label-md text-label-md text-on-surface group-hover/btn:text-on-primary transition-colors">Add User</p>
+<p class="font-body-sm text-[12px] text-on-surface-variant group-hover/btn:text-on-primary/80 transition-colors">Invite new learners or staff</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover/btn:text-on-primary transition-colors opacity-0 group-hover/btn:opacity-100 -translate-x-2 group-hover/btn:translate-x-0">chevron_right</span>
+</button>
+<button class="w-full bg-surface-container-lowest hover:bg-primary hover:text-on-primary p-4 rounded-xl flex items-center gap-4 transition-all duration-300 shadow-sm group/btn focus:outline-none text-left">
+<span class="material-symbols-outlined bg-surface-variant text-on-surface-variant group-hover/btn:bg-primary-container group-hover/btn:text-on-primary-container p-2 rounded-lg transition-colors">library_add</span>
+<div class="flex-1">
+<p class="font-label-md text-label-md text-on-surface group-hover/btn:text-on-primary transition-colors">Create Program</p>
+<p class="font-body-sm text-[12px] text-on-surface-variant group-hover/btn:text-on-primary/80 transition-colors">Draft a new learning path</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover/btn:text-on-primary transition-colors opacity-0 group-hover/btn:opacity-100 -translate-x-2 group-hover/btn:translate-x-0">chevron_right</span>
+</button>
+<button class="w-full bg-surface-container-lowest hover:bg-primary hover:text-on-primary p-4 rounded-xl flex items-center gap-4 transition-all duration-300 shadow-sm group/btn focus:outline-none text-left">
+<span class="material-symbols-outlined bg-surface-variant text-on-surface-variant group-hover/btn:bg-primary-container group-hover/btn:text-on-primary-container p-2 rounded-lg transition-colors">layers</span>
+<div class="flex-1">
+<p class="font-label-md text-label-md text-on-surface group-hover/btn:text-on-primary transition-colors">Create Batch</p>
+<p class="font-body-sm text-[12px] text-on-surface-variant group-hover/btn:text-on-primary/80 transition-colors">Schedule a new cohort</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover/btn:text-on-primary transition-colors opacity-0 group-hover/btn:opacity-100 -translate-x-2 group-hover/btn:translate-x-0">chevron_right</span>
+</button>
+<button class="w-full bg-surface-container-lowest hover:bg-primary hover:text-on-primary p-4 rounded-xl flex items-center gap-4 transition-all duration-300 shadow-sm group/btn focus:outline-none text-left">
+<span class="material-symbols-outlined bg-surface-variant text-on-surface-variant group-hover/btn:bg-primary-container group-hover/btn:text-on-primary-container p-2 rounded-lg transition-colors">supervisor_account</span>
+<div class="flex-1">
+<p class="font-label-md text-label-md text-on-surface group-hover/btn:text-on-primary transition-colors">Assign Mentor</p>
+<p class="font-body-sm text-[12px] text-on-surface-variant group-hover/btn:text-on-primary/80 transition-colors">Link learners to guides</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover/btn:text-on-primary transition-colors opacity-0 group-hover/btn:opacity-100 -translate-x-2 group-hover/btn:translate-x-0">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-sm flex flex-col h-full relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-50"></div>
+<div class="relative z-10 flex justify-between items-center mb-6">
+<h2 class="font-title-lg text-title-lg text-on-surface">Enrollment Activity</h2>
+<button class="text-on-surface-variant hover:text-on-surface transition-colors focus:outline-none">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<div class="relative w-full h-64 z-10 flex items-end">
+<svg class="w-full h-full preserve-aspect-ratio-none" viewbox="0 0 400 150">
+<!-- Grid lines -->
+<line class="text-outline-variant opacity-30" stroke="currentColor" stroke-dasharray="4" stroke-width="0.5" x1="0" x2="400" y1="25" y2="25"></line>
+<line class="text-outline-variant opacity-30" stroke="currentColor" stroke-dasharray="4" stroke-width="0.5" x1="0" x2="400" y1="75" y2="75"></line>
+<line class="text-outline-variant opacity-30" stroke="currentColor" stroke-dasharray="4" stroke-width="0.5" x1="0" x2="400" y1="125" y2="125"></line>
+<!-- Completed Area -->
+<path class="text-tertiary opacity-10" d="M0,140 C50,130 100,120 150,110 C200,100 250,120 300,90 C350,60 400,80 400,80 L400,150 L0,150 Z" fill="currentColor"></path>
+<path class="text-tertiary" d="M0,140 C50,130 100,120 150,110 C200,100 250,120 300,90 C350,60 400,80 400,80" fill="none" stroke="currentColor" stroke-width="2"></path>
+<!-- Active Area -->
+<path class="text-secondary opacity-10" d="M0,120 C50,100 100,110 150,80 C200,50 250,70 300,40 C350,10 400,30 400,30 L400,150 L0,150 Z" fill="currentColor"></path>
+<path class="text-secondary" d="M0,120 C50,100 100,110 150,80 C200,50 250,70 300,40 C350,10 400,30 400,30" fill="none" stroke="currentColor" stroke-width="2"></path>
+<!-- New Area -->
+<path class="text-primary opacity-10" d="M0,90 C50,60 100,80 150,40 C200,0 250,30 300,10 C350,-10 400,0 400,0 L400,150 L0,150 Z" fill="currentColor"></path>
+<path class="text-primary" d="M0,90 C50,60 100,80 150,40 C200,0 250,30 300,10 C350,-10 400,0 400,0" fill="none" stroke="currentColor" stroke-width="3"></path>
+<!-- Data Points (New) -->
+<circle class="text-primary bg-surface" cx="150" cy="40" fill="currentColor" r="4"></circle>
+<circle class="text-primary bg-surface" cx="300" cy="10" fill="currentColor" r="4"></circle>
+</svg>
+</div>
+<div class="flex gap-6 mt-6 z-10 pt-4 border-t border-outline-variant/30">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-primary"></span>
+<span class="font-label-md text-label-md text-on-surface-variant">New</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-secondary"></span>
+<span class="font-label-md text-label-md text-on-surface-variant">Active</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-tertiary"></span>
+<span class="font-label-md text-label-md text-on-surface-variant">Completed</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-sm flex flex-col h-full">
+<h2 class="font-title-lg text-title-lg text-on-surface mb-6">Learning Activity</h2>
+<div class="flex flex-col gap-8 h-full justify-center px-4">
+<div class="flex items-center justify-between">
+<div>
+<p class="font-headline-lg text-headline-lg text-on-surface">2.4k</p>
+<p class="font-body-md text-body-md text-on-surface-variant">Lessons Completed</p>
+</div>
+<div class="w-24 h-24 relative">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 36 36">
+<path class="text-surface-variant" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3"></path>
+<path class="text-primary transition-all duration-1000 ease-out" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="75, 100" stroke-linecap="round" stroke-width="3"></path>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[32px]">play_circle</span>
+</div>
+</div>
+</div>
+<div class="w-full h-px bg-outline-variant/30"></div>
+<div class="flex items-center justify-between">
+<div>
+<p class="font-headline-lg text-headline-lg text-on-surface">850</p>
+<p class="font-body-md text-body-md text-on-surface-variant">Assignments Submitted</p>
+</div>
+<div class="w-24 h-24 relative">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 36 36">
+<path class="text-surface-variant" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3"></path>
+<path class="text-secondary transition-all duration-1000 ease-out" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="45, 100" stroke-linecap="round" stroke-width="3"></path>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-[32px]">task</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+<div class="xl:col-span-2 bg-surface-container-lowest p-6 rounded-2xl shadow-sm overflow-x-auto">
+<div class="flex justify-between items-center mb-6 min-w-[600px]">
+<h2 class="font-title-lg text-title-lg text-on-surface">Program Performance</h2>
+<button class="font-label-md text-label-md text-primary hover:text-primary-container transition-colors flex items-center gap-1 focus:outline-none">
+             View All <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+<table class="w-full min-w-[600px] text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant/30 text-on-surface-variant font-label-md text-label-md uppercase tracking-wider">
+<th class="pb-3 font-medium">Program</th>
+<th class="pb-3 font-medium">Enrolled</th>
+<th class="pb-3 font-medium">Completion Rate</th>
+<th class="pb-3 font-medium">Status</th>
+<th class="pb-3 font-medium text-right">Action</th>
+</tr>
+</thead>
+<tbody class="font-body-md text-body-md text-on-surface">
+<tr class="border-b border-outline-variant/10 hover:bg-surface-container/30 transition-colors group">
+<td class="py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined">data_usage</span>
+</div>
+<span class="font-title-lg text-title-lg min-w-0 truncate">Forge Data Analyst</span>
+</div>
+</td>
+<td class="py-4 font-label-md text-label-md">1,420</td>
+<td class="py-4">
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md w-12">78%</span>
+<div class="h-2 w-24 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[78%] rounded-full"></div>
+</div>
+</div>
+</td>
+<td class="py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[12px] font-medium bg-primary-container/20 text-primary">Active</span>
+</td>
+<td class="py-4 text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-on-surface focus:outline-none opacity-0 group-hover:opacity-100 transition-opacity">more_horiz</button>
+</td>
+</tr>
+<tr class="border-b border-outline-variant/10 hover:bg-surface-container/30 transition-colors group">
+<td class="py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-secondary-container text-on-secondary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined">code</span>
+</div>
+<span class="font-title-lg text-title-lg min-w-0 truncate">Full Stack Developer</span>
+</div>
+</td>
+<td class="py-4 font-label-md text-label-md">890</td>
+<td class="py-4">
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md w-12">62%</span>
+<div class="h-2 w-24 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-[62%] rounded-full"></div>
+</div>
+</div>
+</td>
+<td class="py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[12px] font-medium bg-primary-container/20 text-primary">Active</span>
+</td>
+<td class="py-4 text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-on-surface focus:outline-none opacity-0 group-hover:opacity-100 transition-opacity">more_horiz</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container/30 transition-colors group">
+<td class="py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-tertiary-container text-on-tertiary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined">design_services</span>
+</div>
+<span class="font-title-lg text-title-lg min-w-0 truncate">UX Research Fundamentals</span>
+</div>
+</td>
+<td class="py-4 font-label-md text-label-md">450</td>
+<td class="py-4">
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md w-12">91%</span>
+<div class="h-2 w-24 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-tertiary w-[91%] rounded-full"></div>
+</div>
+</div>
+</td>
+<td class="py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[12px] font-medium bg-outline-variant/30 text-on-surface-variant">Archived</span>
+</td>
+<td class="py-4 text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-on-surface focus:outline-none opacity-0 group-hover:opacity-100 transition-opacity">more_horiz</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="bg-surface-container-low p-6 rounded-2xl shadow-sm">
+<h2 class="font-title-lg text-title-lg text-on-surface mb-6">Recent Activity</h2>
+<div class="relative border-l border-outline-variant/30 ml-3 space-y-6 pb-2">
+<div class="relative pl-6">
+<div class="absolute -left-[5px] top-1 w-2.5 h-2.5 rounded-full bg-primary ring-4 ring-surface-container-low"></div>
+<p class="font-body-md text-body-md text-on-surface">New learner enrolled</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider">2m ago</span>
+<span class="text-on-surface-variant text-[12px]">•</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Forge Data Analyst</span>
+</div>
+</div>
+<div class="relative pl-6">
+<div class="absolute -left-[5px] top-1 w-2.5 h-2.5 rounded-full bg-secondary ring-4 ring-surface-container-low"></div>
+<p class="font-body-md text-body-md text-on-surface">Program published</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">1h ago</span>
+<span class="text-on-surface-variant text-[12px]">•</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Advanced React Patterns</span>
+</div>
+</div>
+<div class="relative pl-6">
+<div class="absolute -left-[5px] top-1 w-2.5 h-2.5 rounded-full bg-tertiary ring-4 ring-surface-container-low"></div>
+<p class="font-body-md text-body-md text-on-surface">Payment received</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-label-sm text-label-sm text-tertiary uppercase tracking-wider">3h ago</span>
+<span class="text-on-surface-variant text-[12px]">•</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">$499.00 USD</span>
+</div>
+</div>
+<div class="relative pl-6">
+<div class="absolute -left-[5px] top-1 w-2.5 h-2.5 rounded-full bg-outline-variant ring-4 ring-surface-container-low"></div>
+<p class="font-body-md text-body-md text-on-surface">Batch completed</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">1d ago</span>
+<span class="text-on-surface-variant text-[12px]">•</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">UX Cohort Alpha</span>
+</div>
+</div>
+</div>
+<button class="w-full mt-6 py-2 border border-outline-variant rounded-lg font-label-md text-label-md text-on-surface hover:bg-surface-container transition-colors focus:outline-none">
+         View All Activity
+       </button>
+</div>
+</div>
+</div>
+<script>
+  // Simple intersection observer to trigger chart animations when scrolled into view
+  document.addEventListener("DOMContentLoaded", () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const svgs = entry.target.querySelectorAll('svg path[stroke-dasharray]');
+          svgs.forEach(svg => {
+            svg.style.strokeDasharray = svg.getAttribute('stroke-dasharray');
+          });
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    const chartCards = document.querySelectorAll('.bg-surface-container-lowest');
+    chartCards.forEach(card => observer.observe(card));
+  });
+</script></main></div></body></html>

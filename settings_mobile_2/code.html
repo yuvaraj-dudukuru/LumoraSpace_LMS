@@ -1,0 +1,102 @@
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;overflow-x:hidden;}body{overscroll-behavior-y:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"surface-container-high":"#ede6ee","surface-container":"#f2ecf3","on-secondary-fixed":"#1f0060","tertiary-container":"#1d48f8","surface-dim":"#ded8e0","on-tertiary":"#ffffff","secondary-fixed-dim":"#ccbdff","primary-fixed":"#e2dfff","surface-container-highest":"#e7e0e8","on-surface":"#1d1b20","surface-tint":"#4d44e3","on-secondary-fixed-variant":"#4d25b5","outline":"#777587","inverse-surface":"#322f35","secondary-fixed":"#e7deff","on-secondary-container":"#fffbff","on-secondary":"#ffffff","on-tertiary-container":"#d5d9ff","secondary":"#6340cb","primary-fixed-dim":"#c3c0ff","on-primary":"#ffffff","on-background":"#1d1b20","on-primary-fixed-variant":"#3323cc","tertiary-fixed-dim":"#bac3ff","surface-container-lowest":"#ffffff","primary":"#3525cd","on-tertiary-fixed-variant":"#0030c7","on-primary-container":"#dad7ff","on-tertiary-fixed":"#00115a","surface-container-low":"#f8f1f9","surface":"#fef7ff","background":"#fef7ff","on-error-container":"#93000a","secondary-container":"#7c5ce6","on-surface-variant":"#464555","on-error":"#ffffff","primary-container":"#4f46e5","on-primary-fixed":"#0f0069","surface-variant":"#e7e0e8","tertiary-fixed":"#dee0ff","outline-variant":"#c7c4d8","inverse-primary":"#c3c0ff","error":"#ba1a1a","error-container":"#ffdad6","inverse-on-surface":"#f5eff6","tertiary":"#0031cb","surface-bright":"#fef7ff"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"lg":"24px","xl":"32px","margin-mobile":"16px","gutter":"24px","xs":"4px","md":"16px","unit":"4px","2xl":"48px","3xl":"64px","container-max":"1280px","sm":"8px"},"fontFamily":{"display-lg-mobile":["Inter"],"body-lg":["Inter"],"body-md":["Inter"],"headline-lg":["Inter"],"title-lg":["Inter"],"label-md":["Inter"],"label-sm":["Inter"],"headline-md":["Inter"],"display-lg":["Inter"]},"fontSize":{"display-lg-mobile":["36px",{"lineHeight":"44px","letterSpacing":"-0.02em","fontWeight":"700"}],"body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}],"body-md":["16px",{"lineHeight":"24px","fontWeight":"400"}],"headline-lg":["32px",{"lineHeight":"40px","letterSpacing":"-0.01em","fontWeight":"600"}],"title-lg":["20px",{"lineHeight":"28px","fontWeight":"500"}],"label-md":["14px",{"lineHeight":"20px","letterSpacing":"0.01em","fontWeight":"500"}],"label-sm":["12px",{"lineHeight":"16px","fontWeight":"600"}],"headline-md":["24px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"600"}],"display-lg":["48px",{"lineHeight":"56px","letterSpacing":"-0.02em","fontWeight":"700"}]}}}}</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-background font-body-md text-on-background min-h-screen"><header class="fixed top-0 inset-x-0 z-50 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] pt-safe"><div class="h-16 px-margin-mobile flex items-center gap-md"><button class="w-11 h-11 flex items-center justify-center text-on-surface hover:bg-surface-variant/20 rounded-full transition-colors" onclick="history.back()"><span class="material-symbols-outlined">arrow_back_ios_new</span></button><h1 class="text-title-lg font-title-lg text-on-surface">Settings</h1></div></header><main class="relative w-full pt-16 pb-safe bg-background"><div class="flex flex-col w-full h-full relative">
+<!-- Settings Section Selector -->
+<div class="px-margin-mobile py-lg">
+<label class="font-label-md text-on-surface-variant block mb-sm">Settings Section</label>
+<div class="relative w-full">
+<select class="w-full appearance-none bg-surface-container text-on-surface font-body-md py-3 px-4 pr-12 rounded-lg outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 transition-shadow">
+<option selected="" value="general">General</option>
+<option value="security">Security</option>
+<option value="billing">Billing</option>
+<option value="notifications">Notifications</option>
+</select>
+<div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-on-surface-variant">
+<span class="material-symbols-outlined">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Divider -->
+<div class="w-full h-px bg-surface-variant my-xs"></div>
+<!-- Settings Form Content -->
+<div class="flex-1 px-margin-mobile py-lg pb-3xl space-y-xl overflow-y-auto">
+<!-- Platform Name -->
+<div>
+<label class="font-label-md text-on-surface block mb-sm" for="platformName">Platform Name</label>
+<input class="w-full bg-surface-container text-on-surface font-body-md py-3 px-4 rounded-lg outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 transition-shadow placeholder:text-on-surface-variant/50" id="platformName" placeholder="Enter platform name" type="text" value="LumoraSpace Alpha"/>
+<p class="font-label-sm text-on-surface-variant mt-xs">This name will be visible to all workspace members.</p>
+</div>
+<!-- Support Email -->
+<div>
+<label class="font-label-md text-on-surface block mb-sm" for="supportEmail">Support Email</label>
+<input class="w-full bg-surface-container text-on-surface font-body-md py-3 px-4 rounded-lg outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 transition-shadow placeholder:text-on-surface-variant/50" id="supportEmail" placeholder="Enter support email" type="email" value="admin@lumoraspace.dev"/>
+</div>
+<!-- Timezone -->
+<div>
+<label class="font-label-md text-on-surface block mb-sm" for="timezone">System Timezone</label>
+<div class="relative w-full">
+<select class="w-full appearance-none bg-surface-container text-on-surface font-body-md py-3 px-4 pr-12 rounded-lg outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 transition-shadow" id="timezone">
+<option value="UTC">UTC (Coordinated Universal Time)</option>
+<option selected="" value="PST">PST (Pacific Standard Time)</option>
+<option value="EST">EST (Eastern Standard Time)</option>
+<option value="CET">CET (Central European Time)</option>
+</select>
+<div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-on-surface-variant">
+<span class="material-symbols-outlined">schedule</span>
+</div>
+</div>
+</div>
+<!-- Language -->
+<div>
+<label class="font-label-md text-on-surface block mb-sm" for="language">Default Language</label>
+<div class="relative w-full">
+<select class="w-full appearance-none bg-surface-container text-on-surface font-body-md py-3 px-4 pr-12 rounded-lg outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 transition-shadow" id="language">
+<option selected="" value="en-US">English (US)</option>
+<option value="en-GB">English (UK)</option>
+<option value="fr-FR">Français</option>
+<option value="es-ES">Español</option>
+</select>
+<div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-on-surface-variant">
+<span class="material-symbols-outlined">language</span>
+</div>
+</div>
+</div>
+<!-- Advanced Toggles -->
+<div class="pt-md">
+<h3 class="font-title-lg text-on-surface mb-lg">Advanced Preferences</h3>
+<div class="flex items-center justify-between py-md">
+<div>
+<span class="block font-body-md text-on-surface font-medium">Require 2FA for Admins</span>
+<span class="block font-label-sm text-on-surface-variant mt-xs">Mandatory two-factor authentication for all administrative accounts.</span>
+</div>
+<!-- Toggle Switch -->
+<button aria-checked="true" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-primary transition-colors duration-200 ease-in-out focus:outline-none" role="switch">
+<span aria-hidden="true" class="pointer-events-none inline-block h-5 w-5 translate-x-5 transform rounded-full bg-on-primary shadow ring-0 transition duration-200 ease-in-out"></span>
+</button>
+</div>
+<div class="flex items-center justify-between py-md">
+<div>
+<span class="block font-body-md text-on-surface font-medium">Experimental Features</span>
+<span class="block font-label-sm text-on-surface-variant mt-xs">Opt-in to beta features before general release.</span>
+</div>
+<!-- Toggle Switch (Off state) -->
+<button aria-checked="false" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-surface-variant transition-colors duration-200 ease-in-out focus:outline-none" role="switch">
+<span aria-hidden="true" class="pointer-events-none inline-block h-5 w-5 translate-x-0 transform rounded-full bg-surface shadow ring-0 transition duration-200 ease-in-out"></span>
+</button>
+</div>
+</div>
+</div>
+<!-- Fixed Bottom Action Bar -->
+<div class="fixed bottom-0 left-0 right-0 bg-surface/90 backdrop-blur-md pb-safe px-margin-mobile py-md shadow-[0_-4px_20px_rgba(13,11,16,0.05)] z-40">
+<button class="w-full bg-primary text-on-primary font-label-md py-4 rounded-full flex items-center justify-center gap-2 hover:bg-primary/90 transition-colors active:scale-[0.98]">
+<span class="material-symbols-outlined text-[20px]">save</span>
+      Save Changes
+    </button>
+</div>
+<!-- Spacer to prevent content hiding behind fixed bar -->
+<div class="h-24 w-full opacity-0 pointer-events-none"></div>
+</div></main></body></html>

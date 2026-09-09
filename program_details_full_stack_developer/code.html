@@ -1,0 +1,464 @@
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"on-background":"#1d1b20","on-tertiary-fixed-variant":"#0030c7","tertiary-fixed":"#dee0ff","surface-bright":"#fef7ff","secondary-fixed-dim":"#ccbdff","on-primary":"#ffffff","on-tertiary":"#ffffff","inverse-on-surface":"#f5eff6","on-tertiary-fixed":"#00115a","inverse-surface":"#322f35","on-secondary-fixed-variant":"#4d25b5","outline-variant":"#c7c4d8","on-error":"#ffffff","surface":"#fef7ff","on-secondary":"#ffffff","error-container":"#ffdad6","tertiary-container":"#1d48f8","on-error-container":"#93000a","surface-tint":"#4d44e3","secondary":"#6340cb","on-surface":"#1d1b20","primary":"#3525cd","outline":"#777587","secondary-container":"#7c5ce6","error":"#ba1a1a","surface-container-lowest":"#ffffff","surface-container":"#f2ecf3","surface-dim":"#ded8e0","on-primary-fixed":"#0f0069","on-secondary-container":"#fffbff","surface-container-high":"#ede6ee","on-surface-variant":"#464555","on-tertiary-container":"#d5d9ff","tertiary-fixed-dim":"#bac3ff","on-primary-container":"#dad7ff","primary-fixed-dim":"#c3c0ff","on-secondary-fixed":"#1f0060","background":"#fef7ff","surface-container-highest":"#e7e0e8","surface-variant":"#e7e0e8","secondary-fixed":"#e7deff","primary-container":"#4f46e5","primary-fixed":"#e2dfff","tertiary":"#0031cb","inverse-primary":"#c3c0ff","surface-container-low":"#f8f1f9","on-primary-fixed-variant":"#3323cc"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"md":"16px","margin-mobile":"16px","2xl":"48px","container-max":"1280px","lg":"24px","unit":"4px","3xl":"64px","xl":"32px","xs":"4px","sm":"8px","gutter":"24px"},"fontFamily":{"headline-md":["Inter"],"body-md":["Inter"],"body-lg":["Inter"],"display-lg-mobile":["Inter"],"headline-lg":["Inter"],"label-sm":["Inter"],"label-md":["Inter"],"display-lg":["Inter"],"title-lg":["Inter"]},"fontSize":{"headline-md":["24px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"600"}],"body-md":["16px",{"lineHeight":"24px","fontWeight":"400"}],"body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}],"display-lg-mobile":["36px",{"lineHeight":"44px","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-lg":["32px",{"lineHeight":"40px","letterSpacing":"-0.01em","fontWeight":"600"}],"label-sm":["12px",{"lineHeight":"16px","fontWeight":"600"}],"label-md":["14px",{"lineHeight":"20px","letterSpacing":"0.01em","fontWeight":"500"}],"display-lg":["48px",{"lineHeight":"56px","letterSpacing":"-0.02em","fontWeight":"700"}],"title-lg":["20px",{"lineHeight":"28px","fontWeight":"500"}]}}}}</script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/></head><body class="bg-background font-body-md text-on-surface"><header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl shadow-[0_4px_20px_rgba(13,11,16,0.05)]"><div class="h-20 max-w-container-max mx-auto px-margin-mobile lg:px-lg flex items-center justify-between"><div class="flex items-center gap-sm"><img alt="LumoraSpace Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Xlp4DF3aKexCX4tB2EEgzqknOia6wj8j34pQt4zgsauZa98lguqONu2nrB5KyMjJW_Vs0g4oRYelZMrqe9BKWA88AVZPetR8XSBhsm9VP9FLtEH2p8kvPxOLU-MLlzmoBZtaLRMcp9OhoHhKorqiq1VDSjTLNNayjM-NabSyJSLOzxn1oKYQP3_dsUZLOQ98u1mqAOkwD-2h-Rixn_q695S7GzaeZklbN5XjQaczZWSf6AUl1xOANNFm8"/><span class="hidden lg:block font-headline-md text-title-lg text-on-surface">LumoraSpace</span></div><nav class="hidden lg:flex items-center gap-xl" data-active-classes="text-primary font-medium"><a class="font-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="programs" href="#">Programs</a><a class="font-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="why-lumoraspace" href="#">Why LumoraSpace</a><a class="font-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="how-it-works" href="#">How It Works</a><a class="font-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="success-stories" href="#">Success Stories</a><a class="font-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="faq" href="#">FAQ</a></nav><div class="flex items-center gap-lg"><a class="hidden sm:block font-label-md text-on-surface-variant hover:text-on-surface" data-path="login" href="#">Login</a><a class="bg-primary text-on-primary font-label-md px-lg py-sm rounded-full hover:bg-primary-container hover:text-on-primary-container transition-all shadow-sm" data-path="explore-programs" href="#">Explore Programs</a><div class="lg:hidden flex items-center"><span class="material-symbols-outlined text-on-surface-variant cursor-pointer">menu</span></div></div></div></header><main class="w-full pt-20"><div class="flex flex-col w-full relative">
+<!-- Hero Section -->
+<section class="w-full bg-surface relative overflow-hidden py-3xl px-margin-mobile lg:px-lg max-w-container-max mx-auto">
+<!-- Decorative background element -->
+<div class="absolute inset-0 z-0 pointer-events-none opacity-40">
+<div class="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/10 rounded-full blur-3xl mix-blend-multiply"></div>
+<div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-tertiary/10 rounded-full blur-3xl mix-blend-multiply"></div>
+</div>
+<div class="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-2xl items-center">
+<div class="flex flex-col gap-lg">
+<span class="font-label-sm uppercase tracking-widest text-primary [writing-mode:horizontal-tb] lg:[writing-mode:horizontal-tb] lg:origin-left inline-block">Professional Certificate</span>
+<h1 class="font-display-lg-mobile lg:font-display-lg text-on-surface">Forge Full Stack Developer</h1>
+<p class="font-body-lg text-on-surface-variant max-w-xl">
+          A comprehensive, immersive journey through modern web architecture. Master the tools and methodologies used by elite engineering teams to build scalable, resilient applications.
+        </p>
+<div class="flex flex-col sm:flex-row gap-md mt-sm">
+<button class="bg-primary text-on-primary font-label-md px-lg py-md rounded-lg shadow-sm hover:bg-primary-container hover:text-on-primary-container transition-all flex items-center justify-center gap-sm group">
+            Enroll Now
+            <span class="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+<a class="bg-transparent border-2 border-outline-variant text-on-surface font-label-md px-lg py-md rounded-lg hover:border-primary hover:text-primary transition-all flex items-center justify-center" href="#curriculum">
+            Explore Curriculum
+          </a>
+</div>
+</div>
+<div class="relative w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-xl bg-surface-container">
+<div class="bg-cover bg-center w-full h-full transform hover:scale-105 transition-transform duration-700 ease-in-out" data-alt="A highly polished, high-fidelity UI mockup of a technical learning environment. The interface shows a code editor on the left with syntax highlighting for a React component, and a real-time preview of a web application on the right. The color palette is minimal, utilizing shades of white, light gray, and deep slate, accented by precise primary blue and tertiary violet tones for active tabs and syntax colors. The overall mood is professional, focused, and intellectually rigorous." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDpMUrdmSB_ZAzUq2dIuQODeI0j4E7tYcDX1Icw8ssTxnQDrdwDKQIw1TLBKRJDenrxiGpnMdWS0lSAKcbJk8X3vQgdCC7O-FoS7Adve5Fpb8k4o8mENyYF5RB3lhkbDfm3UXaguoyzw-o8IlRY9JSu7z_z8jKibYjUmqrj6lFzHrkRPE16TiqScsQ92dyWNcDuZAeU4gpRtFlXZhWwSOrAWh7s1jzbZkqxUk4tYvAcuAninF3iI9NB6A')"></div>
+<!-- UI Overlay Accent -->
+<div class="absolute bottom-0 left-0 right-0 bg-surface/80 backdrop-blur-md p-md border-t border-outline-variant/30 flex items-center justify-between">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">play_circle</span>
+<span class="font-label-sm text-on-surface">Interactive Environment Preview</span>
+</div>
+<span class="font-label-sm text-on-surface-variant">04:12</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Program Snapshot -->
+<section class="w-full bg-surface-container py-xl">
+<div class="max-w-container-max mx-auto px-margin-mobile lg:px-lg">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-xl">
+<div class="flex flex-col gap-xs">
+<span class="font-label-sm text-on-surface-variant uppercase tracking-wider">Duration</span>
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-outline">schedule</span>
+<span class="font-title-lg text-on-surface">24 Weeks</span>
+</div>
+</div>
+<div class="flex flex-col gap-xs">
+<span class="font-label-sm text-on-surface-variant uppercase tracking-wider">Level</span>
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-outline">signal_cellular_alt</span>
+<span class="font-title-lg text-on-surface">Intermediate</span>
+</div>
+</div>
+<div class="flex flex-col gap-xs">
+<span class="font-label-sm text-on-surface-variant uppercase tracking-wider">Format</span>
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-outline">devices</span>
+<span class="font-title-lg text-on-surface">Hybrid / Online</span>
+</div>
+</div>
+<div class="flex flex-col gap-xs">
+<span class="font-label-sm text-on-surface-variant uppercase tracking-wider">Outcome</span>
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-outline">workspace_premium</span>
+<span class="font-title-lg text-on-surface truncate">Professional Cert</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Learning Outcomes -->
+<section class="w-full bg-surface py-3xl px-margin-mobile lg:px-lg max-w-container-max mx-auto">
+<div class="flex flex-col lg:flex-row gap-2xl">
+<div class="lg:w-1/3 flex flex-col gap-md">
+<h2 class="font-headline-lg text-on-surface">What you'll learn</h2>
+<p class="font-body-md text-on-surface-variant">Acquire the technical depth required to architect, build, and deploy production-ready applications.</p>
+<!-- Inline SVG Visualization -->
+<div class="mt-lg p-lg bg-surface-container rounded-xl flex items-center justify-center">
+<svg class="w-48 h-48 text-primary" fill="none" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+<circle cx="50" cy="50" r="40" stroke="currentColor" stroke-opacity="0.1" stroke-width="2"></circle>
+<circle cx="50" cy="50" r="30" stroke="currentColor" stroke-opacity="0.2" stroke-width="2"></circle>
+<circle cx="50" cy="50" r="20" stroke="currentColor" stroke-opacity="0.4" stroke-width="2"></circle>
+<!-- Nodes -->
+<circle cx="50" cy="10" fill="currentColor" r="4"></circle>
+<circle cx="85" cy="30" fill="currentColor" r="4"></circle>
+<circle cx="85" cy="70" fill="currentColor" r="4"></circle>
+<circle cx="50" cy="90" fill="currentColor" r="4"></circle>
+<circle cx="15" cy="70" fill="currentColor" r="4"></circle>
+<circle cx="15" cy="30" fill="currentColor" r="4"></circle>
+<!-- Connections -->
+<path d="M50 10 L85 30 L85 70 L50 90 L15 70 L15 30 Z" stroke="currentColor" stroke-dasharray="4 4" stroke-opacity="0.6" stroke-width="1.5"></path>
+<path d="M50 10 L50 90" stroke="currentColor" stroke-opacity="0.3" stroke-width="1"></path>
+<path d="M15 30 L85 70" stroke="currentColor" stroke-opacity="0.3" stroke-width="1"></path>
+<path d="M15 70 L85 30" stroke="currentColor" stroke-opacity="0.3" stroke-width="1"></path>
+<!-- Center Hub -->
+<circle cx="50" cy="50" fill="currentColor" r="6"></circle>
+</svg>
+</div>
+</div>
+<div class="lg:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-lg">
+<!-- Skill Cards -->
+<div class="p-lg bg-surface-container rounded-xl shadow-sm hover:shadow-md transition-shadow group">
+<div class="flex items-center gap-sm mb-md">
+<div class="w-10 h-10 rounded-lg bg-surface flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined">data_object</span>
+</div>
+<h3 class="font-title-lg text-on-surface">React & Node.js</h3>
+</div>
+<p class="font-body-md text-on-surface-variant">Build dynamic, responsive user interfaces and robust server-side logic using modern JavaScript frameworks.</p>
+</div>
+<div class="p-lg bg-surface-container rounded-xl shadow-sm hover:shadow-md transition-shadow group">
+<div class="flex items-center gap-sm mb-md">
+<div class="w-10 h-10 rounded-lg bg-surface flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined">integration_instructions</span>
+</div>
+<h3 class="font-title-lg text-on-surface">TypeScript</h3>
+</div>
+<p class="font-body-md text-on-surface-variant">Enhance code quality, maintainability, and developer experience with static typing and advanced language features.</p>
+</div>
+<div class="p-lg bg-surface-container rounded-xl shadow-sm hover:shadow-md transition-shadow group">
+<div class="flex items-center gap-sm mb-md">
+<div class="w-10 h-10 rounded-lg bg-surface flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined">cloud</span>
+</div>
+<h3 class="font-title-lg text-on-surface">AWS & Cloud</h3>
+</div>
+<p class="font-body-md text-on-surface-variant">Deploy, scale, and manage applications using Amazon Web Services infrastructure and cloud-native practices.</p>
+</div>
+<div class="p-lg bg-surface-container rounded-xl shadow-sm hover:shadow-md transition-shadow group">
+<div class="flex items-center gap-sm mb-md">
+<div class="w-10 h-10 rounded-lg bg-surface flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined">schema</span>
+</div>
+<h3 class="font-title-lg text-on-surface">System Architecture</h3>
+</div>
+<p class="font-body-md text-on-surface-variant">Design resilient, scalable systems understanding microservices, message queues, and caching strategies.</p>
+</div>
+<div class="p-lg bg-surface-container rounded-xl shadow-sm hover:shadow-md transition-shadow group">
+<div class="flex items-center gap-sm mb-md">
+<div class="w-10 h-10 rounded-lg bg-surface flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined">database</span>
+</div>
+<h3 class="font-title-lg text-on-surface">Database Design</h3>
+</div>
+<p class="font-body-md text-on-surface-variant">Model complex data relationships using SQL and NoSQL databases, optimizing for performance and integrity.</p>
+</div>
+<div class="p-lg bg-surface-container rounded-xl shadow-sm hover:shadow-md transition-shadow group">
+<div class="flex items-center gap-sm mb-md">
+<div class="w-10 h-10 rounded-lg bg-surface flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined">api</span>
+</div>
+<h3 class="font-title-lg text-on-surface">API Development</h3>
+</div>
+<p class="font-body-md text-on-surface-variant">Construct secure, documented RESTful and GraphQL APIs to serve data across diverse client applications.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Curriculum -->
+<section class="w-full bg-surface-container-low py-3xl px-margin-mobile lg:px-lg max-w-container-max mx-auto border-t border-outline-variant/20" id="curriculum">
+<div class="max-w-3xl mx-auto flex flex-col gap-xl">
+<div class="text-center flex flex-col gap-sm">
+<h2 class="font-headline-lg text-on-surface">Curriculum Structure</h2>
+<p class="font-body-md text-on-surface-variant">A modular approach designed to build compounding knowledge.</p>
+</div>
+<!-- Accordion -->
+<div class="flex flex-col gap-sm" id="curriculum-accordion">
+<!-- Module 01 (Expanded) -->
+<div class="bg-surface rounded-xl shadow-sm overflow-hidden border border-outline-variant/30 accordion-item">
+<button aria-expanded="true" class="w-full px-lg py-md flex items-center justify-between text-left focus:outline-none focus:ring-2 focus:ring-primary/20 accordion-header cursor-pointer group">
+<div class="flex items-center gap-md">
+<span class="font-headline-md text-outline group-hover:text-primary transition-colors">01</span>
+<span class="font-title-lg text-on-surface group-hover:text-primary transition-colors">Foundations</span>
+</div>
+<span class="material-symbols-outlined text-outline transition-transform duration-300 transform rotate-180 icon">expand_more</span>
+</button>
+<div class="px-lg pb-lg accordion-content">
+<p class="font-body-md text-on-surface-variant mb-md">Establish the core principles of web development, focusing on advanced JavaScript semantics, functional programming concepts, and the modern DOM.</p>
+<ul class="flex flex-col">
+<li class="flex items-start gap-md py-sm border-t border-outline-variant/20">
+<span class="material-symbols-outlined text-[20px] text-primary mt-xs">play_circle</span>
+<div>
+<h4 class="font-label-md text-on-surface">Advanced JavaScript Context & Closures</h4>
+<p class="font-body-md text-on-surface-variant text-sm mt-xs">Deep dive into execution context, lexical environments, and closure patterns.</p>
+</div>
+</li>
+<li class="flex items-start gap-md py-sm border-t border-outline-variant/20">
+<span class="material-symbols-outlined text-[20px] text-primary mt-xs">description</span>
+<div>
+<h4 class="font-label-md text-on-surface">Functional Programming Paradigms</h4>
+<p class="font-body-md text-on-surface-variant text-sm mt-xs">Immutability, pure functions, and higher-order functions in practice.</p>
+</div>
+</li>
+<li class="flex items-start gap-md py-sm border-t border-outline-variant/20">
+<span class="material-symbols-outlined text-[20px] text-primary mt-xs">task</span>
+<div>
+<h4 class="font-label-md text-on-surface">Project: Core Logic Engine</h4>
+<p class="font-body-md text-on-surface-variant text-sm mt-xs">Build a dependency-free state management library.</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<!-- Module 02 -->
+<div class="bg-surface rounded-xl shadow-sm overflow-hidden border border-outline-variant/30 accordion-item">
+<button aria-expanded="false" class="w-full px-lg py-md flex items-center justify-between text-left focus:outline-none focus:ring-2 focus:ring-primary/20 accordion-header cursor-pointer group">
+<div class="flex items-center gap-md">
+<span class="font-headline-md text-outline group-hover:text-primary transition-colors">02</span>
+<span class="font-title-lg text-on-surface group-hover:text-primary transition-colors">Frontend Mastery</span>
+</div>
+<span class="material-symbols-outlined text-outline transition-transform duration-300 transform icon">expand_more</span>
+</button>
+<div class="px-lg pb-lg accordion-content hidden">
+<p class="font-body-md text-on-surface-variant mb-md">Master component-driven architecture using React. Focus on rendering optimization, complex state management, and building robust design systems.</p>
+<ul class="flex flex-col">
+<li class="flex items-center gap-md py-sm border-t border-outline-variant/20">
+<span class="material-symbols-outlined text-[20px] text-primary">play_circle</span>
+<span class="font-label-md text-on-surface">React Reconciliation & Performance</span>
+</li>
+<li class="flex items-center gap-md py-sm border-t border-outline-variant/20">
+<span class="material-symbols-outlined text-[20px] text-primary">description</span>
+<span class="font-label-md text-on-surface">State Management Architectures</span>
+</li>
+<li class="flex items-center gap-md py-sm border-t border-outline-variant/20">
+<span class="material-symbols-outlined text-[20px] text-primary">task</span>
+<span class="font-label-md text-on-surface">Project: Component Library</span>
+</li>
+</ul>
+</div>
+</div>
+<!-- Module 03 -->
+<div class="bg-surface rounded-xl shadow-sm overflow-hidden border border-outline-variant/30 accordion-item">
+<button aria-expanded="false" class="w-full px-lg py-md flex items-center justify-between text-left focus:outline-none focus:ring-2 focus:ring-primary/20 accordion-header cursor-pointer group">
+<div class="flex items-center gap-md">
+<span class="font-headline-md text-outline group-hover:text-primary transition-colors">03</span>
+<span class="font-title-lg text-on-surface group-hover:text-primary transition-colors">Backend Infrastructure</span>
+</div>
+<span class="material-symbols-outlined text-outline transition-transform duration-300 transform icon">expand_more</span>
+</button>
+<div class="px-lg pb-lg accordion-content hidden">
+<p class="font-body-md text-on-surface-variant mb-md">Architect resilient server-side applications. Topics include REST/GraphQL API design, authentication flows, and relational vs. non-relational data modeling.</p>
+<ul class="flex flex-col">
+<li class="flex items-center gap-md py-sm border-t border-outline-variant/20">
+<span class="material-symbols-outlined text-[20px] text-primary">play_circle</span>
+<span class="font-label-md text-on-surface">Node.js Event Loop & Streams</span>
+</li>
+<li class="flex items-center gap-md py-sm border-t border-outline-variant/20">
+<span class="material-symbols-outlined text-[20px] text-primary">description</span>
+<span class="font-label-md text-on-surface">API Design & Security</span>
+</li>
+<li class="flex items-center gap-md py-sm border-t border-outline-variant/20">
+<span class="material-symbols-outlined text-[20px] text-primary">task</span>
+<span class="font-label-md text-on-surface">Project: Microservice Architecture</span>
+</li>
+</ul>
+</div>
+</div>
+<!-- Module 04 -->
+<div class="bg-surface rounded-xl shadow-sm overflow-hidden border border-outline-variant/30 accordion-item">
+<button aria-expanded="false" class="w-full px-lg py-md flex items-center justify-between text-left focus:outline-none focus:ring-2 focus:ring-primary/20 accordion-header cursor-pointer group">
+<div class="flex items-center gap-md">
+<span class="font-headline-md text-outline group-hover:text-primary transition-colors">04</span>
+<span class="font-title-lg text-on-surface group-hover:text-primary transition-colors">Scalability & DevOps</span>
+</div>
+<span class="material-symbols-outlined text-outline transition-transform duration-300 transform icon">expand_more</span>
+</button>
+<div class="px-lg pb-lg accordion-content hidden">
+<p class="font-body-md text-on-surface-variant mb-md">Prepare applications for production. Learn containerization, CI/CD pipelines, and cloud deployment strategies on AWS.</p>
+<ul class="flex flex-col">
+<li class="flex items-center gap-md py-sm border-t border-outline-variant/20">
+<span class="material-symbols-outlined text-[20px] text-primary">play_circle</span>
+<span class="font-label-md text-on-surface">Docker & Containerization</span>
+</li>
+<li class="flex items-center gap-md py-sm border-t border-outline-variant/20">
+<span class="material-symbols-outlined text-[20px] text-primary">description</span>
+<span class="font-label-md text-on-surface">CI/CD Pipelines with GitHub Actions</span>
+</li>
+<li class="flex items-center gap-md py-sm border-t border-outline-variant/20">
+<span class="material-symbols-outlined text-[20px] text-primary">task</span>
+<span class="font-label-md text-on-surface">Project: Automated Deployment</span>
+</li>
+</ul>
+</div>
+</div>
+<!-- Module 05 -->
+<div class="bg-surface rounded-xl shadow-sm overflow-hidden border border-outline-variant/30 accordion-item">
+<button aria-expanded="false" class="w-full px-lg py-md flex items-center justify-between text-left focus:outline-none focus:ring-2 focus:ring-primary/20 accordion-header cursor-pointer group">
+<div class="flex items-center gap-md">
+<span class="font-headline-md text-outline group-hover:text-primary transition-colors">05</span>
+<span class="font-title-lg text-on-surface group-hover:text-primary transition-colors">Capstone</span>
+</div>
+<span class="material-symbols-outlined text-outline transition-transform duration-300 transform icon">expand_more</span>
+</button>
+<div class="px-lg pb-lg accordion-content hidden">
+<p class="font-body-md text-on-surface-variant mb-md">Synthesize all skills in a final, production-ready application. Design, build, and deploy a comprehensive system from scratch.</p>
+<ul class="flex flex-col">
+<li class="flex items-center gap-md py-sm border-t border-outline-variant/20">
+<span class="material-symbols-outlined text-[20px] text-primary">task</span>
+<span class="font-label-md text-on-surface">Architecture Review</span>
+</li>
+<li class="flex items-center gap-md py-sm border-t border-outline-variant/20">
+<span class="material-symbols-outlined text-[20px] text-primary">task</span>
+<span class="font-label-md text-on-surface">Implementation & Testing</span>
+</li>
+<li class="flex items-center gap-md py-sm border-t border-outline-variant/20">
+<span class="material-symbols-outlined text-[20px] text-primary">task</span>
+<span class="font-label-md text-on-surface">Final Presentation</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Learning Experience -->
+<section class="w-full bg-surface py-3xl px-margin-mobile lg:px-lg max-w-container-max mx-auto border-t border-outline-variant/20">
+<div class="text-center flex flex-col gap-sm mb-2xl">
+<h2 class="font-headline-lg text-on-surface">The Learning Loop</h2>
+<p class="font-body-md text-on-surface-variant max-w-2xl mx-auto">Engineered for deep comprehension and practical application.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-lg relative">
+<!-- Connecting line for desktop -->
+<div class="hidden md:block absolute top-1/2 left-0 right-0 h-px bg-outline-variant/30 -translate-y-1/2 z-0"></div>
+<div class="flex flex-col items-center text-center gap-md relative z-10">
+<div class="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center text-primary shadow-sm border border-outline-variant/20">
+<span class="material-symbols-outlined text-[32px]">menu_book</span>
+</div>
+<div>
+<h3 class="font-title-lg text-on-surface mb-xs">Learn</h3>
+<p class="font-body-md text-on-surface-variant text-sm">Absorb core concepts through high-density text and interactive diagrams.</p>
+</div>
+</div>
+<div class="flex flex-col items-center text-center gap-md relative z-10">
+<div class="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center text-primary shadow-sm border border-outline-variant/20">
+<span class="material-symbols-outlined text-[32px]">code</span>
+</div>
+<div>
+<h3 class="font-title-lg text-on-surface mb-xs">Practice</h3>
+<p class="font-body-md text-on-surface-variant text-sm">Apply knowledge immediately in our integrated sandbox environment.</p>
+</div>
+</div>
+<div class="flex flex-col items-center text-center gap-md relative z-10">
+<div class="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center text-primary shadow-sm border border-outline-variant/20">
+<span class="material-symbols-outlined text-[32px]">forum</span>
+</div>
+<div>
+<h3 class="font-title-lg text-on-surface mb-xs">Feedback</h3>
+<p class="font-body-md text-on-surface-variant text-sm">Receive targeted code reviews from senior engineering mentors.</p>
+</div>
+</div>
+<div class="flex flex-col items-center text-center gap-md relative z-10">
+<div class="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center text-primary shadow-sm border border-outline-variant/20">
+<span class="material-symbols-outlined text-[32px]">trending_up</span>
+</div>
+<div>
+<h3 class="font-title-lg text-on-surface mb-xs">Progress</h3>
+<p class="font-body-md text-on-surface-variant text-sm">Track your competency growth across specialized technical domains.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Support & Community -->
+<section class="w-full bg-surface-container py-3xl px-margin-mobile lg:px-lg max-w-container-max mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-2xl items-center">
+<div class="relative w-full aspect-square md:aspect-[4/3] rounded-2xl overflow-hidden shadow-sm border border-outline-variant/20">
+<div class="bg-cover bg-center w-full h-full" data-alt="A clean, minimalist workspace showing a professional communicating on a laptop. The lighting is soft and natural, emphasizing focus and community. Subtle UI elements of a modern chat application (like Discord or Telegram) overlay the scene seamlessly in the brand's neutral and violet tones. No heavy gamification, just professional networking." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAkXAilB6Y8O74XeVuDjIm1HuzKe2qM64I9r0v0OB_N6PNGhuczS3xJZRHvNnjXw1IG-OC7jqYn6UafwFFqIKN0JU9YVRweMbjIUm0orTJ_iHj9zDftL3yEH-7wBt7ogJKDJeJ6rUkyBC9W0qe64eTgTUUDQFFwnlQVt5BE-h-HSrmcQIIUKC9QfeQUIChv9u1Gc25MnrKQsS27wd3kmG3c9uW0ewP4ghevHgU9OivselUwKV-9TDpkFA')"></div>
+</div>
+<div class="flex flex-col gap-lg">
+<h2 class="font-headline-lg text-on-surface">Community & Mentorship</h2>
+<p class="font-body-lg text-on-surface-variant">
+          Learning is rarely a solitary endeavor. Gain access to a network of driven peers and experienced mentors dedicated to unblocking your path to mastery.
+        </p>
+<div class="flex flex-col gap-md mt-sm">
+<div class="flex items-start gap-md p-md bg-surface rounded-xl shadow-sm border border-outline-variant/20">
+<span class="material-symbols-outlined text-primary mt-xs">school</span>
+<div>
+<h4 class="font-title-lg text-on-surface">1-on-1 Mentorship</h4>
+<p class="font-body-md text-on-surface-variant">Weekly sessions with industry veterans to review architecture, code quality, and career progression.</p>
+</div>
+</div>
+<div class="flex items-center gap-md mt-sm">
+<a class="flex items-center gap-sm px-md py-sm bg-[#5865F2]/10 text-[#5865F2] hover:bg-[#5865F2]/20 transition-colors rounded-lg font-label-md" href="#">
+<span class="material-symbols-outlined">forum</span>
+               Join Discord
+             </a>
+<a class="flex items-center gap-sm px-md py-sm bg-[#229ED9]/10 text-[#229ED9] hover:bg-[#229ED9]/20 transition-colors rounded-lg font-label-md" href="#">
+<span class="material-symbols-outlined">send</span>
+               Join Telegram
+             </a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Sticky CTA -->
+<div class="fixed bottom-0 left-0 w-full bg-surface/90 backdrop-blur-xl border-t border-outline-variant/30 shadow-[0_-4px_20px_rgba(13,11,16,0.05)] transform translate-y-full transition-transform duration-300 z-40" id="sticky-cta">
+<div class="max-w-container-max mx-auto px-margin-mobile lg:px-lg h-20 flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-md text-on-surface truncate max-w-[200px] md:max-w-md">Forge Full Stack Developer</span>
+<span class="font-label-sm text-on-surface-variant">Professional Certificate</span>
+</div>
+<div class="flex items-center gap-lg">
+<span class="hidden sm:block font-title-lg text-on-surface">$1,200</span>
+<button class="bg-primary text-on-primary font-label-md px-lg py-sm rounded-lg shadow-sm hover:bg-primary-container hover:text-on-primary-container transition-all">
+          Enroll Now
+        </button>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Accordion Logic
+  const accordionHeaders = document.querySelectorAll('.accordion-header');
+  accordionHeaders.forEach(header => {
+    header.addEventListener('click', () => {
+      const item = header.parentElement;
+      const content = header.nextElementSibling;
+      const icon = header.querySelector('.icon');
+      const isExpanded = header.getAttribute('aria-expanded') === 'true';
+
+      // Close all
+      document.querySelectorAll('.accordion-content').forEach(c => c.classList.add('hidden'));
+      document.querySelectorAll('.accordion-header').forEach(h => {
+        h.setAttribute('aria-expanded', 'false');
+        h.querySelector('.icon').classList.remove('rotate-180');
+      });
+
+      // Toggle current
+      if (!isExpanded) {
+        content.classList.remove('hidden');
+        header.setAttribute('aria-expanded', 'true');
+        icon.classList.add('rotate-180');
+      }
+    });
+  });
+
+  // Sticky CTA Logic
+  const stickyCta = document.getElementById('sticky-cta');
+  const heroSection = document.querySelector('section'); // Trigger after first section
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting && entry.boundingClientRect.top < 0) {
+          // Hero is out of view (scrolled down)
+          stickyCta.classList.remove('translate-y-full');
+        } else {
+          // Hero is in view
+          stickyCta.classList.add('translate-y-full');
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
+
+  if (heroSection) {
+    observer.observe(heroSection);
+  }
+</script></main><footer class="w-full bg-surface-container-low pt-3xl pb-xl"><div class="max-w-container-max mx-auto px-margin-mobile lg:px-lg grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-xl mb-3xl"><div class="col-span-2 mb-lg"><img alt="LumoraSpace" class="h-8 w-auto mb-md" src="https://lh3.googleusercontent.com/aida/AEtjO1Xlp4DF3aKexCX4tB2EEgzqknOia6wj8j34pQt4zgsauZa98lguqONu2nrB5KyMjJW_Vs0g4oRYelZMrqe9BKWA88AVZPetR8XSBhsm9VP9FLtEH2p8kvPxOLU-MLlzmoBZtaLRMcp9OhoHhKorqiq1VDSjTLNNayjM-NabSyJSLOzxn1oKYQP3_dsUZLOQ98u1mqAOkwD-2h-Rixn_q695S7GzaeZklbN5XjQaczZWSf6AUl1xOANNFm8"/><p class="text-on-surface-variant font-body-md max-w-xs">The premier technical learning environment for those who seek intellectual rigor and mastery.</p></div><div><h4 class="font-label-md text-on-surface uppercase mb-md">Learning</h4><ul class="space-y-sm"><li class="text-on-surface-variant font-body-md hover:text-primary transition-colors cursor-pointer">Programs</li><li class="text-on-surface-variant font-body-md hover:text-primary transition-colors cursor-pointer">How It Works</li><li class="text-on-surface-variant font-body-md hover:text-primary transition-colors cursor-pointer">Success Stories</li></ul></div><div><h4 class="font-label-md text-on-surface uppercase mb-md">Company</h4><ul class="space-y-sm"><li class="text-on-surface-variant font-body-md hover:text-primary transition-colors cursor-pointer">About</li><li class="text-on-surface-variant font-body-md hover:text-primary transition-colors cursor-pointer">FAQ</li><li class="text-on-surface-variant font-body-md hover:text-primary transition-colors cursor-pointer">Contact</li></ul></div><div><h4 class="font-label-md text-on-surface uppercase mb-md">Community</h4><ul class="space-y-sm"><li class="text-on-surface-variant font-body-md hover:text-primary transition-colors cursor-pointer">Discord</li><li class="text-on-surface-variant font-body-md hover:text-primary transition-colors cursor-pointer">Telegram</li></ul></div><div><h4 class="font-label-md text-on-surface uppercase mb-md">Legal</h4><ul class="space-y-sm"><li class="text-on-surface-variant font-body-md hover:text-primary transition-colors cursor-pointer">Privacy</li><li class="text-on-surface-variant font-body-md hover:text-primary transition-colors cursor-pointer">Terms</li></ul></div></div><div class="max-w-container-max mx-auto px-margin-mobile lg:px-lg border-t border-outline-variant/30 pt-lg flex flex-col md:flex-row justify-between items-center gap-md text-on-surface-variant font-label-sm"><span>© 2024 LumoraSpace. Engineered for Depth.</span><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></footer></body></html>
