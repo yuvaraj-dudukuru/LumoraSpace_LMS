@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>All Results - Demo College Client</title>
+<!-- Tailwind CSS v3 CDN with forms and container-queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f7ff',
+              100: '#e0effe',
+              500: '#0284c7',
+              600: '#0369a1',
+              700: '#075985'
+            },
+            canvas: '#f8fafc'
+          },
+          fontFamily: {
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="custom-enhancements">
+    /* Subtle custom borders and background matching reference design */
+    body {
+      background-color: #f8fafc;
+      color: #0f172a;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans antialiased text-slate-800 bg-[#f8fafc]">
+<!-- BEGIN: GlobalNavigationBar -->
+<header class="w-full bg-white border-b border-slate-200 sticky top-0 z-30" data-purpose="top-navigation">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+<!-- Brand & Platform Identity -->
+<div class="flex items-center space-x-3">
+<!-- Logo emblem -->
+<div class="w-9 h-9 rounded-full border border-sky-600 flex items-center justify-center text-sky-700 bg-sky-50 shadow-sm">
+<svg class="w-5 h-5 text-sky-700" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24">
+<!-- Academic cap & laurel emblem representation -->
+<path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+<path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"></path>
+</svg>
+</div>
+<div>
+<div class="font-bold text-slate-900 text-sm leading-tight tracking-tight">Demo College Client</div>
+<div class="text-[11px] text-slate-500 font-medium leading-none">Unified Learning &amp; Hiring Platform</div>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+<!-- Dashboard Link -->
+<a class="flex items-center gap-1.5 hover:text-slate-900 transition-colors" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+<rect height="7" rx="1" width="7" x="3" y="3"></rect>
+<rect height="7" rx="1" width="7" x="14" y="3"></rect>
+<rect height="7" rx="1" width="7" x="14" y="14"></rect>
+<rect height="7" rx="1" width="7" x="3" y="14"></rect>
+</svg>
+<span>Dashboard</span>
+</a>
+<!-- Users dropdown -->
+<button class="flex items-center gap-1 hover:text-slate-900 transition-colors" type="button">
+<span>Users</span>
+<svg class="w-3.5 h-3.5 text-slate-400" fill="currentColor" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" fill-rule="evenodd"></path>
+</svg>
+</button>
+<!-- Learning dropdown -->
+<button class="flex items-center gap-1 hover:text-slate-900 transition-colors" type="button">
+<span>Learning</span>
+<svg class="w-3.5 h-3.5 text-slate-400" fill="currentColor" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" fill-rule="evenodd"></path>
+</svg>
+</button>
+<!-- Placement dropdown -->
+<button class="flex items-center gap-1 hover:text-slate-900 transition-colors" type="button">
+<span>Placement</span>
+<svg class="w-3.5 h-3.5 text-slate-400" fill="currentColor" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" fill-rule="evenodd"></path>
+</svg>
+</button>
+<!-- Resources dropdown -->
+<button class="flex items-center gap-1 hover:text-slate-900 transition-colors" type="button">
+<span>Resources</span>
+<svg class="w-3.5 h-3.5 text-slate-400" fill="currentColor" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</nav>
+<!-- Right Utility Actions -->
+<div class="flex items-center space-x-3">
+<!-- AI Credits Badge -->
+<div class="flex items-center space-x-1.5 bg-slate-100/90 border border-slate-200/80 rounded-full px-3 py-1 text-xs font-semibold text-slate-700 shadow-sm">
+<span class="w-2 h-2 rounded-full bg-sky-500"></span>
+<span>97 AI Credits</span>
+</div>
+<!-- Notification Bell -->
+<button aria-label="Notifications" class="p-1.5 text-slate-500 hover:text-slate-700 rounded-full hover:bg-slate-100 transition-colors" type="button">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+<!-- Settings Gear -->
+<button aria-label="Settings" class="p-1.5 text-slate-500 hover:text-slate-700 rounded-full hover:bg-slate-100 transition-colors" type="button">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" stroke-linecap="round" stroke-linejoin="round"></path>
+<path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+<!-- User Profile Avatar Pill -->
+<div class="flex items-center space-x-1 pl-1">
+<div class="w-8 h-8 rounded-full bg-sky-600 text-white flex items-center justify-center font-bold text-sm shadow-sm">
+            A
+          </div>
+<svg class="w-3.5 h-3.5 text-slate-400 cursor-pointer" fill="currentColor" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" fill-rule="evenodd"></path>
+</svg>
+</div>
+</div>
+</div>
+</header>
+<!-- END: GlobalNavigationBar -->
+<!-- BEGIN: MainContent -->
+<main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8" data-purpose="results-view">
+<!-- Page Header Title & Subtext -->
+<section class="mb-8" data-purpose="page-title-section">
+<h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">All Results</h1>
+<p class="text-slate-500 text-sm mt-1">Review and manage test results</p>
+</section>
+<!-- Assessment History Subheader & Count Badge -->
+<section class="flex items-center justify-between mb-6" data-purpose="sub-header">
+<div class="flex items-center space-x-2">
+<!-- Target/bullseye concentric circles icon -->
+<span class="text-sky-500 flex items-center justify-center">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+<circle cx="12" cy="12" r="10"></circle>
+<circle cx="12" cy="12" r="6"></circle>
+<circle cx="12" cy="12" r="2"></circle>
+</svg>
+</span>
+<h2 class="text-lg font-bold text-slate-800 tracking-tight">Assessment History</h2>
+</div>
+<!-- Record count pill badge -->
+<div class="px-3.5 py-1 text-xs font-medium text-slate-600 bg-white border border-slate-200 rounded-full shadow-xs">
+        0 Total Records
+      </div>
+</section>
+<!-- Content Card / Empty State Container -->
+<section class="w-full bg-white rounded-2xl border border-slate-200/90 shadow-sm min-h-[380px] flex items-center justify-center p-8 sm:p-14" data-purpose="empty-state-card">
+<div class="flex flex-col items-center justify-center text-center max-w-md mx-auto">
+<!-- Soft Circular Icon Container -->
+<div class="w-16 h-16 rounded-full bg-slate-50 flex items-center justify-center mb-5 text-slate-400">
+<!-- Bar chart representation icon -->
+<svg class="w-8 h-8 stroke-[1.75]" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" viewbox="0 0 24 24">
+<line x1="18" x2="18" y1="20" y2="10"></line>
+<line x1="12" x2="12" y1="20" y2="4"></line>
+<line x1="6" x2="6" y1="20" y2="14"></line>
+<path d="M4 20h16"></path>
+</svg>
+</div>
+<!-- Heading Text -->
+<h3 class="text-xl font-bold text-slate-900 mb-2">No Results Found</h3>
+<!-- Description Text -->
+<p class="text-sm text-slate-500 leading-relaxed">
+          No test results have been recorded in the system yet.
+        </p>
+</div>
+</section>
+</main>
+<!-- END: MainContent -->
+</body></html>

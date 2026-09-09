@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Training Management Dashboard - Demo College Client</title>
+<!-- Tailwind CSS v3 with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts: Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              navy: '#0f172a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="base-styles">
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f1f5f9;
+      color: #1e293b;
+      -webkit-font-smoothing: antialiased;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased">
+<!-- BEGIN: MainHeader -->
+<header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+<div class="max-w-[1600px] mx-auto px-6 h-16 flex items-center justify-between">
+<!-- Left: Logo & Subtitle -->
+<div class="flex items-center gap-3">
+<!-- Logo Emblem -->
+<div class="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center p-1.5 shadow-sm bg-slate-50">
+<svg class="w-full h-full text-blue-900" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path>
+<path d="M6 6h10"></path>
+<path d="M6 10h10"></path>
+<path d="M9 18l3-3 3 3"></path>
+</svg>
+</div>
+<!-- Logo Text -->
+<div>
+<h1 class="text-sm font-bold text-slate-900 leading-tight">Demo College Client</h1>
+<p class="text-[11px] text-slate-500 font-medium leading-tight">Unified Learning &amp; Hiring Platform</p>
+</div>
+</div>
+<!-- Center: Navigation Links -->
+<nav class="hidden md:flex items-center gap-6 text-[13px] font-medium text-slate-600">
+<a class="flex items-center gap-1.5 hover:text-blue-600 transition-colors" href="#">
+<svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+<rect height="7" rx="1" width="7" x="3" y="3"></rect>
+<rect height="7" rx="1" width="7" x="14" y="3"></rect>
+<rect height="7" rx="1" width="7" x="14" y="14"></rect>
+<rect height="7" rx="1" width="7" x="3" y="14"></rect>
+</svg>
+          Dashboard
+        </a>
+<div class="flex items-center gap-1 cursor-pointer hover:text-blue-600 transition-colors">
+<span>Users</span>
+<svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="m6 9 6 6 6-6"></path></svg>
+</div>
+<div class="flex items-center gap-1 cursor-pointer hover:text-blue-600 transition-colors">
+<span>Learning</span>
+<svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="m6 9 6 6 6-6"></path></svg>
+</div>
+<div class="flex items-center gap-1 cursor-pointer hover:text-blue-600 transition-colors">
+<span>Placement</span>
+<svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="m6 9 6 6 6-6"></path></svg>
+</div>
+<div class="flex items-center gap-1 cursor-pointer hover:text-blue-600 transition-colors">
+<span>Resources</span>
+<svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="m6 9 6 6 6-6"></path></svg>
+</div>
+</nav>
+<!-- Right: User & Actions -->
+<div class="flex items-center gap-3">
+<!-- AI Credits Pill -->
+<div class="flex items-center gap-1.5 px-3 py-1 rounded-full border border-slate-200 bg-white text-xs font-semibold text-slate-700 shadow-xs">
+<span class="w-2 h-2 rounded-full bg-blue-500"></span>
+<span>97 AI Credits</span>
+</div>
+<!-- Notification Bell -->
+<button aria-label="Notifications" class="p-2 rounded-full text-slate-500 hover:text-slate-700 hover:bg-slate-100 transition-colors" type="button">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
+<path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
+</svg>
+</button>
+<!-- Settings Cog -->
+<button aria-label="Settings" class="p-2 rounded-full text-slate-500 hover:text-slate-700 hover:bg-slate-100 transition-colors" type="button">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+<path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
+<circle cx="12" cy="12" r="3"></circle>
+</svg>
+</button>
+<!-- User Profile Avatar & Dropdown -->
+<div class="flex items-center gap-1.5 ml-1 cursor-pointer">
+<div class="w-8 h-8 rounded-full bg-blue-600 text-white font-semibold text-xs flex items-center justify-center">
+            A
+          </div>
+<svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="m6 9 6 6 6-6"></path></svg>
+</div>
+</div>
+</div>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: MainContent -->
+<main class="flex-1 max-w-[1600px] w-full mx-auto px-6 py-8 space-y-6">
+<!-- BEGIN: HeroBanner -->
+<section class="bg-white rounded-2xl border border-slate-200/80 p-7 shadow-xs relative overflow-hidden" data-purpose="hero-banner">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
+<!-- Title & Icon -->
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-500 shrink-0">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+<path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+<path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+</svg>
+</div>
+<div>
+<h2 class="text-2xl font-bold text-slate-900 tracking-tight">Training Management Dashboard</h2>
+<p class="text-sm text-slate-500 mt-1">Orchestrate professional development programs, track batch progress, and manage training metrics.</p>
+</div>
+</div>
+<!-- CTA Button -->
+<div>
+<button class="inline-flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-5 py-2.5 rounded-xl font-medium text-sm transition-all shadow-sm" type="button">
+<svg class="w-4 h-4 stroke-[2.5]" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" viewbox="0 0 24 24"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
+<span>Create New Batch</span>
+</button>
+</div>
+</div>
+</section>
+<!-- END: HeroBanner -->
+<!-- BEGIN: MetricCardsGrid -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" data-purpose="metrics-summary">
+<!-- Metric 1: Total Batches -->
+<div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs flex flex-col justify-between">
+<div class="flex items-center justify-between mb-4">
+<div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-500">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+<path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"></path>
+<path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"></path>
+<path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"></path>
+</svg>
+</div>
+<span class="px-2.5 py-1 text-[11px] font-semibold text-slate-600 bg-slate-50 border border-slate-200 rounded-full">
+            Management Hub
+          </span>
+</div>
+<div>
+<p class="text-[11px] font-bold tracking-wider text-slate-500 uppercase mb-0.5">Total Batches</p>
+<span class="text-3xl font-bold text-blue-600">2</span>
+</div>
+</div>
+<!-- Metric 2: Active Batches -->
+<div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs flex flex-col justify-between">
+<div class="flex items-center justify-between mb-4">
+<div class="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-500">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+<path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+</svg>
+</div>
+<span class="px-2.5 py-1 text-[11px] font-semibold text-slate-600 bg-slate-50 border border-slate-200 rounded-full">
+            Running Now
+          </span>
+</div>
+<div>
+<p class="text-[11px] font-bold tracking-wider text-slate-500 uppercase mb-0.5">Active Batches</p>
+<span class="text-3xl font-bold text-emerald-500">2</span>
+</div>
+</div>
+<!-- Metric 3: Total Participants -->
+<div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs flex flex-col justify-between">
+<div class="flex items-center justify-between mb-4">
+<div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-500">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+<circle cx="9" cy="7" r="4"></circle>
+<path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+<path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+</svg>
+</div>
+<span class="px-2.5 py-1 text-[11px] font-semibold text-slate-600 bg-slate-50 border border-slate-200 rounded-full">
+            Enrolled Students
+          </span>
+</div>
+<div>
+<p class="text-[11px] font-bold tracking-wider text-slate-500 uppercase mb-0.5">Total Participants</p>
+<span class="text-3xl font-bold text-blue-600">0</span>
+</div>
+</div>
+<!-- Metric 4: Curriculum Modules -->
+<div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs flex flex-col justify-between">
+<div class="flex items-center justify-between mb-4">
+<div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-500">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+<path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path>
+<path d="M10 2v6l3-2 3 2V2"></path>
+</svg>
+</div>
+<span class="px-2.5 py-1 text-[11px] font-semibold text-slate-600 bg-slate-50 border border-slate-200 rounded-full">
+            Course Units
+          </span>
+</div>
+<div>
+<p class="text-[11px] font-bold tracking-wider text-slate-500 uppercase mb-0.5">Curriculum Modules</p>
+<span class="text-3xl font-bold text-blue-600">1</span>
+</div>
+</div>
+</section>
+<!-- END: MetricCardsGrid -->
+<!-- BEGIN: MainContentGrid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+<!-- Left / Center Section: Training Programs (approx 8 cols) -->
+<div class="lg:col-span-8 space-y-4">
+<!-- Header & Search Toolbar -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div class="flex items-center gap-2.5">
+<svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+<path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path>
+<path d="M6 6h10"></path>
+<path d="M6 10h10"></path>
+</svg>
+<div>
+<h3 class="text-base font-bold text-slate-900 leading-tight">Training Programs</h3>
+<p class="text-xs text-slate-500">2 programs matching current filters</p>
+</div>
+</div>
+<!-- Search Input -->
+<div class="relative w-full sm:w-64">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+<circle cx="11" cy="11" r="8"></circle>
+<line x1="21" x2="16.65" y1="21" y2="16.65"></line>
+</svg>
+</div>
+<input class="w-full pl-9 pr-3.5 py-1.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 shadow-xs" placeholder="Search programs..." type="text"/>
+</div>
+</div>
+<!-- Programs List / Cards Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Program Card 1 -->
+<div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs flex flex-col justify-between hover:border-slate-300 transition-colors cursor-pointer group">
+<div>
+<!-- Top Row: Icon and Status Badge -->
+<div class="flex items-center justify-between mb-4">
+<div class="w-10 h-10 rounded-xl border border-slate-200/80 flex items-center justify-center text-slate-500 bg-slate-50/50">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+<path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+</svg>
+</div>
+<span class="px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-emerald-600 bg-emerald-50 border border-emerald-200 rounded-full">
+                  ACTIVE
+                </span>
+</div>
+<!-- Title & Subtitle -->
+<h4 class="text-base font-bold text-slate-900 group-hover:text-blue-600 transition-colors">Astra batch</h4>
+<p class="text-xs text-slate-500 mt-1">Batch Code: <span class="font-medium text-blue-600">11</span></p>
+</div>
+<!-- Card Bottom Bar -->
+<div class="pt-5 mt-5 border-t border-slate-100 flex items-center justify-between text-xs text-slate-600 font-medium">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1.5">
+<svg class="w-3.5 h-3.5 text-blue-500" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+<circle cx="9" cy="7" r="4"></circle>
+</svg>
+<span>0 Students</span>
+</div>
+<div class="flex items-center gap-1.5">
+<svg class="w-3.5 h-3.5 text-blue-500" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+<polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+<polyline points="2 17 12 22 22 17"></polyline>
+<polyline points="2 12 12 17 22 12"></polyline>
+</svg>
+<span>0 Modules</span>
+</div>
+</div>
+<svg class="w-4 h-4 text-blue-500 transform group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24">
+<line x1="5" x2="19" y1="12" y2="12"></line>
+<polyline points="12 5 19 12 12 19"></polyline>
+</svg>
+</div>
+</div>
+<!-- Program Card 2 -->
+<div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs flex flex-col justify-between hover:border-slate-300 transition-colors cursor-pointer group">
+<div>
+<!-- Top Row: Icon and Status Badge -->
+<div class="flex items-center justify-between mb-4">
+<div class="w-10 h-10 rounded-xl border border-slate-200/80 flex items-center justify-center text-slate-500 bg-slate-50/50">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+<path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+</svg>
+</div>
+<span class="px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-emerald-600 bg-emerald-50 border border-emerald-200 rounded-full">
+                  ACTIVE
+                </span>
+</div>
+<!-- Title & Subtitle -->
+<h4 class="text-base font-bold text-slate-900 group-hover:text-blue-600 transition-colors">ece</h4>
+<p class="text-xs text-slate-500 mt-1">Batch Code: <span class="font-medium text-blue-600">12</span></p>
+</div>
+<!-- Card Bottom Bar -->
+<div class="pt-5 mt-5 border-t border-slate-100 flex items-center justify-between text-xs text-slate-600 font-medium">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1.5">
+<svg class="w-3.5 h-3.5 text-blue-500" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+<circle cx="9" cy="7" r="4"></circle>
+</svg>
+<span>0 Students</span>
+</div>
+<div class="flex items-center gap-1.5">
+<svg class="w-3.5 h-3.5 text-blue-500" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+<polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+<polyline points="2 17 12 22 22 17"></polyline>
+<polyline points="2 12 12 17 22 12"></polyline>
+</svg>
+<span>1 Modules</span>
+</div>
+</div>
+<svg class="w-4 h-4 text-blue-500 transform group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24">
+<line x1="5" x2="19" y1="12" y2="12"></line>
+<polyline points="12 5 19 12 12 19"></polyline>
+</svg>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Sidebar: Quick Filters & Metrics (approx 4 cols) -->
+<aside class="lg:col-span-4 space-y-4">
+<!-- Quick Filters Box -->
+<div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs" data-purpose="quick-filters">
+<div class="flex items-center gap-2 mb-4">
+<svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+</svg>
+<h3 class="text-sm font-bold text-slate-900">Quick Filters</h3>
+</div>
+<div class="space-y-2">
+<!-- Active Selected Option: All Programs -->
+<button class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-slate-900 text-white text-xs font-semibold shadow-xs" type="button">
+<span>All Programs</span>
+<span class="px-2 py-0.5 rounded-full bg-slate-800 text-white text-[11px] font-bold">2</span>
+</button>
+<!-- Active Programs -->
+<button class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-slate-700 bg-white border border-slate-100 hover:bg-slate-50 text-xs font-medium transition-colors" type="button">
+<span>Active Programs</span>
+<span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 text-[11px] font-semibold">2</span>
+</button>
+<!-- Inactive Programs -->
+<button class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-slate-700 bg-white border border-slate-100 hover:bg-slate-50 text-xs font-medium transition-colors" type="button">
+<span>Inactive Programs</span>
+<span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 text-[11px] font-semibold">0</span>
+</button>
+</div>
+</div>
+<!-- TMS Metrics Box -->
+<div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs" data-purpose="tms-metrics">
+<div class="flex items-center gap-2 mb-4">
+<svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+<polyline points="17 6 23 6 23 12"></polyline>
+</svg>
+<h3 class="text-sm font-bold text-slate-900">TMS Metrics</h3>
+</div>
+<div class="space-y-4">
+<!-- Metric Item: Avg Attendance -->
+<div>
+<div class="flex items-center justify-between text-[11px] font-bold tracking-wider text-slate-500 uppercase mb-1.5">
+<span>Avg. Attendance</span>
+<span class="text-emerald-600 font-bold">0%</span>
+</div>
+<div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+<div class="bg-emerald-500 h-full rounded-full" style="width: 0%"></div>
+</div>
+</div>
+<!-- Metric Item: Avg Performance -->
+<div>
+<div class="flex items-center justify-between text-[11px] font-bold tracking-wider text-slate-500 uppercase mb-1.5">
+<span>Avg. Performance</span>
+<span class="text-emerald-600 font-bold">0%</span>
+</div>
+<div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+<div class="bg-emerald-500 h-full rounded-full" style="width: 0%"></div>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<!-- END: Right Sidebar -->
+</div>
+<!-- END: MainContentGrid -->
+</main>
+<!-- END: MainContent -->
+</body></html>
