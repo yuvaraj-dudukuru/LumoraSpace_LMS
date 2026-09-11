@@ -1,12 +1,17 @@
-# Data Model
+// Transcribed from /docs/DATA_MODEL.md. That file is the source of truth —
+// edit it first, then mirror the change here. // PHASE 2 markers are kept
+// verbatim: those models exist for a later milestone, get no seed data, no
+// API, no UI yet.
 
-Derived field-by-field from `SCREEN_INVENTORY.md` (all 91 screens). Domain is a **cohort bootcamp**: `Program` → `Module` → `Lesson`, with `Batch` as a dated cohort instance of a `Program` that learners enroll into. Roles: `LEARNER`, `MENTOR`, `ADMIN`. Binding decisions locked in `DECISIONS.md` are applied throughout — see that file for rationale.
+generator client {
+  provider = "prisma-client-js"
+}
 
-Note on Program vs Course (resolved, `DECISIONS.md` Q1): no screen ever shows a program containing more than one course — "Forge Full Stack Developer" is a *course* card on `my_learning_lumoraspace` and a *program* on `program_detail_forge_data_analyst_desktop` interchangeably. `Course` has been collapsed out entirely; `Module` now belongs directly to `Program`.
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
 
-Models marked `// PHASE 2` are kept in the schema (and the initial migration — migrations are cheap) but get no seed data, no API endpoints, and no UI in the 18-screen MVP (`DECISIONS.md` Q23).
-
-```prisma
 // ── Identity & Auth ──────────────────────────────────────────────
 // Auth.js v5 owns Account/Session/VerificationToken via its Prisma
 // adapter (standard tables below, not derived from any screen).
@@ -14,6 +19,42 @@ Models marked `// PHASE 2` are kept in the schema (and the initial migration —
 // live-class session concept — ours is named LiveSession throughout
 // this schema (see "Live Sessions" section) to avoid the clash.
 // User itself is extended with the fields every screen reads.
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
 
 enum Role {
   LEARNER
@@ -37,6 +78,7 @@ model User {
   id                 String            @id @default(cuid())
   name               String
   email              String            @unique
+  emailVerified      DateTime?         // Auth.js Prisma adapter convention (Google OAuth path)
   passwordHash       String?           // null for OAuth-only accounts
   avatarUrl          String?
   role               Role              @default(LEARNER)
@@ -52,6 +94,8 @@ model User {
   createdAt          DateTime          @default(now())
   updatedAt          DateTime          @updatedAt
 
+  accounts           Account[]
+  sessions           Session[]
   enrollments        Enrollment[]      // lesson progress, attempts, submissions all hang off Enrollment now — FIX A
   mentorAssignments  MentorAssignment[]
   hostedSessions     LiveSession[]     @relation("SessionHost") // PHASE 2
@@ -702,18 +746,3 @@ model IntegrationConnection {
   lastSyncAt DateTime?
   detail     String?           // free-text status detail, e.g. "14 Active Meetings", "Missing IAM Role"
 }
-```
-
-## Fields invented (implied by the UI but not literally shown)
-
-- `User.passwordHash`, `twoFactorEnabled` — implied by the login/security forms, never rendered as data.
-- `LessonProgress.videoProgressPercent` vs `completed` boolean — resolved by `DECISIONS.md` Q3: `completed` (explicit "Mark as Complete") drives completion, `videoProgressPercent` is a resume hint only.
-- `Enrollment.programId` (required) and `batchId` (nullable) — resolved by `DECISIONS.md` Q2: cohort-only for MVP, schema stays open for self-paced later.
-- `Attempt.attemptNumber` / `Submission.attemptNumber` — screens show "Attempts 1/3" as a fraction; the underlying per-attempt row isn't shown, only the count.
-- `Enrollment.id` as the scoping key for `LessonProgress`, `Attempt`, and `Submission` (FIX A) — no screen shows this distinction directly; invented to make per-cohort progress/grading correct for a learner who repeats a batch or holds two enrollments.
-- `RubricCriterion` living on `Assignment` rather than `Review` (FIX B) — screens render rubrics as a fixed-looking table, implying they're authored once per assignment, not invented per grading pass.
-- `Assessment.kind` (`PRACTICE` / `GRADED`) — resolved by `DECISIONS.md` Q4: unified model, explicit kind field rather than inferring from a null `passingScorePercent`.
-- `CertificateEligibilityRule`, `IntegrationConnection`, `PlatformSetting` — modeled for completeness (Phase 2), but `DECISIONS.md` Q13 defers all admin settings UI, so these ship with no seed data or endpoints in MVP.
-- `MentorAssignment.roleLabel` — free text ("Lead Instructor") rather than an enum, since values seen vary per batch.
-- `Payment.method` as free text — resolved by `DECISIONS.md` Q19, matching the "stub the gateway" MVP decision.
-- `SessionAttendee.engagementPercent` — removed per `DECISIONS.md` Q6; its source was never confirmed, so it isn't persisted at all rather than guessed.

@@ -44,3 +44,9 @@ applying these corrections are in the current `OPEN_QUESTIONS.md`, not here.
 19. **Confirmed: `Payment.method` stays a string.** Values look like gateway-provided display strings, not a fixed taxonomy — consistent with stubbing the payment gateway for MVP.
 
 20. **Confirmed: `Certificate.templateName` string is sufficient.** No screen shows real template management beyond a stat count; a separate `CertificateTemplate` model would be speculative for MVP.
+
+21. **`student_dashboard_home` is canonical over `lumoraspace_home`.** The sidebar shell wins, consistent with Q11/Q12 — `lumoraspace_home` is discarded as a route entirely. `GET /learn` maps to `student_dashboard_home` only.
+
+22. **Enrollment is independent of onboarding.** Onboarding is personalization only (`learningGoal`, `experienceLevel`), runs once after signup, returns `{ ok }`, and never creates an `Enrollment`. Enrollment happens via `POST /programs/:id/enroll` from program detail, with an explicit batch selection. Because payments are stubbed, a learner-initiated enrollment is created at `status=PENDING`, `accessState=AWAITING`; an admin flips `accessState` to `GRANTED` from the admin enrollments screen. Content is gated on `accessState=GRANTED` — a `PENDING` enrollment can see the program overview but not lesson content. Admins may also create enrollments directly at `GRANTED`.
+
+23. **Learner assignment screens are in MVP.** `assignment_details_*` and `assignment_feedback_*` ship alongside mentor review — a review queue with no submission flow is a dead feature. This resolves `OPEN_QUESTIONS.md` #3 (raised in Phase 0.5): MVP is now 18 screens, not 16.
