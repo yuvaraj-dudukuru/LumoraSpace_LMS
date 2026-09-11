@@ -1,8 +1,10 @@
 # Data Model
 
-Derived field-by-field from `SCREEN_INVENTORY.md` (all 91 screens). Domain is a **cohort bootcamp**: `Program` → `Course` → `Module` → `Lesson`, with `Batch` as a dated cohort instance of a `Program` that learners enroll into. Roles: `LEARNER`, `MENTOR`, `ADMIN`.
+Derived field-by-field from `SCREEN_INVENTORY.md` (all 91 screens). Domain is a **cohort bootcamp**: `Program` → `Module` → `Lesson`, with `Batch` as a dated cohort instance of a `Program` that learners enroll into. Roles: `LEARNER`, `MENTOR`, `ADMIN`. Binding decisions locked in `DECISIONS.md` are applied throughout — see that file for rationale.
 
-Note on Program vs Course: nearly every screen treats "the program" and "the course a learner is taking" as the same object (e.g. `my_learning_lumoraspace` lists "Forge Full Stack Developer" as a *course* card; `program_detail_forge_data_analyst_desktop` treats the same name as a *program*). The UI never shows a program containing multiple distinct courses. The schema keeps the `Program → Course → Module → Lesson` nesting from the spec (so a program *can* bundle multiple courses later), but in current data every `Program` has exactly one `Course` sharing its name — see `OPEN_QUESTIONS.md`.
+Note on Program vs Course (resolved, `DECISIONS.md` Q1): no screen ever shows a program containing more than one course — "Forge Full Stack Developer" is a *course* card on `my_learning_lumoraspace` and a *program* on `program_detail_forge_data_analyst_desktop` interchangeably. `Course` has been collapsed out entirely; `Module` now belongs directly to `Program`.
+
+Models marked `// PHASE 2` are kept in the schema (and the initial migration — migrations are cheap) but get no seed data, no API endpoints, and no UI in the 16-screen MVP.
 
 ```prisma
 // ── Identity & Auth ──────────────────────────────────────────────
@@ -47,19 +49,16 @@ model User {
   createdAt          DateTime          @default(now())
   updatedAt          DateTime          @updatedAt
 
-  enrollments        Enrollment[]
-  lessonProgress     LessonProgress[]
+  enrollments        Enrollment[]      // lesson progress, attempts, submissions all hang off Enrollment now — FIX A
   mentorAssignments  MentorAssignment[]
-  hostedSessions     Session[]         @relation("SessionHost")
-  attendances        SessionAttendee[]
-  preSessionQuestions PreSessionQuestion[]
-  attempts           Attempt[]
-  submissions        Submission[]
+  hostedSessions     Session[]         @relation("SessionHost") // PHASE 2
+  attendances        SessionAttendee[] // PHASE 2
+  preSessionQuestions PreSessionQuestion[] // PHASE 2
   reviewsGiven       Review[]          @relation("ReviewedBy")
   certificates       Certificate[]
-  payments           Payment[]
-  notifications      Notification[]
-  notificationPref   NotificationPreference?
+  payments           Payment[]         // PHASE 2
+  notifications      Notification[]    // PHASE 2
+  notificationPref   NotificationPreference? // PHASE 2
 }
 
 // ── Curriculum ───────────────────────────────────────────────────
@@ -96,10 +95,11 @@ model Program {
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
 
-  courses         Course[]
+  modules         Module[]
   batches         Batch[]
+  enrollments     Enrollment[]
   outcomes        ProgramOutcome[]      // "what you'll learn" tiles
-  eligibilityRules CertificateEligibilityRule[]
+  eligibilityRules CertificateEligibilityRule[] // PHASE 2
   certificates    Certificate[]
 }
 
@@ -113,22 +113,11 @@ model ProgramOutcome {
   order       Int
 }
 
-model Course {
-  id            String        @id @default(cuid())
-  programId     String
-  program       Program       @relation(fields: [programId], references: [id], onDelete: Cascade)
-  title         String
-  description   String
-  order         Int           @default(0)
-  createdAt     DateTime      @default(now())
-
-  modules       Module[]
-}
-
+// DECISIONS.md Q1 — Course deleted; Module hangs directly off Program.
 model Module {
   id                    String        @id @default(cuid())
-  courseId              String
-  course                Course        @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  programId             String
+  program               Program       @relation(fields: [programId], references: [id], onDelete: Cascade)
   title                 String
   description           String?
   order                 Int
@@ -138,6 +127,7 @@ model Module {
   lessons               Lesson[]
   assessments           Assessment[]
   assignments           Assignment[]
+  resources             Resource[]    // PHASE 2 — module-level downloadable materials
 }
 
 enum LessonType {
@@ -164,19 +154,23 @@ model Lesson {
 
 // Learner ↔ Lesson completion + notes + per-lesson autosaved notes
 // (lesson_experience_middleware_security note-taking panel)
+// FIX A — scoped to the Enrollment, not the User: a User-keyed row bled
+// progress across enrollments (e.g. a learner repeating a batch, or two
+// programs sharing a lesson), so Enrollment.progressPercent couldn't be
+// computed correctly. Reach the learner via enrollment.user.
 model LessonProgress {
-  id                  String   @id @default(cuid())
-  userId              String
-  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                  String     @id @default(cuid())
+  enrollmentId        String
+  enrollment          Enrollment @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)
   lessonId            String
-  lesson              Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
-  completed           Boolean  @default(false)
+  lesson              Lesson     @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  completed           Boolean    @default(false)
   completedAt         DateTime?
-  videoProgressPercent Int?    // for MARK-COMPLETE-VS-WATCH-% decision, see OPEN_QUESTIONS.md
+  videoProgressPercent Int?      // resume-position hint only — DECISIONS.md Q3, never triggers completion
   notes               String?
-  updatedAt           DateTime @updatedAt
+  updatedAt           DateTime   @updatedAt
 
-  @@unique([userId, lessonId])
+  @@unique([enrollmentId, lessonId])
 }
 
 enum ResourceType {
@@ -189,18 +183,20 @@ enum ResourceType {
   VIDEO
 }
 
-// Downloadable materials — attached at program, course, module or
-// lesson level depending on where the screen surfaces them
-// (course_detail_forge_data_analyst "Global Resources", resources_lumoraspace mentor library)
+// PHASE 2
+// Downloadable materials attached at module or lesson level.
+// FIX C — the previous version had four nullable FK columns but only
+// `lessonId` had a declared relation, so `programId`/`courseId` had no
+// referential integrity and Course no longer exists to scope against
+// anyway. Scoped to lessonId/moduleId only, both with real relations.
 model Resource {
   id         String        @id @default(cuid())
   title      String
   fileUrl    String
   fileType   ResourceType
   fileSizeKB Int?
-  programId  String?
-  courseId   String?
   moduleId   String?
+  module     Module?       @relation(fields: [moduleId], references: [id])
   lessonId   String?
   lesson     Lesson?       @relation(fields: [lessonId], references: [id])
   updatedAt  DateTime      @default(now())
@@ -224,12 +220,12 @@ model Batch {
   startDate    DateTime
   endDate      DateTime
   status       BatchStatus @default(UPCOMING)
-  scheduleNote String?     // "Mon, Wed, Fri • 18:00 EST" (batches_mobile) — free text, see OPEN_QUESTIONS.md
+  scheduleNote String?     // "Mon, Wed, Fri • 18:00 EST" (batches_mobile) — free text, DECISIONS.md Q18
   capacity     Int?
 
   enrollments  Enrollment[]
   mentors      MentorAssignment[]
-  sessions     Session[]
+  sessions     Session[]           // PHASE 2
   certificates Certificate[]
 }
 
@@ -247,11 +243,16 @@ enum AccessState {
   AWAITING
 }
 
+// DECISIONS.md Q2 — cohort-only for MVP: programId is required. batchId
+// stays nullable at the DB level so self-paced enrollment is possible
+// later, but MVP UI and seed data only ever create batch-backed rows.
 model Enrollment {
   id              String            @id @default(cuid())
   userId          String
   user            User              @relation(fields: [userId], references: [id], onDelete: Cascade)
-  batchId         String?           // nullable: self-paced enrollment with no cohort (see OPEN_QUESTIONS.md)
+  programId       String
+  program         Program           @relation(fields: [programId], references: [id])
+  batchId         String?           // nullable for future self-paced support — DECISIONS.md Q2; always set in MVP
   batch           Batch?            @relation(fields: [batchId], references: [id])
   status          EnrollmentStatus  @default(PENDING)
   accessState     AccessState       @default(AWAITING)
@@ -259,7 +260,10 @@ model Enrollment {
   enrolledAt      DateTime          @default(now())
   completedAt     DateTime?
 
-  payments        Payment[]
+  lessonProgress  LessonProgress[]  // FIX A — moved from User
+  attempts        Attempt[]         // FIX A — moved from User
+  submissions     Submission[]      // FIX A — moved from User
+  payments        Payment[]         // PHASE 2
   certificates    Certificate[]
 }
 
@@ -285,6 +289,7 @@ enum SessionStatus {
   CANCELLED
 }
 
+// PHASE 2
 model Session {
   id          String            @id @default(cuid())
   batchId     String
@@ -303,6 +308,7 @@ model Session {
   questions   PreSessionQuestion[]
 }
 
+// PHASE 2
 model SessionAgendaItem {
   id            String  @id @default(cuid())
   sessionId     String
@@ -312,6 +318,9 @@ model SessionAgendaItem {
   order         Int
 }
 
+// PHASE 2
+// DECISIONS.md Q6 — engagementPercent dropped: its source was never
+// confirmed (live poll? follow-up quiz?), so it isn't persisted. present only.
 model SessionAttendee {
   id                String   @id @default(cuid())
   sessionId         String
@@ -319,11 +328,11 @@ model SessionAttendee {
   userId            String
   user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   present           Boolean?  // null = not yet marked
-  engagementPercent Int?     // session_detail_sql_q_a shows a % per attendee — meaning unconfirmed, see OPEN_QUESTIONS.md
 
   @@unique([sessionId, userId])
 }
 
+// PHASE 2
 model PreSessionQuestion {
   id           String   @id @default(cuid())
   sessionId    String
@@ -335,7 +344,7 @@ model PreSessionQuestion {
   submittedAt  DateTime @default(now())
 }
 
-// ── Assessments & Quizzes (unified — see OPEN_QUESTIONS.md) ──────
+// ── Assessments & Quizzes (unified — DECISIONS.md Q4) ─────────────
 
 enum QuestionType {
   MULTIPLE_CHOICE
@@ -343,18 +352,26 @@ enum QuestionType {
   TRUE_FALSE
 }
 
+// PRACTICE = practice-hub quiz, no certificate weight.
+// GRADED = counts toward certificate eligibility (CertificateEligibilityRule.REQUIRED_ASSESSMENTS).
+enum AssessmentKind {
+  PRACTICE
+  GRADED
+}
+
 model Assessment {
-  id                    String        @id @default(cuid())
+  id                    String         @id @default(cuid())
   moduleId              String
-  module                Module        @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  module                Module         @relation(fields: [moduleId], references: [id], onDelete: Cascade)
   title                 String
-  status                ContentStatus @default(DRAFT)
+  kind                  AssessmentKind @default(PRACTICE) // DECISIONS.md Q4 — explicit, not inferred from passingScorePercent
+  status                ContentStatus  @default(DRAFT)
   timeLimitMins         Int?
   passingScorePercent   Int?
-  allowedAttempts       Int           @default(1) // 0 = unlimited
-  shuffleQuestions      Boolean       @default(false)
-  showResultsImmediately Boolean      @default(true)
-  updatedAt             DateTime      @updatedAt
+  allowedAttempts       Int            @default(1) // 0 = unlimited
+  shuffleQuestions      Boolean        @default(false)
+  showResultsImmediately Boolean       @default(true)
+  updatedAt             DateTime       @updatedAt
 
   questions             Question[]
   attempts              Attempt[]
@@ -391,12 +408,13 @@ enum AttemptStatus {
   GRADED
 }
 
+// FIX A — scoped to Enrollment, not User (see LessonProgress note above).
 model Attempt {
   id           String        @id @default(cuid())
   assessmentId String
   assessment   Assessment    @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
-  userId       String
-  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  enrollmentId String
+  enrollment   Enrollment    @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)
   attemptNumber Int
   status       AttemptStatus @default(IN_PROGRESS)
   scorePercent Float?
@@ -406,7 +424,7 @@ model Attempt {
 
   answers      Answer[]
 
-  @@unique([assessmentId, userId, attemptNumber])
+  @@unique([assessmentId, enrollmentId, attemptNumber])
 }
 
 // Saved per-answer (not only on submit) so a dropped connection
@@ -449,6 +467,23 @@ model Assignment {
 
   resources      AssignmentResource[]
   submissions    Submission[]
+  rubricCriteria RubricCriterion[] // FIX B — defined per assignment, not invented per review
+}
+
+// FIX B — the rubric an assignment is graded against. Previously this
+// hung off Review, meaning each mentor invented criteria at grading
+// time and two learners on the same assignment couldn't be compared
+// on the same scale. Now fixed per assignment; Review scores against it.
+model RubricCriterion {
+  id           String       @id @default(cuid())
+  assignmentId String
+  assignment   Assignment   @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
+  name         String
+  description  String?
+  maxScore     Int
+  order        Int
+
+  scores       RubricScore[]
 }
 
 model AssignmentResource {
@@ -469,12 +504,13 @@ enum SubmissionStatus {
   REVISION_REQUESTED
 }
 
+// FIX A — scoped to Enrollment, not User (see LessonProgress note above).
 model Submission {
   id            String           @id @default(cuid())
   assignmentId  String
   assignment    Assignment       @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
-  userId        String
-  user          User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  enrollmentId  String
+  enrollment    Enrollment       @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)
   attemptNumber Int              @default(1)
   status        SubmissionStatus @default(NOT_STARTED)
   fileUrl       String?
@@ -503,17 +539,20 @@ model Review {
   reviewedAt       DateTime?
   createdAt        DateTime          @default(now())
 
-  rubricCriteria   RubricCriterion[]
+  rubricScores     RubricScore[]
 }
 
-model RubricCriterion {
-  id            String  @id @default(cuid())
-  reviewId      String
-  review        Review  @relation(fields: [reviewId], references: [id], onDelete: Cascade)
-  name          String
-  description   String?
-  score         Int
-  maxScore      Int
+// FIX B — one row per RubricCriterion this review scored. See
+// RubricCriterion above (now defined on Assignment, not Review).
+model RubricScore {
+  id           String          @id @default(cuid())
+  reviewId     String
+  review       Review          @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  criterionId  String
+  criterion    RubricCriterion @relation(fields: [criterionId], references: [id])
+  score        Int
+
+  @@unique([reviewId, criterionId])
 }
 
 // ── Certificates ───────────────────────────────────────────────────
@@ -545,11 +584,12 @@ model Certificate {
 
 enum EligibilityRuleType {
   PROGRAM_COMPLETION
-  REQUIRED_ASSESSMENTS
+  REQUIRED_ASSESSMENTS // DECISIONS.md Q4 — only Assessment.kind = GRADED counts
   MIN_CUMULATIVE_SCORE
   IDENTITY_VERIFICATION
 }
 
+// PHASE 2
 model CertificateEligibilityRule {
   id              String              @id @default(cuid())
   programId       String?             // null = platform-wide default gate
@@ -568,6 +608,7 @@ enum PaymentStatus {
   REFUNDED
 }
 
+// PHASE 2
 model Payment {
   id           String        @id @default(cuid())
   enrollmentId String?
@@ -578,7 +619,7 @@ model Payment {
   providerRef  String?
   amount       Decimal       @db.Decimal(10, 2)
   currency     String        @default("INR")
-  method       String        // "UPI Transfer" / "Credit Card ending 4421" — free text in MVP
+  method       String        // free text, not an enum — DECISIONS.md Q19
   status       PaymentStatus @default(PENDING)
   createdAt    DateTime      @default(now())
   refundedAt   DateTime?
@@ -586,6 +627,7 @@ model Payment {
   events       PaymentEvent[]
 }
 
+// PHASE 2
 model PaymentEvent {
   id          String   @id @default(cuid())
   paymentId   String
@@ -597,6 +639,7 @@ model PaymentEvent {
 
 // ── Notifications & Preferences ───────────────────────────────────
 
+// PHASE 2
 model Notification {
   id        String   @id @default(cuid())
   userId    String
@@ -609,6 +652,7 @@ model Notification {
   createdAt DateTime @default(now())
 }
 
+// PHASE 2
 model NotificationPreference {
   id                    String  @id @default(cuid())
   userId                String  @unique
@@ -621,8 +665,9 @@ model NotificationPreference {
 }
 
 // ── Platform Admin Settings ────────────────────────────────────────
+// DECISIONS.md Q13 — all admin settings screens deferred to Phase 2 wholesale.
 
-// Singleton row (id fixed to "default")
+// PHASE 2 — Singleton row (id fixed to "default")
 model PlatformSetting {
   id                  String @id @default("default")
   platformName        String @default("LumoraSpace")
@@ -639,6 +684,7 @@ enum IntegrationStatus {
   CONFIG_REQUIRED
 }
 
+// PHASE 2
 model IntegrationConnection {
   id         String            @id @default(cuid())
   service    String            @unique // SENDGRID / ZOOM / RAZORPAY / AWS_S3
@@ -652,11 +698,13 @@ model IntegrationConnection {
 ## Fields invented (implied by the UI but not literally shown)
 
 - `User.passwordHash`, `twoFactorEnabled` — implied by the login/security forms, never rendered as data.
-- `LessonProgress.videoProgressPercent` vs `completed` boolean — the UI shows both a lesson-level checkmark and a video progress bar; which one actually drives "complete" is unresolved, see `OPEN_QUESTIONS.md`.
-- `Enrollment.batchId` nullability — no screen shows a batch-less enrollment, but the prompt pack explicitly flags self-paced enrollment as a decision to make now.
+- `LessonProgress.videoProgressPercent` vs `completed` boolean — resolved by `DECISIONS.md` Q3: `completed` (explicit "Mark as Complete") drives completion, `videoProgressPercent` is a resume hint only.
+- `Enrollment.programId` (required) and `batchId` (nullable) — resolved by `DECISIONS.md` Q2: cohort-only for MVP, schema stays open for self-paced later.
 - `Attempt.attemptNumber` / `Submission.attemptNumber` — screens show "Attempts 1/3" as a fraction; the underlying per-attempt row isn't shown, only the count.
-- `Review.rubricCriteria` as a separate table — screens render it as a fixed-looking table, but criteria clearly vary per assignment, so it's modeled as data, not a hardcoded enum.
-- `CertificateEligibilityRule`, `IntegrationConnection`, `PlatformSetting` — admin settings screens display these as configuration, implying persisted rows rather than hardcoded UI.
+- `Enrollment.id` as the scoping key for `LessonProgress`, `Attempt`, and `Submission` (FIX A) — no screen shows this distinction directly; invented to make per-cohort progress/grading correct for a learner who repeats a batch or holds two enrollments.
+- `RubricCriterion` living on `Assignment` rather than `Review` (FIX B) — screens render rubrics as a fixed-looking table, implying they're authored once per assignment, not invented per grading pass.
+- `Assessment.kind` (`PRACTICE` / `GRADED`) — resolved by `DECISIONS.md` Q4: unified model, explicit kind field rather than inferring from a null `passingScorePercent`.
+- `CertificateEligibilityRule`, `IntegrationConnection`, `PlatformSetting` — modeled for completeness (Phase 2), but `DECISIONS.md` Q13 defers all admin settings UI, so these ship with no seed data or endpoints in MVP.
 - `MentorAssignment.roleLabel` — free text ("Lead Instructor") rather than an enum, since values seen vary per batch.
-- `Payment.method` as free text — real values ("UPI Transfer", "Credit Card ending 4421") look like gateway-provided display strings, not a fixed enum, matching the "stub the gateway" MVP decision.
-- `SessionAttendee.engagementPercent` — shown per-attendee in `session_detail_sql_q_a` but its meaning (quiz score during session? engagement score?) is guessed; see `OPEN_QUESTIONS.md`.
+- `Payment.method` as free text — resolved by `DECISIONS.md` Q19, matching the "stub the gateway" MVP decision.
+- `SessionAttendee.engagementPercent` — removed per `DECISIONS.md` Q6; its source was never confirmed, so it isn't persisted at all rather than guessed.
