@@ -13,7 +13,7 @@ Rules:
 
 Cohort-based bootcamp LMS. Three roles: LEARNER, MENTOR, ADMIN.
 
-The repo root currently contains a Google Stitch design export — ~85 folders, each
+The Google Stitch design export lives in `design/stitch/` — ~85 folders, each
 with an HTML file (Tailwind markup) and a PNG render. This is design reference only.
 
 ## Stack — do not deviate without asking

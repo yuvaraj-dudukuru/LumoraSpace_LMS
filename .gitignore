@@ -40,3 +40,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local agent/tooling artifacts (not part of the app)
+.claude-flow/
+.swarm/
+ruvector.db
+.mcp.json

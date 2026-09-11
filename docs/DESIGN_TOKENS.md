@@ -1,6 +1,6 @@
 # Design Tokens
 
-Source of truth: `lumoraspace/DESIGN.md` (checked into the export) plus the `tailwind.config` block embedded in every screen's `code.html` — the two agree exactly, so DESIGN.md is the canonical, de-duplicated version used below. Design system name: **LumoraSpace** — "Corporate Modernism" / high-end technical tool, not a gamified classroom.
+Source of truth: `design/stitch/lumoraspace/DESIGN.md` (checked into the export) plus the `tailwind.config` block embedded in every screen's `code.html` — the two agree exactly, so DESIGN.md is the canonical, de-duplicated version used below. Design system name: **LumoraSpace** — "Corporate Modernism" / high-end technical tool, not a gamified classroom.
 
 ## Brand & style summary
 

@@ -1,6 +1,6 @@
 # LumoraSpace LMS — Agent Prompt Pack
 
-Repo: `github.com/yuvaraj-dudukuru/LumoraSpace_LMS` (Stitch export: ~85 screen folders, each with `.html` + `.png`)
+Repo: `github.com/yuvaraj-dudukuru/LumoraSpace_LMS` (Stitch export lives in `design/stitch/`: ~85 screen folders, each with `.html` + `.png`)
 
 ---
 
@@ -174,7 +174,7 @@ Antigravity's edge is the browser tool — it can run your app, screenshot it, a
 
 ```
 Repo context: Next.js 15 + Tailwind v4 + shadcn/ui LMS. Design source of truth is
-the Stitch export in the repo root — each folder has an HTML file and a PNG render.
+the Stitch export in design/stitch/ — each folder has an HTML file and a PNG render.
 Specs are in /docs/.
 
 TASK: bring the implemented screens to visual parity with the Stitch designs, and
