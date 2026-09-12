@@ -150,6 +150,8 @@ model Lesson {
   videoUrl      String?       // MVP: unlisted YouTube/Vimeo embed URL
   bodyContent   String?       // reading-type lesson content (markdown)
   description   String?
+  assessmentId  String?       @unique // M4.5 — makes a QUIZ-type lesson meaningful; @unique because one Assessment belongs to at most one quiz lesson
+  assessment    Assessment?   @relation(fields: [assessmentId], references: [id])
 
   progress      LessonProgress[]
   resources     Resource[]
@@ -382,6 +384,7 @@ model Assessment {
 
   questions             Question[]
   attempts              Attempt[]
+  lesson                Lesson? // back-relation for M4.5's Lesson.assessmentId
 }
 
 model Question {

@@ -64,7 +64,10 @@ const FORGE_DATA_ANALYST_MODULES: ModuleDef[] = [
       { title: "The Data Lifecycle Explained", type: LessonType.VIDEO, order: 2, durationMins: 15 },
       { title: "Data Sources and Collection", type: LessonType.READING, order: 3 },
       { title: "Data Quality Fundamentals", type: LessonType.READING, order: 4 },
-      { title: "Foundational Quiz", type: LessonType.QUIZ, order: 5 },
+      // M4.5 — was QUIZ with no backing Assessment in this module; no
+      // assessment exists to link, and authoring a whole new question bank
+      // isn't proportionate here, so this converts to READING (see report).
+      { title: "Data Lifecycle Recap", type: LessonType.READING, order: 5 },
     ],
   },
   {
@@ -76,6 +79,10 @@ const FORGE_DATA_ANALYST_MODULES: ModuleDef[] = [
       { title: "Joins and Aggregations", type: LessonType.READING, order: 3 },
       { title: "SQL Optimization Techniques", type: LessonType.VIDEO, order: 4, durationMins: 16 },
       { title: "Practice: SQL Q&A", type: LessonType.READING, order: 5 },
+      // M4.5 — this module already owns sqlAssessment ("SQL Fundamentals
+      // Assessment") below but had no QUIZ lesson pointing at it. Linked via
+      // assessmentId right after the assessment is created.
+      { title: "SQL Fundamentals Assessment", type: LessonType.QUIZ, order: 6 },
     ],
   },
   {
@@ -96,7 +103,9 @@ const FORGE_DATA_ANALYST_MODULES: ModuleDef[] = [
       { title: "Data Cleaning Techniques", type: LessonType.VIDEO, order: 2, durationMins: 19 },
       { title: "Data Validation & Quality Checks", type: LessonType.READING, order: 3 },
       { title: "Outlier Detection", type: LessonType.READING, order: 4 },
-      { title: "Module Quiz", type: LessonType.QUIZ, order: 5 },
+      // M4.5 — same reasoning as "Data Lifecycle Recap" above: no backing
+      // Assessment exists for this module, converted to READING.
+      { title: "Data Cleaning Recap", type: LessonType.READING, order: 5 },
     ],
   },
 ];
@@ -261,8 +270,14 @@ async function main(): Promise<void> {
   const lessonIdsByProgramAndTitle = new Map<string, string>();
   const moduleIdByProgramAndTitle = new Map<string, string>();
 
-  async function createModules(programId: string, programSlug: string, defs: ModuleDef[]): Promise<string[]> {
-    const orderedLessonIds: string[] = [];
+  type CreatedLesson = { id: string; type: LessonType };
+
+  // Returns {id, type} (not bare ids) so callers can filter QUIZ lessons out
+  // of the generic fraction-based completion marking below — a QUIZ lesson's
+  // completion is earned by passing its linked Assessment, never fabricated
+  // by this bookkeeping loop (M4.5).
+  async function createModules(programId: string, programSlug: string, defs: ModuleDef[]): Promise<CreatedLesson[]> {
+    const orderedLessons: CreatedLesson[] = [];
     for (const moduleDef of defs) {
       const module = await prisma.module.create({
         data: {
@@ -284,14 +299,20 @@ async function main(): Promise<void> {
           },
         });
         lessonIdsByProgramAndTitle.set(`${programSlug}::${lessonDef.title}`, lesson.id);
-        orderedLessonIds.push(lesson.id);
+        orderedLessons.push({ id: lesson.id, type: lesson.type });
       }
     }
-    return orderedLessonIds;
+    return orderedLessons;
   }
 
-  const dataAnalystLessonIds = await createModules(forgeDataAnalyst.id, "fda", FORGE_DATA_ANALYST_MODULES);
-  const fullStackLessonIds = await createModules(forgeFullStack.id, "fsd", FORGE_FULL_STACK_MODULES);
+  const dataAnalystLessons = await createModules(forgeDataAnalyst.id, "fda", FORGE_DATA_ANALYST_MODULES);
+  const fullStackLessons = await createModules(forgeFullStack.id, "fsd", FORGE_FULL_STACK_MODULES);
+
+  // QUIZ lessons complete via a passing Assessment attempt (wired in further
+  // below), never via the generic fraction-based bookkeeping — filtered out
+  // here so that loop can't fabricate a "completed" quiz nobody attempted.
+  const dataAnalystLessonIds = dataAnalystLessons.filter((l) => l.type !== LessonType.QUIZ).map((l) => l.id);
+  const fullStackLessonIds = fullStackLessons.filter((l) => l.type !== LessonType.QUIZ).map((l) => l.id);
 
   // ── Batches ────────────────────────────────────────────────────
   const now = new Date();
@@ -450,11 +471,16 @@ async function main(): Promise<void> {
       },
     });
     enrollmentByLearner.set(name, enrollment);
-    for (let i = 0; i < fullStackLessonIds.length; i++) {
+    // Uses the FULL lesson list (fullStackLessons, not the QUIZ-filtered
+    // fullStackLessonIds) — these two learners are already COMPLETED with an
+    // issued certificate, predating any Attempt tracking in this seed, so
+    // their quiz lesson reads complete too without a backing Attempt row.
+    // An accepted simplification for these two fixtures, not a general rule.
+    for (const lesson of fullStackLessons) {
       await prisma.lessonProgress.create({
         data: {
           enrollmentId: enrollment.id,
-          lessonId: fullStackLessonIds[i],
+          lessonId: lesson.id,
           completed: true,
           completedAt: weeksAgo(2),
         },
@@ -491,6 +517,11 @@ async function main(): Promise<void> {
       showResultsImmediately: true,
     },
   });
+
+  // M4.5 — link the QUIZ lesson added above to this assessment.
+  const sqlQuizLessonId = lessonIdsByProgramAndTitle.get("fda::SQL Fundamentals Assessment");
+  if (!sqlQuizLessonId) throw new Error("Seed error: SQL Fundamentals Assessment lesson not found");
+  await prisma.lesson.update({ where: { id: sqlQuizLessonId }, data: { assessmentId: sqlAssessment.id } });
 
   type QuestionDef = { text: string; type: QuestionType; options: { label: string; text: string; isCorrect: boolean }[] };
   const sqlQuestionDefs: QuestionDef[] = [
@@ -594,6 +625,12 @@ async function main(): Promise<void> {
     questions: { id: string; options: { id: string; isCorrect: boolean }[] }[],
     correctMask: boolean[],
     passingScorePercent: number | null,
+    // M4.5 — when the assessment is linked to a QUIZ lesson, mirrors
+    // submitAttempt's completion rule (src/app/learn/attempts/[attemptId]/actions.ts):
+    // no threshold => complete on any submission; otherwise only a real pass
+    // marks it complete. Keeps this fixture data consistent with that rule
+    // instead of just declaring these enrollments "done" by fiat.
+    linkedLesson?: { lessonId: string; totalProgramLessons: number },
   ): Promise<void> {
     const correctCount = correctMask.filter(Boolean).length;
     const scorePercent = Math.round((correctCount / questions.length) * 1000) / 10;
@@ -622,23 +659,43 @@ async function main(): Promise<void> {
         },
       });
     }
+
+    if (linkedLesson && (passingScorePercent === null || passed === true)) {
+      await prisma.lessonProgress.upsert({
+        where: { enrollmentId_lessonId: { enrollmentId, lessonId: linkedLesson.lessonId } },
+        create: { enrollmentId, lessonId: linkedLesson.lessonId, completed: true, completedAt: weeksAgo(2) },
+        update: { completed: true, completedAt: weeksAgo(2) },
+      });
+      const completedCount = await prisma.lessonProgress.count({ where: { enrollmentId, completed: true } });
+      await prisma.enrollment.update({
+        where: { id: enrollmentId },
+        data: { progressPercent: Math.round((completedCount / linkedLesson.totalProgramLessons) * 1000) / 10 },
+      });
+    }
   }
 
-  // Alex Morgan: 7/8 correct — passing.
+  // Alex Morgan: 7/8 correct — passing. Also marks the linked "SQL
+  // Fundamentals Assessment" lesson complete (real fixture proof of the
+  // completion rule, not just narrative bookkeeping).
   await recordAttempt(
     enrollmentByLearner.get("Alex Morgan")!.id,
     sqlAssessment.id,
     sqlQuestions,
     [true, true, true, true, true, true, true, false],
     70,
+    { lessonId: sqlQuizLessonId, totalProgramLessons: dataAnalystLessons.length },
   );
-  // David Kim: 4/8 correct — failing.
+  // David Kim: 4/8 correct — failing. linkedLesson is passed for symmetry
+  // with Alex's call, but the failing score means recordAttempt's own guard
+  // skips marking the lesson complete — proving the "failed attempt does not
+  // complete the lesson" rule rather than just asserting it.
   await recordAttempt(
     enrollmentByLearner.get("David Kim")!.id,
     sqlAssessment.id,
     sqlQuestions,
     [true, false, true, false, true, false, true, false],
     70,
+    { lessonId: sqlQuizLessonId, totalProgramLessons: dataAnalystLessons.length },
   );
 
   const foundationsModuleId = moduleIdByProgramAndTitle.get("fsd::Foundations");
@@ -656,6 +713,12 @@ async function main(): Promise<void> {
       showResultsImmediately: true,
     },
   });
+
+  // M4.5 — this is the exact 1:1 match: "Foundations Quiz" the lesson and
+  // "Foundations Quiz" the assessment already live in the same module.
+  const foundationsQuizLessonId = lessonIdsByProgramAndTitle.get("fsd::Foundations Quiz");
+  if (!foundationsQuizLessonId) throw new Error("Seed error: Foundations Quiz lesson not found");
+  await prisma.lesson.update({ where: { id: foundationsQuizLessonId }, data: { assessmentId: foundationsQuiz.id } });
 
   const foundationsQuestionDefs: QuestionDef[] = [
     {
@@ -722,12 +785,16 @@ async function main(): Promise<void> {
     foundationsQuestions.push({ id: question.id, options });
   }
 
+  // Wei Zhang: 5/5, and passingScorePercent is null for this PRACTICE
+  // assessment — per the "no threshold => complete on any submission" rule,
+  // this marks the "Foundations Quiz" lesson complete regardless of score.
   await recordAttempt(
     enrollmentByLearner.get("Wei Zhang")!.id,
     foundationsQuiz.id,
     foundationsQuestions,
     [true, true, true, true, true],
     null,
+    { lessonId: foundationsQuizLessonId, totalProgramLessons: fullStackLessons.length },
   );
 
   // ── Assignments, Rubrics, Submissions, Reviews ─────────────────
