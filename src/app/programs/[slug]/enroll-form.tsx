@@ -3,6 +3,7 @@
 import { useActionState, useState } from "react";
 import { Button } from "@/components/ui/button";
 import type { EnrollableBatch } from "@/lib/queries/programs";
+import { formatDate } from "@/lib/format";
 import { enrollAction, type EnrollResult } from "./actions";
 
 type Props = {
@@ -11,10 +12,6 @@ type Props = {
 };
 
 const initialState: EnrollResult = { ok: false, error: "" };
-
-function formatDate(date: Date): string {
-  return new Date(date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-}
 
 export function EnrollForm({ programId, batches }: Props) {
   const [selectedBatchId, setSelectedBatchId] = useState<string>(batches[0]?.id ?? "");
