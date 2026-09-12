@@ -2,6 +2,13 @@ import "server-only";
 import type { LessonType } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 
+/** Derived only when a QUIZ lesson isn't yet completed — once completed, the
+ * existing green-check treatment already means "passed", so no separate
+ * badge is shown (see getProgramProgress's mapping below). This sidesteps a
+ * retake-after-pass edge case entirely: completion is what's authoritative,
+ * this is only ever a status hint for the not-yet-complete cases. */
+export type AttemptState = "not_attempted" | "in_progress" | "failed";
+
 export type LessonProgressSummary = {
   id: string;
   title: string;
@@ -9,6 +16,8 @@ export type LessonProgressSummary = {
   order: number;
   durationMins: number | null;
   completed: boolean;
+  assessmentId: string | null;
+  attemptState: AttemptState | null;
 };
 
 export type ModuleProgress = {
@@ -30,6 +39,18 @@ export type ProgramProgress = {
   completedLessons: number;
   modules: ModuleProgress[];
 };
+
+function deriveAttemptState(
+  assessmentId: string | null,
+  completed: boolean,
+  assessment: { attempts: { status: string; passed: boolean | null }[] } | null,
+): AttemptState | null {
+  if (!assessmentId || completed) return null;
+  const latest = assessment?.attempts[0];
+  if (!latest) return "not_attempted";
+  if (latest.status === "IN_PROGRESS") return "in_progress";
+  return "failed"; // graded/submitted but still not `completed` => didn't clear the bar
+}
 
 /**
  * THE shared progress calculation — every screen that shows a percentage
@@ -54,7 +75,28 @@ export async function getProgramProgress(enrollmentId: string): Promise<ProgramP
               order: true,
               lessons: {
                 orderBy: { order: "asc" },
-                select: { id: true, title: true, type: true, order: true, durationMins: true },
+                select: {
+                  id: true,
+                  title: true,
+                  type: true,
+                  order: true,
+                  durationMins: true,
+                  assessmentId: true,
+                  // Still one query — this is a bounded, nested select (at
+                  // most one QUIZ lesson per module today), not a per-lesson
+                  // loop. `enrollmentId` here is the same value already used
+                  // as this query's top-level `where`.
+                  assessment: {
+                    select: {
+                      attempts: {
+                        where: { enrollmentId },
+                        orderBy: { attemptNumber: "desc" },
+                        take: 1,
+                        select: { status: true, passed: true },
+                      },
+                    },
+                  },
+                },
               },
             },
           },
@@ -73,14 +115,19 @@ export async function getProgramProgress(enrollmentId: string): Promise<ProgramP
   let completedLessons = 0;
 
   const modules: ModuleProgress[] = enrollment.program.modules.map((programModule) => {
-    const lessons: LessonProgressSummary[] = programModule.lessons.map((lesson) => ({
-      id: lesson.id,
-      title: lesson.title,
-      type: lesson.type,
-      order: lesson.order,
-      durationMins: lesson.durationMins,
-      completed: completedLessonIds.has(lesson.id),
-    }));
+    const lessons: LessonProgressSummary[] = programModule.lessons.map((lesson) => {
+      const completed = completedLessonIds.has(lesson.id);
+      return {
+        id: lesson.id,
+        title: lesson.title,
+        type: lesson.type,
+        order: lesson.order,
+        durationMins: lesson.durationMins,
+        completed,
+        assessmentId: lesson.assessmentId,
+        attemptState: deriveAttemptState(lesson.assessmentId, completed, lesson.assessment),
+      };
+    });
 
     const moduleCompleted = lessons.filter((lesson) => lesson.completed).length;
     totalLessons += lessons.length;

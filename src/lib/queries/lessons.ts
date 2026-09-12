@@ -31,6 +31,7 @@ export type LessonDetail = {
   programSlug: string;
   notes: string | null;
   completed: boolean;
+  assessmentId: string | null;
 };
 
 /** Full lesson content plus this enrollment's notes/completion, if any. Call
@@ -48,6 +49,7 @@ export async function getLessonDetail(lessonId: string, enrollmentId: string): P
       bodyContent: true,
       description: true,
       moduleId: true,
+      assessmentId: true,
       module: {
         select: {
           title: true,
@@ -81,5 +83,6 @@ export async function getLessonDetail(lessonId: string, enrollmentId: string): P
     programSlug: lesson.module.program.slug,
     notes: progressRow?.notes ?? null,
     completed: progressRow?.completed ?? false,
+    assessmentId: lesson.assessmentId,
   };
 }

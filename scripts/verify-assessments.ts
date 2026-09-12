@@ -166,6 +166,46 @@ async function main(): Promise<void> {
     );
   }
 
+  // 9. M4.5 — every QUIZ lesson has a linked assessment, and every linked
+  // assessment resolves to the SAME program as its lesson (catches a future
+  // mis-link across programs).
+  const quizLessons = await prisma.lesson.findMany({
+    where: { type: "QUIZ" },
+    select: {
+      id: true,
+      title: true,
+      assessmentId: true,
+      module: { select: { programId: true } },
+      assessment: { select: { module: { select: { programId: true } } } },
+    },
+  });
+  const unlinked = quizLessons.filter((l) => l.assessmentId === null);
+  const mismatched = quizLessons.filter(
+    (l) => l.assessmentId !== null && l.assessment?.module.programId !== l.module.programId,
+  );
+  record(
+    "Every QUIZ lesson has a linked assessment in the SAME program",
+    quizLessons.length > 0 && unlinked.length === 0 && mismatched.length === 0,
+    `total=${quizLessons.length} unlinked=${unlinked.map((l) => l.title).join(",")} mismatched=${mismatched.map((l) => l.title).join(",")}`,
+  );
+
+  // 10. Seed fixture proof of the completion rule (M4.5 2d): Alex's linked
+  // lesson is completed (passed), David's is not (failed) — read-only.
+  const sqlQuizLesson = await prisma.lesson.findFirstOrThrow({ where: { title: "SQL Fundamentals Assessment" } });
+  const [alexLessonProgress, davidLessonProgress] = await Promise.all([
+    prisma.lessonProgress.findUnique({
+      where: { enrollmentId_lessonId: { enrollmentId: alexEnrollment.id, lessonId: sqlQuizLesson.id } },
+    }),
+    prisma.lessonProgress.findUnique({
+      where: { enrollmentId_lessonId: { enrollmentId: davidEnrollment.id, lessonId: sqlQuizLesson.id } },
+    }),
+  ]);
+  record(
+    "Seed fixture: Alex (passed) has the quiz lesson marked complete, David (failed) does not",
+    alexLessonProgress?.completed === true && (davidLessonProgress === null || davidLessonProgress.completed === false),
+    `alex=${alexLessonProgress?.completed} david=${davidLessonProgress?.completed ?? "no row"}`,
+  );
+
   console.log("verify-assessments results:\n");
   for (const check of checks) {
     console.log(`${check.pass ? "PASS" : "FAIL"}  ${check.name}${check.detail ? ` (${check.detail})` : ""}`);

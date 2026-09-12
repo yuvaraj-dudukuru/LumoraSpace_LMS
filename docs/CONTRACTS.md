@@ -36,13 +36,16 @@ only the pure predicates above them are callable from a script (see
 - `getEnrollmentWithProgram(enrollmentId: string): Promise<EnrollmentWithProgram | null>` — single lookup.
 
 ### `src/lib/queries/progress.ts` — THE shared calculation
-- `getProgramProgress(enrollmentId: string): Promise<ProgramProgress>` — one query (nested module/lesson tree + completed LessonProgress), then in-memory aggregation. `{ overallPercent, totalLessons, completedLessons, modules: ModuleProgress[] }`.
+- `getProgramProgress(enrollmentId: string): Promise<ProgramProgress>` — one query (nested module/lesson tree + completed LessonProgress +, per lesson, its linked Assessment's latest attempt for THIS enrollment — still one query, a bounded nested select, not a per-lesson loop), then in-memory aggregation. `{ overallPercent, totalLessons, completedLessons, modules: ModuleProgress[] }`. Each `LessonProgressSummary` now also carries `assessmentId` and `attemptState: AttemptState | null` (M4.5) — `"not_attempted" | "in_progress" | "failed"`, or `null` when the lesson isn't a linked quiz OR is already `completed` (the existing checkmark already means "passed"; no separate badge then).
 - `findNextIncompleteLesson(progress: ProgramProgress): { moduleId; lesson } | null` — pure, no query.
 - `flattenLessons(progress: ProgramProgress): LessonProgressSummary[]` — pure, no query; used for prev/next nav.
 
+### `src/lib/progress-rollup.ts` — M4.5
+- `refreshEnrollmentProgress(enrollmentId: string): Promise<ProgramProgress>` — THE rollup: `getProgramProgress` then caches `overallPercent` onto `Enrollment.progressPercent`. Both `markLessonComplete` and `submitAttempt`'s quiz-completion step call this instead of each inlining it — do not duplicate this logic a third time.
+
 ### `src/lib/queries/lessons.ts`
 - `resolveLessonProgram(lessonId: string): Promise<{ programId; moduleId } | null>` — cheap lookup for guards, called BEFORE `requireGrantedEnrollment`.
-- `getLessonDetail(lessonId: string, enrollmentId: string): Promise<LessonDetail | null>` — full content + this enrollment's notes/completed. Call only after a guard produced `enrollmentId`.
+- `getLessonDetail(lessonId: string, enrollmentId: string): Promise<LessonDetail | null>` — full content + this enrollment's notes/completed + `assessmentId` (M4.5, nullable). Call only after a guard produced `enrollmentId`. Does NOT itself fetch assessment details — callers with a non-null `assessmentId` call `getAssessmentOverview` separately (reused verbatim, not re-derived).
 
 ### `src/lib/queries/dashboard.ts`
 - `getDashboardData(userId: string): Promise<DashboardData>` — `DashboardData` is `null` when no GRANTED+ACTIVE enrollment exists (render empty state). Otherwise: learner name/streak, `ProgramProgress`, next incomplete lesson, next unsubmitted assignment by nearest `dueAt`, last-5 merged activity feed (completed lessons + submitted assignments).
@@ -57,8 +60,8 @@ only the pure predicates above them are callable from a script (see
 
 ### `src/lib/queries/assessments.ts`
 - `resolveAssessmentProgram(assessmentId: string): Promise<{ programId; moduleId } | null>` — cheap lookup for guards, called BEFORE `requireGrantedEnrollment`. Mirrors `resolveLessonProgram`.
-- `getAssessmentOverview(assessmentId: string, enrollmentId: string): Promise<AssessmentOverview | null>` — title/time-limit/question-count/`allowedAttempts` + this enrollment's finished-attempt count + an in-progress attempt id if one exists. Powers the pre-attempt page.
-- `getAttemptForGuard(attemptId: string): Promise<AttemptGuardInfo | null>` — one query joining the attempt to its assessment/module/program; used by every attempt-scoped action AND the attempt page to decide ownership, expiry, and which view to render.
+- `getAssessmentOverview(assessmentId: string, enrollmentId: string): Promise<AssessmentOverview | null>` — title/time-limit/question-count/`allowedAttempts` + this enrollment's finished-attempt count + an in-progress attempt id if one exists + (M4.5) `programId`/`programName`/`moduleTitle`/`lesson: {id,title} | null` for breadcrumbs. Powers the pre-attempt page AND the lesson page's QUIZ content (reused as-is, not re-derived).
+- `getAttemptForGuard(attemptId: string): Promise<AttemptGuardInfo | null>` — one query joining the attempt to its assessment/module/program + (M4.5) `lessonId: string | null` if the assessment is linked to a quiz lesson; used by every attempt-scoped action AND the attempt page to decide ownership, expiry, and which view to render.
 - `getLiveAttemptQuestions(assessmentId, attemptId, shuffle): Promise<LiveAttemptQuestion[]>` — questions in **seeded-shuffle order** (see Rules below) merged with saved `Answer` rows. Never selects `isCorrect`/`explanation` from the DB — not merely hidden client-side, actually absent from the query, for an IN_PROGRESS attempt.
 - `getGradedAttemptQuestions(assessmentId, attemptId, shuffle): Promise<GradedAttemptQuestion[]>` — same, but includes `isCorrect`/`explanation`. Callers only invoke this when `Assessment.showResultsImmediately` is true.
 
@@ -76,12 +79,12 @@ only the pure predicates above them are callable from a script (see
 | `/learn` (page) | `requireUser` | `getDashboardData` |
 | `/learn/my-learning` | `requireUser` | `getEnrollmentsForUser`, then `getProgramProgress` per GRANTED enrollment |
 | `/learn/programs/[programId]` | `requireGrantedEnrollment(programId)` | `getProgramProgress` |
-| `/learn/lessons/[lessonId]` | `resolveLessonProgram` then `requireGrantedEnrollment` | `getLessonDetail`, `getProgramProgress` (for sidebar/prev-next via `flattenLessons`) |
-| `/learn/lessons/[lessonId]` → `markLessonComplete` | `resolveLessonProgram` then `requireGrantedEnrollment` | upserts `LessonProgress`, recomputes `getProgramProgress`, caches onto `Enrollment.progressPercent` |
+| `/learn/lessons/[lessonId]` | `resolveLessonProgram` then `requireGrantedEnrollment` | `getLessonDetail`, `getProgramProgress` (sidebar/prev-next via `flattenLessons`), + `getAssessmentOverview` when `lesson.assessmentId` is set (QUIZ lessons only) |
+| `/learn/lessons/[lessonId]` → `markLessonComplete` | `resolveLessonProgram` then `requireGrantedEnrollment` | upserts `LessonProgress`, calls `refreshEnrollmentProgress`. Not rendered at all for `QUIZ` lessons — see the completion rule below |
 | `/learn/lessons/[lessonId]` → `saveLessonNotes` | same as above | upserts `LessonProgress.notes` |
 | `/learn/progress` | `requireUser` | `getEnrollmentsForUser`, `getLearningHoursStats`, `getCertificatesForUser`, `getProgramProgress` per GRANTED enrollment |
 | `/learn/assessments/[assessmentId]` | `requireGrantedEnrollment` (via `resolveAssessmentProgram`) | `getAssessmentOverview`; `startAttempt` Server Action resumes an `IN_PROGRESS` attempt or creates the next `attemptNumber`, rejecting when `allowedAttempts` is exhausted |
-| `/learn/attempts/[attemptId]` | `getAttemptForGuard` → `requireGrantedEnrollment` → verify `attempt.enrollmentId` matches | `getLiveAttemptQuestions` (in progress) or `getGradedAttemptQuestions`/none (graded, per `showResultsImmediately`); `saveAnswer`/`toggleFlag`/`submitAttempt` Server Actions, each independently re-authorizing (see Rules) |
+| `/learn/attempts/[attemptId]` | `getAttemptForGuard` → `requireGrantedEnrollment` → verify `attempt.enrollmentId` matches | `getLiveAttemptQuestions` (in progress) or `getGradedAttemptQuestions`/none (graded, per `showResultsImmediately`); `saveAnswer`/`toggleFlag`/`submitAttempt` Server Actions, each independently re-authorizing (see Rules). `submitAttempt` also completes the linked `QUIZ` lesson per the completion rule below, via `refreshEnrollmentProgress` |
 | `/learn/certificates` | `requireUser` | `getCertificatesForUser` |
 | `/learn/certificates/[id]` | `requireUser`, then verify `certificate.userId === user.id` (`forbidden()` otherwise) | `getCertificateDetailForUser` |
 | `/verify/[certificateNumber]` | **none — PUBLIC**, no `/learn` chrome | `getCertificateForVerification`; not-found/`REVOKED` render an inline negative-result panel, never `notFound()`/a thrown error |
@@ -96,6 +99,7 @@ only the pure predicates above them are callable from a script (see
 - **Shuffled question order is derived, not stored.** There is no `Attempt.questionOrder` column. `getLiveAttemptQuestions`/`getGradedAttemptQuestions` run `seededShuffle(questions, attemptId)` when `Assessment.shuffleQuestions` is true — `attemptId` never changes after creation, so the same order comes back on every load with zero persisted state. Do not add a stored-order column without removing this derivation (they'd disagree).
 - **The attempt deadline is always recomputed server-side** as `Attempt.startedAt + Assessment.timeLimitMins`, never read from the client. `/learn/attempts/[attemptId]`'s page checks this on every load and grades-in-place (calls the same `submitAttempt` the Submit button calls) if it's already passed, before rendering anything. The client's countdown is cosmetic.
 - **`CODE_SNIPPET` questions are never auto-graded.** `submitAttempt`'s grading sums `Question.points` only over `MULTIPLE_CHOICE`/`TRUE_FALSE`; a `CODE_SNIPPET` answer's `freeTextAnswer` is stored but contributes nothing to `scorePercent`. `status` still becomes `GRADED` — there is no "awaiting manual review" `AttemptStatus`. A future grading UI would query `GRADED` attempts' `Answer` rows where `Question.type = CODE_SNIPPET`.
+- **A `QUIZ` lesson completes itself (M4.5).** When `Lesson.assessmentId` is set, `submitAttempt` marks that lesson's `LessonProgress.completed = true` iff `Assessment.passingScorePercent === null` (no threshold — any submission counts) OR the attempt's `passed === true`. A failed attempt (a threshold exists and wasn't met) does nothing — no upsert, and it does NOT un-mark a lesson completed by an earlier passing attempt (completion is monotonic; a later failed retake never revokes an earlier pass). The manual "Mark as Complete" button (`markLessonComplete`) is not rendered at all for `QUIZ` lessons. Both paths call `refreshEnrollmentProgress` (`src/lib/progress-rollup.ts`) — never recompute the rollup inline a third way.
 
 ## 4. Known gaps (schema does not model these — do not fabricate)
 
@@ -103,5 +107,6 @@ only the pure predicates above them are callable from a script (see
 - **Real time tracking** — no session/duration log; see Learning Hours rule above.
 - **Program categories** — `Program` has no category/tag field; catalog filter chips are not built.
 - **"Saved" enrollment state** — My Learning's Stitch reference shows a Saved tab; no backing field exists (`EnrollmentStatus` has no SAVED value). Dropped, not faked.
-- **Assessments have no curriculum entry point.** `Assessment.moduleId` hangs off `Module` directly, not off a `Lesson` — a `Lesson` with `type: QUIZ` has no FK to an `Assessment`. M4 3a built `/learn/assessments/[assessmentId]` and the attempt flow, but nothing links to it from `CurriculumAccordion` or the lesson page yet; it's only reachable by direct URL. Wiring that up needs a product decision on where the link belongs (module-level vs. replacing the `QUIZ` lesson-type row) — not assumed here.
 - **Assignment-taking UI** — still unbuilt (M4 scope was assessments + certificates only, not assignments).
+
+~~Assessments have no curriculum entry point~~ — resolved in M4.5: `Lesson.assessmentId` (optional, unique FK) links a `QUIZ` lesson to its `Assessment`; `CurriculumAccordion` and the lesson page both surface it now. Two of the seed's three original `QUIZ` lessons had no backing `Assessment` at all and were converted to `READING` rather than authoring new question banks (see `prisma/seed.ts` comments near `FORGE_DATA_ANALYST_MODULES`) — a program can still have a `QUIZ` lesson with a null `assessmentId` at the schema level; both the lesson page and `getProgramProgress`'s `attemptState` derivation handle that (`null`) gracefully rather than assuming it can't happen.

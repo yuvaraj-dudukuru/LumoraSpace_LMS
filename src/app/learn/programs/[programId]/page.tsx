@@ -22,6 +22,7 @@ export default async function ProgramCurriculumPage({
       title: lesson.title,
       type: lesson.type,
       completed: lesson.completed,
+      attemptState: lesson.attemptState,
     })),
   }));
 

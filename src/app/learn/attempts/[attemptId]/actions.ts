@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { requireGrantedEnrollment } from "@/lib/auth-guards";
 import { getAttemptForGuard, type AttemptGuardInfo } from "@/lib/queries/assessments";
 import { saveAnswerSchema } from "@/lib/validations/assessment";
+import { refreshEnrollmentProgress } from "@/lib/progress-rollup";
 import { prisma } from "@/lib/prisma";
 
 type AuthorizedAttempt = { ok: true; attempt: AttemptGuardInfo } | { ok: false; error: string };
@@ -126,7 +127,57 @@ export async function submitAttempt(attemptId: string): Promise<SubmitAttemptRes
 
   const result = await gradeAttempt(attemptId, auth.attempt.assessmentId, auth.attempt.passingScorePercent);
   revalidatePath(`/learn/attempts/${attemptId}`);
+
+  if (auth.attempt.lessonId) {
+    await markQuizLessonIfComplete({
+      lessonId: auth.attempt.lessonId,
+      enrollmentId: auth.attempt.enrollmentId,
+      programId: auth.attempt.programId,
+      passingScorePercent: auth.attempt.passingScorePercent,
+      passed: result.passed,
+    });
+  }
+
   return result;
+}
+
+/** A QUIZ lesson completes automatically on a passing attempt — or on ANY
+ * submission when the assessment has no passingScorePercent at all. A
+ * failed attempt (a threshold exists and wasn't met) does nothing: no
+ * upsert, and — deliberately — no un-marking a lesson a learner already
+ * completed on an earlier attempt. The spec doesn't address a later failed
+ * retake after an earlier pass; revoking felt like the more surprising
+ * choice, so completion here is monotonic. Reuses refreshEnrollmentProgress
+ * — the exact rollup markLessonComplete uses — rather than recomputing it. */
+async function markQuizLessonIfComplete({
+  lessonId,
+  enrollmentId,
+  programId,
+  passingScorePercent,
+  passed,
+}: {
+  lessonId: string;
+  enrollmentId: string;
+  programId: string;
+  passingScorePercent: number | null;
+  passed: boolean | null;
+}): Promise<void> {
+  const isComplete = passingScorePercent === null || passed === true;
+  if (!isComplete) return;
+
+  await prisma.lessonProgress.upsert({
+    where: { enrollmentId_lessonId: { enrollmentId, lessonId } },
+    create: { enrollmentId, lessonId, completed: true, completedAt: new Date() },
+    update: { completed: true, completedAt: new Date() },
+  });
+
+  await refreshEnrollmentProgress(enrollmentId);
+
+  revalidatePath(`/learn/lessons/${lessonId}`);
+  revalidatePath(`/learn/programs/${programId}`);
+  revalidatePath("/learn");
+  revalidatePath("/learn/my-learning");
+  revalidatePath("/learn/progress");
 }
 
 /** Auto-grades MULTIPLE_CHOICE/TRUE_FALSE (points-weighted) against

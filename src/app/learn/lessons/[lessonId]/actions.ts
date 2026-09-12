@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { requireGrantedEnrollment } from "@/lib/auth-guards";
 import { resolveLessonProgram } from "@/lib/queries/lessons";
-import { getProgramProgress } from "@/lib/queries/progress";
+import { refreshEnrollmentProgress } from "@/lib/progress-rollup";
 import { lessonNotesSchema } from "@/lib/validations/lesson";
 import { prisma } from "@/lib/prisma";
 
@@ -23,11 +23,7 @@ export async function markLessonComplete(lessonId: string): Promise<MarkComplete
     update: { completed: true, completedAt: new Date() },
   });
 
-  const progress = await getProgramProgress(enrollment.id);
-  await prisma.enrollment.update({
-    where: { id: enrollment.id },
-    data: { progressPercent: progress.overallPercent },
-  });
+  const progress = await refreshEnrollmentProgress(enrollment.id);
 
   revalidatePath(`/learn/lessons/${lessonId}`);
   revalidatePath(`/learn/programs/${resolved.programId}`);

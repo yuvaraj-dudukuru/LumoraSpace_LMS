@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ChevronDown, Check, PlayCircle, FileText, HelpCircle } from "lucide-react";
+import { ChevronDown, Check, PlayCircle, FileText, FileQuestion } from "lucide-react";
 import type { LessonType } from "@prisma/client";
+import type { AttemptState } from "@/lib/queries/progress";
 
 export type CurriculumLesson = {
   id: string;
@@ -11,6 +12,10 @@ export type CurriculumLesson = {
   description?: string | null;
   type: LessonType;
   completed?: boolean;
+  /** Only meaningful for QUIZ lessons in "learner" mode; null once completed
+   * (the checkmark already means "passed") or when there's no linked
+   * assessment. See queries/progress.ts's deriveAttemptState. */
+  attemptState?: AttemptState | null;
 };
 
 export type CurriculumModuleData = {
@@ -33,7 +38,19 @@ type Props = {
 const LESSON_ICON: Record<LessonType, typeof PlayCircle> = {
   VIDEO: PlayCircle,
   READING: FileText,
-  QUIZ: HelpCircle,
+  QUIZ: FileQuestion,
+};
+
+const ATTEMPT_STATE_LABEL: Record<AttemptState, string> = {
+  not_attempted: "Not attempted",
+  in_progress: "In progress",
+  failed: "Failed",
+};
+
+const ATTEMPT_STATE_STYLE: Record<AttemptState, string> = {
+  not_attempted: "bg-surface-container text-on-surface-variant",
+  in_progress: "bg-warning-container text-warning",
+  failed: "bg-error-container text-on-error-container",
 };
 
 export function CurriculumAccordion({ modules, mode, defaultOpenModuleId }: Props) {
@@ -105,7 +122,16 @@ export function CurriculumAccordion({ modules, mode, defaultOpenModuleId }: Prop
                           <Icon className="mt-xs h-5 w-5 shrink-0 text-primary" />
                         )}
                         <div>
-                          <h4 className="font-label-md text-label-md text-on-surface">{lesson.title}</h4>
+                          <div className="flex items-center gap-sm">
+                            <h4 className="font-label-md text-label-md text-on-surface">{lesson.title}</h4>
+                            {mode === "learner" && lesson.type === "QUIZ" && lesson.attemptState ? (
+                              <span
+                                className={`rounded-full px-sm py-xs font-label-sm text-label-sm ${ATTEMPT_STATE_STYLE[lesson.attemptState]}`}
+                              >
+                                {ATTEMPT_STATE_LABEL[lesson.attemptState]}
+                              </span>
+                            ) : null}
+                          </div>
                           {lesson.description ? (
                             <p className="mt-xs font-body-md text-sm text-on-surface-variant">
                               {lesson.description}

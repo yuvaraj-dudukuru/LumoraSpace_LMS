@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ChevronRight, Check, PlayCircle, FileText, HelpCircle } from "lucide-react";
+import { ChevronRight, Check, PlayCircle, FileText, FileQuestion, Clock } from "lucide-react";
 import { requireGrantedEnrollment } from "@/lib/auth-guards";
 import { resolveLessonProgram, getLessonDetail } from "@/lib/queries/lessons";
 import { getProgramProgress, flattenLessons } from "@/lib/queries/progress";
+import { getAssessmentOverview, type AssessmentOverview } from "@/lib/queries/assessments";
 import { MarkCompleteButton } from "./mark-complete-button";
 import { NotesPanel } from "./notes-panel";
 
@@ -20,6 +21,10 @@ export default async function LessonPage({ params }: { params: Promise<{ lessonI
     getProgramProgress(enrollment.id),
   ]);
   if (!lesson) notFound();
+
+  const assessmentOverview = lesson.assessmentId
+    ? await getAssessmentOverview(lesson.assessmentId, enrollment.id)
+    : null;
 
   const orderedLessons = flattenLessons(progress);
   const currentIndex = orderedLessons.findIndex((item) => item.id === lessonId);
@@ -39,7 +44,7 @@ export default async function LessonPage({ params }: { params: Promise<{ lessonI
           <span className="text-on-surface">{lesson.title}</span>
         </nav>
 
-        <LessonContent lesson={lesson} />
+        <LessonContent lesson={lesson} assessmentOverview={assessmentOverview} />
 
         <div className="flex flex-col gap-md md:flex-row md:items-start md:justify-between">
           <div className="flex flex-col gap-xs">
@@ -53,7 +58,9 @@ export default async function LessonPage({ params }: { params: Promise<{ lessonI
               </span>
             ) : null}
           </div>
-          <MarkCompleteButton lessonId={lessonId} initiallyCompleted={lesson.completed} />
+          {lesson.type !== "QUIZ" ? (
+            <MarkCompleteButton lessonId={lessonId} initiallyCompleted={lesson.completed} />
+          ) : null}
         </div>
 
         {lesson.description ? (
@@ -85,7 +92,7 @@ export default async function LessonPage({ params }: { params: Promise<{ lessonI
           </p>
           <ul className="flex flex-col gap-xs">
             {orderedLessons.map((item) => {
-              const Icon = item.type === "VIDEO" ? PlayCircle : item.type === "READING" ? FileText : HelpCircle;
+              const Icon = item.type === "VIDEO" ? PlayCircle : item.type === "READING" ? FileText : FileQuestion;
               const isActive = item.id === lessonId;
               return (
                 <li key={item.id}>
@@ -110,7 +117,13 @@ export default async function LessonPage({ params }: { params: Promise<{ lessonI
   );
 }
 
-function LessonContent({ lesson }: { lesson: Awaited<ReturnType<typeof getLessonDetail>> }) {
+function LessonContent({
+  lesson,
+  assessmentOverview,
+}: {
+  lesson: Awaited<ReturnType<typeof getLessonDetail>>;
+  assessmentOverview: AssessmentOverview | null;
+}) {
   if (!lesson) return null;
 
   if (lesson.type === "VIDEO") {
@@ -144,15 +157,47 @@ function LessonContent({ lesson }: { lesson: Awaited<ReturnType<typeof getLesson
     );
   }
 
-  // QUIZ — assessment-taking UI isn't built yet (M3 is lessons, not
-  // assessments); linking to the curriculum page rather than pretending a
-  // quiz-taking flow exists here.
+  // QUIZ — schema-legal for a QUIZ lesson to have no linked assessment
+  // (Lesson.assessmentId is nullable), even though the seed avoids it.
+  if (!assessmentOverview) {
+    return (
+      <div className="flex flex-col items-center gap-md rounded-2xl border border-outline-variant/30 bg-surface p-xl text-center">
+        <FileQuestion className="h-8 w-8 text-primary" />
+        <p className="font-body-md text-body-md text-on-surface-variant">
+          This lesson is a quiz, but it isn&apos;t linked to an assessment yet.
+        </p>
+      </div>
+    );
+  }
+
+  const ctaLabel = assessmentOverview.inProgressAttemptId
+    ? "Resume Assessment"
+    : assessmentOverview.finishedAttemptCount > 0
+      ? "View Assessment"
+      : "Start Assessment";
+
   return (
-    <div className="flex flex-col items-center gap-md rounded-2xl border border-outline-variant/30 bg-surface p-xl text-center">
-      <HelpCircle className="h-8 w-8 text-primary" />
-      <p className="font-body-md text-body-md text-on-surface-variant">
-        This lesson is a quiz. The quiz-taking experience isn&apos;t built yet.
-      </p>
+    <div className="flex flex-col items-center gap-lg rounded-2xl border border-outline-variant/30 bg-surface p-xl text-center">
+      <FileQuestion className="h-8 w-8 text-primary" />
+      <h3 className="font-title-lg text-title-lg text-on-surface">{assessmentOverview.title}</h3>
+      <div className="flex flex-wrap items-center justify-center gap-lg font-label-md text-label-md text-on-surface-variant">
+        <span className="flex items-center gap-xs">
+          <Clock className="h-4 w-4" />
+          {assessmentOverview.timeLimitMins ? `${assessmentOverview.timeLimitMins} min` : "No time limit"}
+        </span>
+        <span>{assessmentOverview.questionCount} questions</span>
+        <span>
+          {assessmentOverview.allowedAttempts === 0
+            ? `${assessmentOverview.finishedAttemptCount} attempts taken`
+            : `${assessmentOverview.finishedAttemptCount} / ${assessmentOverview.allowedAttempts} attempts used`}
+        </span>
+      </div>
+      <Link
+        href={`/learn/assessments/${assessmentOverview.id}`}
+        className="rounded-full bg-primary px-lg py-sm font-label-md text-label-md text-on-primary transition-colors hover:bg-primary-container hover:text-on-primary-container"
+      >
+        {ctaLabel}
+      </Link>
     </div>
   );
 }

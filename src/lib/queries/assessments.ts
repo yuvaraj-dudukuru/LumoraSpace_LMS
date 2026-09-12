@@ -26,10 +26,14 @@ export type AssessmentOverview = {
   questionCount: number;
   finishedAttemptCount: number;
   inProgressAttemptId: string | null;
+  programId: string;
+  programName: string;
+  moduleTitle: string;
+  lesson: { id: string; title: string } | null;
 };
 
-/** Powers the pre-attempt page: one query (assessment + this enrollment's
- * attempts + a question count), no N+1. */
+/** Powers the pre-attempt page: one query (assessment + module/program +
+ * linked lesson + this enrollment's attempts + a question count), no N+1. */
 export async function getAssessmentOverview(
   assessmentId: string,
   enrollmentId: string,
@@ -47,6 +51,14 @@ export async function getAssessmentOverview(
         where: { enrollmentId },
         select: { id: true, status: true },
       },
+      module: {
+        select: {
+          title: true,
+          programId: true,
+          program: { select: { name: true } },
+        },
+      },
+      lesson: { select: { id: true, title: true } },
     },
   });
   if (!assessment) return null;
@@ -65,6 +77,10 @@ export async function getAssessmentOverview(
     questionCount: assessment._count.questions,
     finishedAttemptCount,
     inProgressAttemptId: inProgress?.id ?? null,
+    programId: assessment.module.programId,
+    programName: assessment.module.program.name,
+    moduleTitle: assessment.module.title,
+    lesson: assessment.lesson,
   };
 }
 
@@ -79,6 +95,7 @@ export type AttemptGuardInfo = {
   assessmentId: string;
   moduleId: string;
   programId: string;
+  lessonId: string | null;
   title: string;
   timeLimitMins: number | null;
   allowedAttempts: number;
@@ -111,6 +128,7 @@ export async function getAttemptForGuard(attemptId: string): Promise<AttemptGuar
           passingScorePercent: true,
           moduleId: true,
           module: { select: { programId: true } },
+          lesson: { select: { id: true } },
         },
       },
     },
@@ -125,6 +143,7 @@ export async function getAttemptForGuard(attemptId: string): Promise<AttemptGuar
     submittedAt: attempt.submittedAt,
     scorePercent: attempt.scorePercent,
     passed: attempt.passed,
+    lessonId: attempt.assessment.lesson?.id ?? null,
     assessmentId: attempt.assessmentId,
     moduleId: attempt.assessment.moduleId,
     programId: attempt.assessment.module.programId,
