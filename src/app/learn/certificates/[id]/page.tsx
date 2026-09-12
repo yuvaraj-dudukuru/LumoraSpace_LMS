@@ -49,7 +49,7 @@ export default async function CertificateDetailPage({ params }: { params: Promis
       {/* Certificate visual — built from our own components/tokens, not copied
           from the Stitch reference (design/stitch/certificate_detail_lum_2026_00124). */}
       <div className="rounded-2xl border-4 border-double border-primary/30 bg-surface p-2xl text-center shadow-sm">
-        <p className="font-label-sm text-label-sm uppercase tracking-[0.3em] text-on-surface-variant">
+        <p className="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant">
           LumoraSpace
         </p>
         <h2 className="mt-lg font-display-lg-mobile text-display-lg-mobile text-on-surface lg:font-display-lg lg:text-display-lg">
