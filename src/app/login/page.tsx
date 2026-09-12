@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useTransition, type FormEvent } from "react";
+import { Suspense, useState, useTransition, type FormEvent } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { loginSchema } from "@/lib/validations/auth";
 import { Button } from "@/components/ui/button";
@@ -13,8 +13,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 // Generic on purpose — never reveal whether an email exists.
 const GENERIC_ERROR = "Invalid email or password";
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
+  // useSearchParams needs a Suspense boundary (see default export below).
+  const searchParams = useSearchParams();
+  const returnTo = searchParams.get("returnTo") || "/";
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
@@ -42,8 +45,9 @@ export default function LoginPage() {
         setError(GENERIC_ERROR);
         return;
       }
-      // Land on "/" and let middleware route to the caller's role home.
-      router.push("/");
+      // Land on returnTo (or "/") and let middleware route to the caller's
+      // role home if returnTo isn't reachable for them.
+      router.push(returnTo);
       router.refresh();
     });
   }
@@ -99,7 +103,7 @@ export default function LoginPage() {
             type="button"
             variant="outline"
             className="w-full"
-            onClick={() => signIn("google", { redirectTo: "/" })}
+            onClick={() => signIn("google", { redirectTo: returnTo })}
           >
             Continue with Google
           </Button>
@@ -113,5 +117,13 @@ export default function LoginPage() {
         </CardContent>
       </Card>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense>
+      <LoginForm />
+    </Suspense>
   );
 }
