@@ -24,10 +24,9 @@ import {
   CertificateStatus,
 } from "@prisma/client";
 import bcrypt from "bcryptjs";
+import { DEV_PASSWORD } from "./dev-password";
 
 const prisma = new PrismaClient();
-
-const DEV_PASSWORD = "LumoraDev123!";
 
 async function resetDomainData(): Promise<void> {
   await prisma.rubricScore.deleteMany();
