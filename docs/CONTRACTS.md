@@ -50,6 +50,16 @@ only the pure predicates above them are callable from a script (see
 ### `src/lib/queries/certificates.ts`
 - `getCertificatesForUser(userId: string): Promise<LearnerCertificate[]>`.
 
+### `src/lib/shuffle.ts` — pure, no DB
+- `seededShuffle<T>(items: T[], seed: string): T[]` — string-hash → mulberry32 PRNG → sort-key shuffle. Same `seed` always reproduces the same permutation.
+
+### `src/lib/queries/assessments.ts`
+- `resolveAssessmentProgram(assessmentId: string): Promise<{ programId; moduleId } | null>` — cheap lookup for guards, called BEFORE `requireGrantedEnrollment`. Mirrors `resolveLessonProgram`.
+- `getAssessmentOverview(assessmentId: string, enrollmentId: string): Promise<AssessmentOverview | null>` — title/time-limit/question-count/`allowedAttempts` + this enrollment's finished-attempt count + an in-progress attempt id if one exists. Powers the pre-attempt page.
+- `getAttemptForGuard(attemptId: string): Promise<AttemptGuardInfo | null>` — one query joining the attempt to its assessment/module/program; used by every attempt-scoped action AND the attempt page to decide ownership, expiry, and which view to render.
+- `getLiveAttemptQuestions(assessmentId, attemptId, shuffle): Promise<LiveAttemptQuestion[]>` — questions in **seeded-shuffle order** (see Rules below) merged with saved `Answer` rows. Never selects `isCorrect`/`explanation` from the DB — not merely hidden client-side, actually absent from the query, for an IN_PROGRESS attempt.
+- `getGradedAttemptQuestions(assessmentId, attemptId, shuffle): Promise<GradedAttemptQuestion[]>` — same, but includes `isCorrect`/`explanation`. Callers only invoke this when `Assessment.showResultsImmediately` is true.
+
 ### `src/lib/queries/activity.ts`
 - `getLearningHoursStats(userId: string): Promise<LearningHoursStats>` — `{ totalHours, weeklyActivity }`, see Known Gaps.
 
@@ -68,6 +78,8 @@ only the pure predicates above them are callable from a script (see
 | `/learn/lessons/[lessonId]` → `markLessonComplete` | `resolveLessonProgram` then `requireGrantedEnrollment` | upserts `LessonProgress`, recomputes `getProgramProgress`, caches onto `Enrollment.progressPercent` |
 | `/learn/lessons/[lessonId]` → `saveLessonNotes` | same as above | upserts `LessonProgress.notes` |
 | `/learn/progress` | `requireUser` | `getEnrollmentsForUser`, `getLearningHoursStats`, `getCertificatesForUser`, `getProgramProgress` per GRANTED enrollment |
+| `/learn/assessments/[assessmentId]` | `requireGrantedEnrollment` (via `resolveAssessmentProgram`) | `getAssessmentOverview`; `startAttempt` Server Action resumes an `IN_PROGRESS` attempt or creates the next `attemptNumber`, rejecting when `allowedAttempts` is exhausted |
+| `/learn/attempts/[attemptId]` | `getAttemptForGuard` → `requireGrantedEnrollment` → verify `attempt.enrollmentId` matches | `getLiveAttemptQuestions` (in progress) or `getGradedAttemptQuestions`/none (graded, per `showResultsImmediately`); `saveAnswer`/`toggleFlag`/`submitAttempt` Server Actions, each independently re-authorizing (see Rules) |
 | `/mentor`, `/admin` (layouts) | `requireRole(MENTOR, ADMIN)` / `requireRole(ADMIN)` | placeholder pages, no queries yet |
 
 ## 3. Rules
@@ -76,6 +88,9 @@ only the pure predicates above them are callable from a script (see
 - **Every Server Action re-verifies enrollment server-side.** IDs in the request (lessonId, programId, batchId) are attacker-controlled — never trust them without re-resolving and re-checking `requireGrantedEnrollment`/`requireRole` inside the action itself, even if the calling page already checked.
 - **Learning hours and weekly activity are DERIVED, not tracked.** `getLearningHoursStats` sums `Lesson.durationMins` over completed lessons — there is no time-tracking model. Label this honestly in UI copy ("Est. Learning Hours"), never as measured time.
 - **Streak comes from `User.streakDays`** — a stored counter, not derived from activity. Any screen showing a streak reads this field (via `requireUser()`'s `CurrentUser` or a direct `user.streakDays` select), never recomputed.
+- **Shuffled question order is derived, not stored.** There is no `Attempt.questionOrder` column. `getLiveAttemptQuestions`/`getGradedAttemptQuestions` run `seededShuffle(questions, attemptId)` when `Assessment.shuffleQuestions` is true — `attemptId` never changes after creation, so the same order comes back on every load with zero persisted state. Do not add a stored-order column without removing this derivation (they'd disagree).
+- **The attempt deadline is always recomputed server-side** as `Attempt.startedAt + Assessment.timeLimitMins`, never read from the client. `/learn/attempts/[attemptId]`'s page checks this on every load and grades-in-place (calls the same `submitAttempt` the Submit button calls) if it's already passed, before rendering anything. The client's countdown is cosmetic.
+- **`CODE_SNIPPET` questions are never auto-graded.** `submitAttempt`'s grading sums `Question.points` only over `MULTIPLE_CHOICE`/`TRUE_FALSE`; a `CODE_SNIPPET` answer's `freeTextAnswer` is stored but contributes nothing to `scorePercent`. `status` still becomes `GRADED` — there is no "awaiting manual review" `AttemptStatus`. A future grading UI would query `GRADED` attempts' `Answer` rows where `Question.type = CODE_SNIPPET`.
 
 ## 4. Known gaps (schema does not model these — do not fabricate)
 
@@ -83,4 +98,5 @@ only the pure predicates above them are callable from a script (see
 - **Real time tracking** — no session/duration log; see Learning Hours rule above.
 - **Program categories** — `Program` has no category/tag field; catalog filter chips are not built.
 - **"Saved" enrollment state** — My Learning's Stitch reference shows a Saved tab; no backing field exists (`EnrollmentStatus` has no SAVED value). Dropped, not faked.
-- **Assignment/assessment-taking UI** — QUIZ-type lessons link out but don't render a quiz; M4 scope.
+- **Assessments have no curriculum entry point.** `Assessment.moduleId` hangs off `Module` directly, not off a `Lesson` — a `Lesson` with `type: QUIZ` has no FK to an `Assessment`. M4 3a built `/learn/assessments/[assessmentId]` and the attempt flow, but nothing links to it from `CurriculumAccordion` or the lesson page yet; it's only reachable by direct URL. Wiring that up needs a product decision on where the link belongs (module-level vs. replacing the `QUIZ` lesson-type row) — not assumed here.
+- **Assignment-taking UI** — still unbuilt (M4 scope was assessments + certificates only, not assignments).
