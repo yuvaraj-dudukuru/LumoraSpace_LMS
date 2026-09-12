@@ -49,6 +49,8 @@ only the pure predicates above them are callable from a script (see
 
 ### `src/lib/queries/certificates.ts`
 - `getCertificatesForUser(userId: string): Promise<LearnerCertificate[]>`.
+- `getCertificateDetailForUser(certificateId: string): Promise<CertificateDetailForUser | null>` — includes `userId` *only* so the `[id]` page can verify ownership before rendering; the page must `forbidden()` when `userId` doesn't match the caller.
+- `getCertificateForVerification(certificateNumber: string): Promise<VerifiedCertificate | null>` — backs the PUBLIC `/verify/[certificateNumber]` route. Returns **exactly** `{ learnerName, programName, issuedAt, status }`, nothing else — never add `userId`/email/batch/enrollment fields to this query or its return type.
 
 ### `src/lib/shuffle.ts` — pure, no DB
 - `seededShuffle<T>(items: T[], seed: string): T[]` — string-hash → mulberry32 PRNG → sort-key shuffle. Same `seed` always reproduces the same permutation.
@@ -80,6 +82,9 @@ only the pure predicates above them are callable from a script (see
 | `/learn/progress` | `requireUser` | `getEnrollmentsForUser`, `getLearningHoursStats`, `getCertificatesForUser`, `getProgramProgress` per GRANTED enrollment |
 | `/learn/assessments/[assessmentId]` | `requireGrantedEnrollment` (via `resolveAssessmentProgram`) | `getAssessmentOverview`; `startAttempt` Server Action resumes an `IN_PROGRESS` attempt or creates the next `attemptNumber`, rejecting when `allowedAttempts` is exhausted |
 | `/learn/attempts/[attemptId]` | `getAttemptForGuard` → `requireGrantedEnrollment` → verify `attempt.enrollmentId` matches | `getLiveAttemptQuestions` (in progress) or `getGradedAttemptQuestions`/none (graded, per `showResultsImmediately`); `saveAnswer`/`toggleFlag`/`submitAttempt` Server Actions, each independently re-authorizing (see Rules) |
+| `/learn/certificates` | `requireUser` | `getCertificatesForUser` |
+| `/learn/certificates/[id]` | `requireUser`, then verify `certificate.userId === user.id` (`forbidden()` otherwise) | `getCertificateDetailForUser` |
+| `/verify/[certificateNumber]` | **none — PUBLIC**, no `/learn` chrome | `getCertificateForVerification`; not-found/`REVOKED` render an inline negative-result panel, never `notFound()`/a thrown error |
 | `/mentor`, `/admin` (layouts) | `requireRole(MENTOR, ADMIN)` / `requireRole(ADMIN)` | placeholder pages, no queries yet |
 
 ## 3. Rules

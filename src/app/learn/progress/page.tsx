@@ -284,9 +284,10 @@ function CertificatesSection({ certificates }: { certificates: LearnerCertificat
       <h2 className="mb-md font-title-lg text-title-lg text-on-surface">Recent Certificates</h2>
       <div className="flex flex-col gap-sm">
         {shown.map((cert) => (
-          <div
+          <Link
             key={cert.id}
-            className="flex items-center gap-md rounded-xl bg-surface-container-low p-md"
+            href={`/learn/certificates/${cert.id}`}
+            className="flex items-center gap-md rounded-xl bg-surface-container-low p-md transition-colors hover:bg-surface-container"
           >
             <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded bg-secondary/10">
               <Award className="h-6 w-6 text-secondary" />
@@ -299,12 +300,12 @@ function CertificatesSection({ certificates }: { certificates: LearnerCertificat
                 Issued: {formatDate(cert.issuedAt)}
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
       {certificates.length > 2 ? (
         <Link
-          href="/learn/progress"
+          href="/learn/certificates"
           className="mt-md flex items-center gap-xs font-label-md text-label-md text-primary hover:underline"
         >
           View all certificates <ArrowRight className="h-4 w-4" />
