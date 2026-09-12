@@ -111,7 +111,7 @@ export default async function ProgressPage() {
         />
         <StatCard
           icon={<Flame className="h-7 w-7 text-primary" />}
-          value="—"
+          value={`${user.streakDays}${user.streakDays === 1 ? " Day" : " Days"}`}
           label="Current Streak"
         />
       </section>

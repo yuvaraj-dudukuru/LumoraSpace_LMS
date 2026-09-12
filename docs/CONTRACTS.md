@@ -21,7 +21,7 @@ drifts from the source, the source wins — update this file, not the other way 
 | `requireGrantedEnrollment(programId: string): Promise<Enrollment>` | same, also requires GRANTED, else `forbidden()` | **No** |
 | `requireMentorForBatch(batchId: string): Promise<CurrentUser>` | user, else `forbidden()` | **No** |
 
-`CurrentUser = { id, name, email, role, onboardingComplete }`. The `require*`
+`CurrentUser = { id, name, email, role, onboardingComplete, streakDays }`. The `require*`
 functions need `next/navigation`'s request context (`forbidden`/`redirect`) —
 only the pure predicates above them are callable from a script (see
 `scripts/verify-guards.ts`).

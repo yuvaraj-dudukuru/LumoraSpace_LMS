@@ -22,6 +22,7 @@ export type CurrentUser = {
   email: string;
   role: Role;
   onboardingComplete: boolean;
+  streakDays: number;
 };
 
 export async function findCurrentUserById(userId: string): Promise<CurrentUser | null> {
@@ -34,6 +35,7 @@ export async function findCurrentUserById(userId: string): Promise<CurrentUser |
       role: true,
       status: true,
       onboardingComplete: true,
+      streakDays: true,
     },
   });
   if (!user || user.status !== "ACTIVE") return null;
@@ -44,6 +46,7 @@ export async function findCurrentUserById(userId: string): Promise<CurrentUser |
     email: user.email,
     role: user.role,
     onboardingComplete: user.onboardingComplete,
+    streakDays: user.streakDays,
   };
 }
 
