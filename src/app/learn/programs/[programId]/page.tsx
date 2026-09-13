@@ -24,6 +24,7 @@ export default async function ProgramCurriculumPage({
       completed: lesson.completed,
       attemptState: lesson.attemptState,
     })),
+    assignments: programModule.assignments,
   }));
 
   return (

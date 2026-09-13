@@ -1,5 +1,5 @@
 import "server-only";
-import type { LessonType } from "@prisma/client";
+import type { LessonType, AssignmentType } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 
 /** Derived only when a QUIZ lesson isn't yet completed — once completed, the
@@ -20,6 +20,26 @@ export type LessonProgressSummary = {
   attemptState: AttemptState | null;
 };
 
+/** M5a — a module-level Assignment's state for THIS enrollment. Assignments
+ * have no Lesson FK (D2 — module-level, not lesson-level), so they're listed
+ * per-module alongside lessons rather than folded into LessonProgressSummary. */
+export type AssignmentSubmissionState =
+  | "not_started"
+  | "submitted"
+  | "under_review"
+  | "revision_requested"
+  | "reviewed";
+
+export type ModuleAssignmentSummary = {
+  id: string;
+  title: string;
+  type: AssignmentType;
+  dueAt: Date | null;
+  state: AssignmentSubmissionState;
+  score: number | null;
+  maxScore: number | null;
+};
+
 export type ModuleProgress = {
   moduleId: string;
   title: string;
@@ -28,6 +48,7 @@ export type ModuleProgress = {
   completedLessons: number;
   percent: number;
   lessons: LessonProgressSummary[];
+  assignments: ModuleAssignmentSummary[];
 };
 
 export type ProgramProgress = {
@@ -50,6 +71,20 @@ function deriveAttemptState(
   if (!latest) return "not_attempted";
   if (latest.status === "IN_PROGRESS") return "in_progress";
   return "failed"; // graded/submitted but still not `completed` => didn't clear the bar
+}
+
+/** A lone leftover NOT_STARTED row (see queries/assignments.ts) reads
+ * identically to no submission at all — it can never coexist with a real
+ * row once submitAssignment's upsert has converted it, so `take: 1` ordered
+ * by attemptNumber desc is safe here, same as the quiz attemptState above. */
+function deriveAssignmentState(
+  latest: { status: string; review: { score: number | null; maxScore: number | null } | null } | undefined,
+): { state: AssignmentSubmissionState; score: number | null; maxScore: number | null } {
+  if (!latest || latest.status === "NOT_STARTED") return { state: "not_started", score: null, maxScore: null };
+  if (latest.status === "SUBMITTED") return { state: "submitted", score: null, maxScore: null };
+  if (latest.status === "UNDER_REVIEW") return { state: "under_review", score: null, maxScore: null };
+  if (latest.status === "REVISION_REQUESTED") return { state: "revision_requested", score: null, maxScore: null };
+  return { state: "reviewed", score: latest.review?.score ?? null, maxScore: latest.review?.maxScore ?? null };
 }
 
 /**
@@ -98,6 +133,25 @@ export async function getProgramProgress(enrollmentId: string): Promise<ProgramP
                   },
                 },
               },
+              // M5a — same bounded nested-select shape as the quiz
+              // attemptState above; still one query, not a per-module loop.
+              assignments: {
+                select: {
+                  id: true,
+                  title: true,
+                  type: true,
+                  dueAt: true,
+                  submissions: {
+                    where: { enrollmentId },
+                    orderBy: { attemptNumber: "desc" },
+                    take: 1,
+                    select: {
+                      status: true,
+                      review: { select: { score: true, maxScore: true } },
+                    },
+                  },
+                },
+              },
             },
           },
         },
@@ -133,6 +187,17 @@ export async function getProgramProgress(enrollmentId: string): Promise<ProgramP
     totalLessons += lessons.length;
     completedLessons += moduleCompleted;
 
+    const assignments: ModuleAssignmentSummary[] = programModule.assignments.map((assignment) => {
+      const derived = deriveAssignmentState(assignment.submissions[0]);
+      return {
+        id: assignment.id,
+        title: assignment.title,
+        type: assignment.type,
+        dueAt: assignment.dueAt,
+        ...derived,
+      };
+    });
+
     return {
       moduleId: programModule.id,
       title: programModule.title,
@@ -141,6 +206,7 @@ export async function getProgramProgress(enrollmentId: string): Promise<ProgramP
       completedLessons: moduleCompleted,
       percent: lessons.length === 0 ? 0 : Math.round((moduleCompleted / lessons.length) * 1000) / 10,
       lessons,
+      assignments,
     };
   });
 

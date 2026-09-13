@@ -99,10 +99,10 @@ export default async function LearnHomePage() {
                 </p>
               </div>
               <Link
-                href={`/learn/programs/${data.enrollment.programId}`}
+                href={`/learn/assignments/${nextAssignment.id}`}
                 className="mt-auto flex w-fit items-center justify-center gap-sm rounded-lg bg-on-error-container px-md py-sm font-label-md text-label-md text-error-container transition-colors hover:bg-error hover:text-on-error"
               >
-                View in Curriculum
+                View Assignment
               </Link>
             </section>
           ) : null}

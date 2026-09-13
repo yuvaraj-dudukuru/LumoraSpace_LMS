@@ -51,7 +51,10 @@ export async function getDashboardData(userId: string): Promise<DashboardData> {
       where: {
         module: { programId: enrollment.programId },
         dueAt: { not: null },
-        submissions: { none: { enrollmentId: enrollment.id } },
+        // M5a — a NOT_STARTED row is a seed placeholder, not a real
+        // submission (see queries/assignments.ts); excluded here so it
+        // doesn't hide an assignment nothing has really been submitted for.
+        submissions: { none: { enrollmentId: enrollment.id, status: { not: "NOT_STARTED" } } },
       },
       orderBy: { dueAt: "asc" },
       select: { id: true, title: true, dueAt: true, estimatedMins: true },

@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ChevronDown, Check, PlayCircle, FileText, FileQuestion } from "lucide-react";
-import type { LessonType } from "@prisma/client";
-import type { AttemptState } from "@/lib/queries/progress";
+import { ChevronDown, Check, PlayCircle, FileText, FileQuestion, ClipboardList, CalendarClock } from "lucide-react";
+import type { LessonType, AssignmentType } from "@prisma/client";
+import type { AttemptState, AssignmentSubmissionState } from "@/lib/queries/progress";
+import { formatDate } from "@/lib/format";
 
 export type CurriculumLesson = {
   id: string;
@@ -18,12 +19,26 @@ export type CurriculumLesson = {
   attemptState?: AttemptState | null;
 };
 
+/** D2 — module-level, not lesson-level (Assignment has no Lesson FK).
+ * Learner mode only; catalog (public, unenrolled) viewers see no submission
+ * state, so this is omitted there entirely. */
+export type CurriculumAssignment = {
+  id: string;
+  title: string;
+  type: AssignmentType;
+  dueAt: Date | null;
+  state: AssignmentSubmissionState;
+  score: number | null;
+  maxScore: number | null;
+};
+
 export type CurriculumModuleData = {
   id: string;
   title: string;
   description?: string | null;
   order: number;
   lessons: CurriculumLesson[];
+  assignments?: CurriculumAssignment[];
   percent?: number;
 };
 
@@ -51,6 +66,22 @@ const ATTEMPT_STATE_STYLE: Record<AttemptState, string> = {
   not_attempted: "bg-surface-container text-on-surface-variant",
   in_progress: "bg-warning-container text-warning",
   failed: "bg-error-container text-on-error-container",
+};
+
+const ASSIGNMENT_STATE_LABEL: Record<AssignmentSubmissionState, string> = {
+  not_started: "Not started",
+  submitted: "Submitted",
+  under_review: "Under review",
+  revision_requested: "Revision requested",
+  reviewed: "Reviewed",
+};
+
+const ASSIGNMENT_STATE_STYLE: Record<AssignmentSubmissionState, string> = {
+  not_started: "bg-surface-container text-on-surface-variant",
+  submitted: "bg-primary-fixed text-primary",
+  under_review: "bg-warning-container text-warning",
+  revision_requested: "bg-error-container text-on-error-container",
+  reviewed: "bg-success-container text-success",
 };
 
 export function CurriculumAccordion({ modules, mode, defaultOpenModuleId }: Props) {
@@ -153,6 +184,43 @@ export function CurriculumAccordion({ modules, mode, defaultOpenModuleId }: Prop
                     );
                   })}
                 </ul>
+
+                {mode === "learner" && curriculumModule.assignments && curriculumModule.assignments.length > 0 ? (
+                  <div className="mt-md border-t border-outline-variant/20 pt-md">
+                    <h5 className="mb-sm font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">
+                      Assignments
+                    </h5>
+                    <ul className="flex flex-col gap-xs">
+                      {curriculumModule.assignments.map((assignment) => (
+                        <li key={assignment.id}>
+                          <Link
+                            href={`/learn/assignments/${assignment.id}`}
+                            className="flex flex-wrap items-center gap-sm rounded-lg p-sm hover:bg-surface-container-high"
+                          >
+                            <ClipboardList className="h-4 w-4 shrink-0 text-on-surface-variant" />
+                            <span className="font-label-md text-label-md text-on-surface">{assignment.title}</span>
+                            <span className="rounded-full bg-surface-container px-sm py-xs font-label-sm text-label-sm text-on-surface-variant">
+                              {assignment.type === "PROJECT" ? "Project" : "Assignment"}
+                            </span>
+                            {assignment.dueAt ? (
+                              <span className="flex items-center gap-xs font-label-sm text-label-sm text-on-surface-variant">
+                                <CalendarClock className="h-3.5 w-3.5" /> {formatDate(assignment.dueAt)}
+                              </span>
+                            ) : null}
+                            <span
+                              className={`ml-auto rounded-full px-sm py-xs font-label-sm text-label-sm ${ASSIGNMENT_STATE_STYLE[assignment.state]}`}
+                            >
+                              {ASSIGNMENT_STATE_LABEL[assignment.state]}
+                              {assignment.state === "reviewed" && assignment.score !== null
+                                ? ` — ${assignment.score}/${assignment.maxScore}`
+                                : ""}
+                            </span>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
               </div>
             ) : null}
           </div>

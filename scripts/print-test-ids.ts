@@ -33,6 +33,30 @@ async function main(): Promise<void> {
     orderBy: { title: "asc" },
   });
 
+  const assignments = await prisma.assignment.findMany({
+    select: {
+      id: true,
+      title: true,
+      type: true,
+      maxAttempts: true,
+      allowGithubUrl: true,
+      dueAt: true,
+      module: { select: { title: true, program: { select: { name: true } } } },
+    },
+    orderBy: { title: "asc" },
+  });
+
+  const submissions = await prisma.submission.findMany({
+    select: {
+      id: true,
+      attemptNumber: true,
+      status: true,
+      assignment: { select: { title: true } },
+      enrollment: { select: { user: { select: { name: true } } } },
+    },
+    orderBy: [{ assignment: { title: "asc" } }, { attemptNumber: "asc" }],
+  });
+
   const certificates = await prisma.certificate.findMany({
     select: {
       certificateNumber: true,
@@ -80,6 +104,32 @@ async function main(): Promise<void> {
     console.log(`  showResultsImmediately: ${assessment.showResultsImmediately}`);
     console.log(`  questions:              ${assessment._count.questions}`);
     console.log(`  URL:                    /learn/assessments/${assessment.id}`);
+    console.log();
+  }
+
+  console.log("=".repeat(70));
+  console.log("ASSIGNMENTS");
+  console.log("=".repeat(70));
+  for (const assignment of assignments) {
+    console.log(`${assignment.title}  [${assignment.type}]`);
+    console.log(`  id:             ${assignment.id}`);
+    console.log(`  program/module: ${assignment.module.program.name} / ${assignment.module.title}`);
+    console.log(`  maxAttempts:    ${assignment.maxAttempts}`);
+    console.log(`  allowGithubUrl: ${assignment.allowGithubUrl}`);
+    console.log(`  dueAt:          ${assignment.dueAt ? assignment.dueAt.toISOString().slice(0, 10) : "none"}`);
+    console.log(`  URL:            /learn/assignments/${assignment.id}`);
+    console.log();
+  }
+
+  console.log("=".repeat(70));
+  console.log("SUBMISSIONS");
+  console.log("=".repeat(70));
+  for (const submission of submissions) {
+    console.log(
+      `${submission.assignment.title} — ${submission.enrollment.user.name}  attempt ${submission.attemptNumber}  [${submission.status}]`,
+    );
+    console.log(`  id:  ${submission.id}`);
+    console.log(`  URL: /learn/submissions/${submission.id}`);
     console.log();
   }
 
