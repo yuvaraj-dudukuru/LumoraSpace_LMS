@@ -57,6 +57,18 @@ async function main(): Promise<void> {
     orderBy: [{ assignment: { title: "asc" } }, { attemptNumber: "asc" }],
   });
 
+  const mentors = await prisma.user.findMany({
+    where: { role: "MENTOR" },
+    select: {
+      email: true,
+      name: true,
+      mentorAssignments: {
+        select: { roleLabel: true, batch: { select: { code: true, program: { select: { name: true } } } } },
+      },
+    },
+    orderBy: { name: "asc" },
+  });
+
   const certificates = await prisma.certificate.findMany({
     select: {
       certificateNumber: true,
@@ -130,6 +142,21 @@ async function main(): Promise<void> {
     );
     console.log(`  id:  ${submission.id}`);
     console.log(`  URL: /learn/submissions/${submission.id}`);
+    console.log();
+  }
+
+  console.log("=".repeat(70));
+  console.log("MENTORS");
+  console.log("=".repeat(70));
+  for (const mentor of mentors) {
+    console.log(`${mentor.name}  (${mentor.email})`);
+    if (mentor.mentorAssignments.length === 0) {
+      console.log(`  batches: none assigned`);
+    } else {
+      for (const assignment of mentor.mentorAssignments) {
+        console.log(`  batch: ${assignment.batch.code} — ${assignment.batch.program.name}  [${assignment.roleLabel}]`);
+      }
+    }
     console.log();
   }
 
