@@ -81,6 +81,21 @@ async function main(): Promise<void> {
     adminPasses === true,
   );
 
+  // 7. (M5c) requireGrantedEnrollment (via isEnrollmentGranted) blocks
+  // SUSPENDED, not just AWAITING. No SUSPENDED row exists in the seed, so
+  // this is constructed via object-spread on Alex Morgan's real fetched
+  // GRANTED enrollment — still the real isEnrollmentGranted predicate, just
+  // a synthetic accessState.
+  record(
+    "isEnrollmentGranted is true for the real GRANTED enrollment (Alex Morgan) — sanity check",
+    isEnrollmentGranted(alexEnrollment) === true,
+  );
+  const suspendedEnrollment = alexEnrollment ? { ...alexEnrollment, accessState: "SUSPENDED" as const } : null;
+  record(
+    "isEnrollmentGranted is false once accessState is SUSPENDED (not just AWAITING)",
+    isEnrollmentGranted(suspendedEnrollment) === false,
+  );
+
   console.log("verify-guards results:\n");
   for (const check of checks) {
     console.log(`${check.pass ? "PASS" : "FAIL"}  ${check.name}${check.detail ? ` (${check.detail})` : ""}`);
