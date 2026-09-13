@@ -6,6 +6,8 @@
 // queries/assignments.ts imports "server-only", which throws outside Next's
 // bundler unless the "react-server" export condition is set.
 // Run: NODE_OPTIONS="--conditions=react-server" npx tsx scripts/verify-assignments.ts
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { PrismaClient } from "@prisma/client";
 import {
   getAssignmentDetail,
@@ -142,6 +144,24 @@ async function main(): Promise<void> {
     priyaDetail !== null &&
       canSubmitNewAttempt(priyaDetail.submissions, priyaDetail.maxAttempts) === true &&
       nextAttemptNumber(priyaDetail.submissions) === 1,
+  );
+
+  // 12. Static check on the actual deployed source (not a DB write — Priya's
+  // NOT_STARTED fixture is left untouched for manual testing): submitAssignment
+  // must write via upsert on the exact compound unique key, never a plain
+  // create, or attemptNumber 1 would collide with her existing placeholder row.
+  const actionsSource = readFileSync(
+    join(process.cwd(), "src/app/learn/assignments/[assignmentId]/actions.ts"),
+    "utf-8",
+  );
+  const usesUpsertOnCompoundKey =
+    /prisma\.submission\.upsert\(/.test(actionsSource) &&
+    /assignmentId_enrollmentId_attemptNumber/.test(actionsSource);
+  const usesPlainSubmissionCreate = /prisma\.submission\.create\(/.test(actionsSource);
+  record(
+    "submitAssignment writes via upsert on the compound unique key, not a plain create",
+    usesUpsertOnCompoundKey && !usesPlainSubmissionCreate,
+    `upsert=${usesUpsertOnCompoundKey} plainCreate=${usesPlainSubmissionCreate}`,
   );
 
   console.log("verify-assignments results:\n");
