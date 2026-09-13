@@ -28,7 +28,10 @@ export default async function SubmissionDetailPage({
   const user = await requireUser();
 
   const submission = await getSubmissionWithReview(submissionId);
-  if (!submission) notFound();
+  // NOT_STARTED is a seed placeholder, not a real submission (see
+  // queries/assignments.ts) — nothing to show, so this reads as not-found
+  // rather than rendering a status this page has no copy for.
+  if (!submission || submission.status === "NOT_STARTED") notFound();
   if (submission.userId !== user.id) forbidden();
 
   return (
