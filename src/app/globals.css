@@ -157,6 +157,26 @@
   --spacing-margin-mobile: 16px;
   --spacing-container-max: 1280px;
 
+  /* Tailwind's max-w-{xs,sm,md,lg,xl,2xl,3xl} utilities resolve theme keys in
+   * this order: --max-width-* , then --spacing-* , then --container-* (see
+   * tailwindcss/dist/lib.js's utility table). Our --spacing-* scale above
+   * reuses those exact t-shirt names for a completely different purpose
+   * (gap/padding, e.g. gap-md/p-lg), so every max-w-md/lg/xl/2xl/3xl in the
+   * app was silently resolving to a spacing value (max-w-md => 16px) instead
+   * of Tailwind's built-in container size (28rem) — this is what compressed
+   * the /login card (and every other max-w-{size} usage) into a thin strip.
+   * Redeclaring the dedicated --max-width-* namespace here (highest
+   * priority in that lookup order) restores Tailwind's real defaults
+   * without touching --spacing-*, which is used correctly everywhere else.
+   */
+  --max-width-xs: 20rem;
+  --max-width-sm: 24rem;
+  --max-width-md: 28rem;
+  --max-width-lg: 32rem;
+  --max-width-xl: 36rem;
+  --max-width-2xl: 42rem;
+  --max-width-3xl: 48rem;
+
   --text-display-lg: 48px;
   --text-display-lg--line-height: 56px;
   --text-display-lg--letter-spacing: -0.02em;
