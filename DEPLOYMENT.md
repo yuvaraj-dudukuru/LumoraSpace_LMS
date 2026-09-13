@@ -1,0 +1,71 @@
+# Deployment
+
+Environment variables, first-deploy bootstrap, and OAuth setup for running LumoraSpace LMS outside local dev.
+
+## Environment variables
+
+| Variable | Required? | Used in | If missing |
+|---|---|---|---|
+| `DATABASE_URL` | **Yes, always** | `prisma/schema.prisma` (`datasource db { url = env("DATABASE_URL") }`) — every Prisma query in the app goes through this | **Fails loud.** Prisma throws immediately on the first query attempt ("Environment variable not found: DATABASE_URL" or a connection error). Nothing works without it. |
+| `AUTH_SECRET` | **Yes, in production** | Read implicitly by Auth.js v5 (`src/auth.ts`, `src/auth.config.ts`) to sign/encrypt session JWTs | **Fails loud in production** — Auth.js throws `MissingSecretError` on the first auth request. In development it falls back to a value generated fresh each restart, which silently invalidates every existing session — always set this explicitly, even locally. |
+| `AUTH_GOOGLE_ID` | Only if Google sign-in is offered | Auth.js's `Google` provider (`src/auth.config.ts`), picked up by its own env-var convention — no explicit `process.env` read in this codebase | **Fails at request time, not startup.** The app builds and runs fine with this unset; clicking "Continue with Google" redirects to an Auth.js error page. Easy to miss unless that specific button is tested. |
+| `AUTH_GOOGLE_SECRET` | Only if Google sign-in is offered | Same as `AUTH_GOOGLE_ID` | Same as `AUTH_GOOGLE_ID`. |
+| `RESEND_API_KEY` | **Yes, outside development** | `src/lib/email.ts` — checked lazily, on first actual send | **Fails loud on first use** — the first `grantAccess` or `submitReview` call that tries to send an email throws a clear error (caught by `mail.ts`'s own try/catch, so it logs rather than crashing that Server Action). Deliberately **not** checked at module load: an earlier version threw at import time, which crashed `next build`'s page-data collection for any page that transitively imports this module (confirmed by reproducing it) — checking lazily means a missing key only ever fails the specific request that needed it, never the build. |
+| `EMAIL_FROM_ADDRESS` | No | `src/lib/mail.ts` | **Silent fallback** to `noreply@lumoraspace.dev`. Set this explicitly for a real deployment — that default won't be a verified sending domain in Resend. |
+| `S3_ENDPOINT` | **Yes, outside development** | `src/lib/storage.ts` — checked lazily, on first actual presigned-URL request | **Fails loud on first use**, same pattern and same reason as `RESEND_API_KEY` above. |
+| `S3_ACCESS_KEY` | **Yes, outside development** | `src/lib/storage.ts` | Same as `S3_ENDPOINT`. (Previously defaulted silently to an empty string — fixed to match `S3_ENDPOINT`'s behavior as part of this deployment-prep pass.) |
+| `S3_SECRET_KEY` | **Yes, outside development** | `src/lib/storage.ts` | Same as `S3_ENDPOINT`. |
+| `S3_BUCKET_NAME` | **Yes, outside development** | `src/lib/storage.ts` | Same as `S3_ENDPOINT`. |
+| `S3_REGION` | No | `src/lib/storage.ts` | **Silent fallback** to `"auto"` (correct for Cloudflare R2; set an explicit AWS region like `us-east-1` if using real S3). |
+| `BOOTSTRAP_ADMIN_EMAIL` | Only when running `npm run bootstrap` | `prisma/bootstrap.ts`, Zod-validated | **Fails loud** — printed validation error, `process.exit(1)`, before any database write. |
+| `BOOTSTRAP_ADMIN_PASSWORD` | Only when running `npm run bootstrap` (min 12 chars) | `prisma/bootstrap.ts`, Zod-validated | Same as `BOOTSTRAP_ADMIN_EMAIL`. |
+| `BOOTSTRAP_ADMIN_NAME` | Only when running `npm run bootstrap` | `prisma/bootstrap.ts`, Zod-validated | Same as `BOOTSTRAP_ADMIN_EMAIL`. |
+
+`NODE_ENV` isn't something you set by hand on most platforms — `next build`/`next start` set it to `production` automatically. It gates the dev-only fallbacks above (`src/lib/prisma.ts`, `src/lib/email.ts`, `src/lib/storage.ts`).
+
+## First deploy: bootstrapping a fresh database
+
+Never run `npm run seed` against a production database — it deletes every row in every table it owns before reseeding (see `prisma/seed.ts`'s own top-of-file comment). It exists for local dev only.
+
+For a real deployment, after running migrations against the new database:
+
+```bash
+BOOTSTRAP_ADMIN_EMAIL=you@yourcompany.com \
+BOOTSTRAP_ADMIN_PASSWORD='a-real-password-12-chars-min' \
+BOOTSTRAP_ADMIN_NAME='Your Name' \
+npm run bootstrap
+```
+
+This creates exactly one admin account, plus curriculum and a batch from `prisma/bootstrap-data.json`. It refuses outright (exit code 1, no writes) if the `User` table already has any rows — safe to run in CI on every deploy, since it's a no-op after the first successful run. Edit `prisma/bootstrap-data.json` before your first deploy to replace the placeholder program/lessons/questions with real content.
+
+## Generating `AUTH_SECRET`
+
+```bash
+npx auth secret
+```
+
+or, without the `auth` CLI:
+
+```bash
+openssl rand -base64 32
+```
+
+Either produces a random 32+ byte value. Set it as `AUTH_SECRET` in your deployment platform's environment variables — never commit it.
+
+## Google OAuth setup
+
+1. In the [Google Cloud Console](https://console.cloud.google.com/), create (or reuse) a project, then go to **APIs & Services → Credentials → Create Credentials → OAuth client ID**.
+2. Application type: **Web application**.
+3. Under **Authorized redirect URIs**, add the exact URI Auth.js expects — `{your app's origin}/api/auth/callback/google`:
+   - Production: `https://yourdomain.com/api/auth/callback/google`
+   - Local dev: `http://localhost:3000/api/auth/callback/google`
+
+   This path is fixed by Auth.js's own convention (`/api/auth/callback/<provider>`), not configurable in this codebase — it must match exactly, including scheme and absence of a trailing slash, or Google will reject the callback with a `redirect_uri_mismatch` error.
+4. Copy the generated **Client ID** and **Client Secret** into `AUTH_GOOGLE_ID` and `AUTH_GOOGLE_SECRET`.
+5. If your deployment platform assigns a URL only after the first deploy (common with preview environments), you'll need to add that URL's callback as an additional authorized redirect URI after deploying once — Google OAuth doesn't support wildcard domains.
+
+## Security notes from the deployment-readiness audit
+
+- No hardcoded `localhost` URLs, `.env`/`.env.local` file references, or sensitive-data-leaking `console.log`s were found in `src/`. See the audit findings in the corresponding commit for the one low-risk item noted (a dev-only test-data script importing the shared dev password, which never ships in the production build).
+- `src/lib/prisma.ts` reuses a single `PrismaClient` in development only (`globalThis.prisma`, guarded by `NODE_ENV !== "production"`) — this is intentional, to survive Next.js's dev-mode hot-reload without exhausting connections; production always gets a fresh client.
+- **Never validate a required env var at module scope in a file reachable from a Server Action.** Next's `next build` statically evaluates the module graph of every Server Action reachable from every page during its "collect page data" step — even for a route nobody is actively hitting in that build. A top-level `throw` in such a module (as `src/lib/storage.ts` and `src/lib/email.ts` both originally had) turns a missing production env var into a **build failure**, not a runtime one — reproduced directly while preparing this deployment pass (`/learn/assignments/[assignmentId]` failed "collect page data" over unset `S3_*` vars). Both were refactored to validate lazily instead, inside a cached getter called only when the client is actually used — the same loud error still fires, just at first real use instead of at build time. Follow this pattern for any future required-env-var client (e.g. a new third-party API key).

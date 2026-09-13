@@ -5,21 +5,49 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 const UPLOAD_URL_EXPIRY_SECONDS = 5 * 60; // 5 minutes
 
-if (!process.env.S3_ENDPOINT && process.env.NODE_ENV !== "development") {
-  throw new Error("S3_ENDPOINT is not set. Required outside development — see .env.example.");
-}
+// All four were previously checked inconsistently — only S3_ENDPOINT threw.
+// S3_ACCESS_KEY/S3_SECRET_KEY/S3_BUCKET_NAME silently defaulted to "" instead.
+// All four now fail the same way, for the same reason — but see the note on
+// getS3Client() below for why this check moved from module scope into a
+// lazy getter instead of running here at import time.
+const REQUIRED_S3_ENV_VARS = ["S3_ENDPOINT", "S3_ACCESS_KEY", "S3_SECRET_KEY", "S3_BUCKET_NAME"] as const;
 
-const s3Client = new S3Client({
-  endpoint: process.env.S3_ENDPOINT,
-  region: process.env.S3_REGION ?? "auto",
-  credentials: {
-    accessKeyId: process.env.S3_ACCESS_KEY ?? "",
-    secretAccessKey: process.env.S3_SECRET_KEY ?? "",
-  },
-  // S3-compatible providers (R2, MinIO) serve path-style buckets; AWS itself
-  // also accepts this, so it's the safe default for either backend.
-  forcePathStyle: true,
-});
+let cachedClient: S3Client | null = null;
+
+/** Lazily constructs (and caches) the S3 client on first actual use, rather
+ * than throwing at module load. A top-level throw here would fire the
+ * moment ANYTHING imports this module — and Next's build "collect page
+ * data" step statically evaluates every Server Action's module graph,
+ * including this one (reachable from getAssignmentUploadUrl), even for
+ * routes nobody is actively hitting. That turned a missing S3 env var at
+ * BUILD time into a fatal, whole-page build failure (confirmed: this is
+ * exactly what broke `npm run build` for /learn/assignments/[assignmentId]
+ * before this fix). Deferring the check to first real call means the same
+ * loud error still fires — just at the first actual upload-URL request,
+ * not at build time for a page that never runs the function. */
+function getS3Client(): S3Client {
+  if (cachedClient) return cachedClient;
+
+  if (process.env.NODE_ENV !== "development") {
+    const missing = REQUIRED_S3_ENV_VARS.filter((name) => !process.env[name]);
+    if (missing.length > 0) {
+      throw new Error(`${missing.join(", ")} not set. Required outside development — see .env.example.`);
+    }
+  }
+
+  cachedClient = new S3Client({
+    endpoint: process.env.S3_ENDPOINT,
+    region: process.env.S3_REGION ?? "auto",
+    credentials: {
+      accessKeyId: process.env.S3_ACCESS_KEY ?? "",
+      secretAccessKey: process.env.S3_SECRET_KEY ?? "",
+    },
+    // S3-compatible providers (R2, MinIO) serve path-style buckets; AWS itself
+    // also accepts this, so it's the safe default for either backend.
+    forcePathStyle: true,
+  });
+  return cachedClient;
+}
 
 export type PresignedUpload = {
   uploadUrl: string;
@@ -61,7 +89,7 @@ export async function getPresignedUploadUrl(
     ContentLength: fileSize,
   });
 
-  const uploadUrl = await getSignedUrl(s3Client, command, { expiresIn: UPLOAD_URL_EXPIRY_SECONDS });
+  const uploadUrl = await getSignedUrl(getS3Client(), command, { expiresIn: UPLOAD_URL_EXPIRY_SECONDS });
 
   // Path-style public URL — the reasonable default for an S3-compatible
   // endpoint (R2/MinIO) with no CDN/custom domain configured. A production
