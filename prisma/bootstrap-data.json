@@ -1,0 +1,125 @@
+{
+  "program": {
+    "name": "Data Analyst",
+    "slug": "data-analyst",
+    "description": "An introductory, cohort-based program covering the core skills of data analysis: data types, spreadsheets, and drawing conclusions from real datasets.",
+    "level": "BEGINNER",
+    "durationWeeks": 8,
+    "format": "ONLINE",
+    "status": "PUBLISHED",
+    "credentialType": "Professional Certificate"
+  },
+  "modules": [
+    {
+      "title": "Module 1: Data Fundamentals",
+      "order": 1,
+      "status": "PUBLISHED",
+      "lessons": [
+        {
+          "id": "m1-l1",
+          "title": "Welcome to Data Analysis",
+          "type": "VIDEO",
+          "order": 1,
+          "durationMins": 8,
+          "videoUrl": "https://example.com/videos/welcome-to-data-analysis.mp4"
+        },
+        {
+          "id": "m1-l2",
+          "title": "Understanding Data Types",
+          "type": "READING",
+          "order": 2,
+          "bodyContent": "# Understanding Data Types\n\nEvery dataset is built from a small set of underlying data types: numeric, categorical, date/time, and text. Replace this placeholder with real lesson content before going live.\n\n## Numeric data\n...\n\n## Categorical data\n...\n"
+        },
+        {
+          "id": "m1-l3",
+          "title": "Module 1 Knowledge Check",
+          "type": "QUIZ",
+          "order": 3
+        }
+      ]
+    },
+    {
+      "title": "Module 2: Working with Spreadsheets",
+      "order": 2,
+      "status": "PUBLISHED",
+      "lessons": [
+        {
+          "id": "m2-l1",
+          "title": "Spreadsheet Basics",
+          "type": "VIDEO",
+          "order": 1,
+          "durationMins": 10,
+          "videoUrl": "https://example.com/videos/spreadsheet-basics.mp4"
+        },
+        {
+          "id": "m2-l2",
+          "title": "Formulas and Functions",
+          "type": "READING",
+          "order": 2,
+          "bodyContent": "# Formulas and Functions\n\nReplace this placeholder with real lesson content covering SUM, AVERAGE, VLOOKUP, and pivot tables before going live.\n"
+        }
+      ]
+    }
+  ],
+  "assessments": [
+    {
+      "moduleOrder": 1,
+      "linkedLessonId": "m1-l3",
+      "title": "Module 1 Knowledge Check",
+      "kind": "GRADED",
+      "status": "PUBLISHED",
+      "timeLimitMins": 15,
+      "passingScorePercent": 70,
+      "allowedAttempts": 2,
+      "shuffleQuestions": false,
+      "showResultsImmediately": true,
+      "questions": [
+        {
+          "order": 1,
+          "type": "MULTIPLE_CHOICE",
+          "text": "Which of the following is an example of categorical data?",
+          "points": 10,
+          "options": [
+            { "label": "A", "text": "A customer's age in years", "isCorrect": false },
+            { "label": "B", "text": "A customer's subscription tier (Free/Pro/Enterprise)", "isCorrect": true },
+            { "label": "C", "text": "A transaction's total in dollars", "isCorrect": false },
+            { "label": "D", "text": "A server's response time in milliseconds", "isCorrect": false }
+          ]
+        },
+        {
+          "order": 2,
+          "type": "TRUE_FALSE",
+          "text": "A spreadsheet formula that references another cell will automatically update if that cell's value changes.",
+          "points": 10,
+          "options": [
+            { "label": "A", "text": "True", "isCorrect": true },
+            { "label": "B", "text": "False", "isCorrect": false }
+          ]
+        },
+        {
+          "order": 3,
+          "type": "MULTIPLE_CHOICE",
+          "text": "Which function would you use to look up a value in one column and return a value from another column in the same row?",
+          "points": 10,
+          "options": [
+            { "label": "A", "text": "SUM" },
+            { "label": "B", "text": "VLOOKUP", "isCorrect": true },
+            { "label": "C", "text": "COUNT" },
+            { "label": "D", "text": "AVERAGE" }
+          ]
+        }
+      ]
+    }
+  ],
+  "batches": [
+    {
+      "name": "Batch 01",
+      "code": "DA-B01",
+      "startDate": "2026-11-02",
+      "endDate": "2027-01-25",
+      "status": "UPCOMING",
+      "scheduleNote": "Mon, Wed, Fri - 18:00 EST",
+      "capacity": 30
+    }
+  ]
+}
