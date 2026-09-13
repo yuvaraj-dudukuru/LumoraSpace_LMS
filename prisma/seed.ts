@@ -369,10 +369,12 @@ async function main(): Promise<void> {
   });
 
   // ── Mentor assignments (to the active batches) ────────────────
+  // M5b — Sarah is the SOLE mentor on fsdBatch03 (Michael's former TA row
+  // here was removed) so there's a real batch-scoping asymmetry to test:
+  // every Forge Full Stack learner is visible to Sarah but not Michael.
   await prisma.mentorAssignment.create({ data: { mentorId: michaelChen.id, batchId: fdaBatch04.id, roleLabel: "Lead Instructor" } });
   await prisma.mentorAssignment.create({ data: { mentorId: sarahJenkins.id, batchId: fdaBatch04.id, roleLabel: "Teaching Assistant" } });
   await prisma.mentorAssignment.create({ data: { mentorId: sarahJenkins.id, batchId: fsdBatch03.id, roleLabel: "Lead Instructor" } });
-  await prisma.mentorAssignment.create({ data: { mentorId: michaelChen.id, batchId: fsdBatch03.id, roleLabel: "Teaching Assistant" } });
 
   // ── Enrollments + LessonProgress ──────────────────────────────
   type ActiveLearnerPlan = { name: string; batch: typeof fdaBatch04; programId: string; lessonIds: string[]; targetFraction: number };
