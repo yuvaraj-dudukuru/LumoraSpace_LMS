@@ -324,6 +324,7 @@ export type SubmissionForReview = {
    * `rubricScores` to the current viewer (never another mentor's draft) —
    * see docs/CONTRACTS.md. */
   review: {
+    id: string;
     mentorId: string;
     mentorName: string;
     overallFeedback: string;
@@ -367,6 +368,7 @@ export async function getSubmissionForReview(submissionId: string): Promise<Subm
       },
       review: {
         select: {
+          id: true,
           mentorId: true,
           mentor: { select: { name: true } },
           overallFeedback: true,
@@ -417,6 +419,7 @@ export async function getSubmissionForReview(submissionId: string): Promise<Subm
     })),
     review: submission.review
       ? {
+          id: submission.review.id,
           mentorId: submission.review.mentorId,
           mentorName: submission.review.mentor.name,
           overallFeedback: submission.review.overallFeedback,
