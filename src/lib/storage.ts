@@ -71,3 +71,15 @@ export async function getPresignedUploadUrl(
 
   return { uploadUrl, publicUrl, key };
 }
+
+/** submitAssignment receives fileUrl straight from the client — never trust
+ * that it actually came from a presigned upload this app issued. This is a
+ * cheap, real check: does it even point at our bucket? It can't confirm the
+ * object was genuinely uploaded (that needs a HEAD request, not done here),
+ * but it stops a learner from submitting an arbitrary off-bucket URL as if
+ * it were their upload. */
+export function isKnownStorageUrl(url: string): boolean {
+  const bucket = process.env.S3_BUCKET_NAME ?? "";
+  const expectedPrefix = `${process.env.S3_ENDPOINT}/${bucket}/assignment-submissions/`;
+  return url.startsWith(expectedPrefix);
+}

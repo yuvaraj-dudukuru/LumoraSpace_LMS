@@ -5,12 +5,14 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { AssignmentFileUpload } from "@/components/assignment-file-upload";
 import { submitAssignment } from "./actions";
 
 export function SubmitAssignmentForm({ assignmentId, allowGithubUrl }: { assignmentId: string; allowGithubUrl: boolean }) {
   const router = useRouter();
   const [githubUrl, setGithubUrl] = useState("");
   const [notes, setNotes] = useState("");
+  const [fileUrl, setFileUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
@@ -21,6 +23,7 @@ export function SubmitAssignmentForm({ assignmentId, allowGithubUrl }: { assignm
       const result = await submitAssignment(assignmentId, {
         githubUrl: githubUrl.trim() || undefined,
         notes: notes.trim() || undefined,
+        fileUrl: fileUrl ?? undefined,
       });
       if (result.ok) {
         router.push(`/learn/submissions/${result.submissionId}`);
@@ -58,11 +61,13 @@ export function SubmitAssignmentForm({ assignmentId, allowGithubUrl }: { assignm
         />
       </div>
 
-      {/* D1 — no object storage is configured this milestone; a real upload
-          input would be a dead control, so this says so instead. */}
-      <p className="rounded-lg bg-surface-container-low p-md font-label-sm text-label-sm text-on-surface-variant">
-        File upload is coming in a future update — for now, submit a GitHub link and/or notes.
-      </p>
+      {/* D1 resolved — presigned-upload storage now exists. No per-assignment
+          allow flag in the schema (unlike allowGithubUrl), so this is always
+          available, same as notes. */}
+      <div className="flex flex-col gap-xs">
+        <Label>Attach a file (optional)</Label>
+        <AssignmentFileUpload assignmentId={assignmentId} onUploadComplete={setFileUrl} />
+      </div>
 
       {error ? <p className="font-label-sm text-label-sm text-error">{error}</p> : null}
 

@@ -5,6 +5,7 @@ import { Prisma } from "@prisma/client";
 import { requireGrantedEnrollment } from "@/lib/auth-guards";
 import { resolveAssignmentProgram, nextAttemptNumber, canSubmitNewAttempt } from "@/lib/queries/assignments";
 import { submitAssignmentSchema } from "@/lib/validations/assignment";
+import { isKnownStorageUrl } from "@/lib/storage";
 import { prisma } from "@/lib/prisma";
 
 export type SubmitAssignmentResult = { ok: true; submissionId: string } | { ok: false; error: string };
@@ -16,7 +17,7 @@ export type SubmitAssignmentResult = { ok: true; submissionId: string } | { ok: 
  * only flagged in the UI, never blocked. */
 export async function submitAssignment(
   assignmentId: string,
-  input: { githubUrl?: string; notes?: string },
+  input: { githubUrl?: string; notes?: string; fileUrl?: string },
 ): Promise<SubmitAssignmentResult> {
   const resolved = await resolveAssignmentProgram(assignmentId);
   if (!resolved) return { ok: false, error: "Assignment not found." };
@@ -26,6 +27,14 @@ export async function submitAssignment(
   const parsed = submitAssignmentSchema.safeParse(input);
   if (!parsed.success) {
     return { ok: false, error: parsed.error.issues[0]?.message ?? "Invalid submission." };
+  }
+
+  // fileUrl comes straight from the client (the upload component reports back
+  // whatever publicUrl the presigned-url action returned) — never trust it
+  // blindly. This can't confirm the object was actually uploaded, but it
+  // rejects anything that isn't even shaped like one of our own bucket URLs.
+  if (parsed.data.fileUrl && !isKnownStorageUrl(parsed.data.fileUrl)) {
+    return { ok: false, error: "Invalid file URL." };
   }
 
   const assignment = await prisma.assignment.findUniqueOrThrow({
@@ -74,12 +83,14 @@ export async function submitAssignment(
         status: "SUBMITTED",
         githubUrl: parsed.data.githubUrl,
         notes: parsed.data.notes,
+        fileUrl: parsed.data.fileUrl,
         submittedAt: new Date(),
       },
       update: {
         status: "SUBMITTED",
         githubUrl: parsed.data.githubUrl ?? null,
         notes: parsed.data.notes ?? null,
+        fileUrl: parsed.data.fileUrl ?? null,
         submittedAt: new Date(),
       },
     });
