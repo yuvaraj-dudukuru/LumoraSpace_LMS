@@ -8,7 +8,6 @@ import {
   Users,
   BookOpen,
   ClipboardCheck,
-  Layers,
   UserCheck,
   Award,
 } from "lucide-react";
@@ -41,16 +40,15 @@ export const MENTOR_NAV_ITEMS: NavItem[] = [
   { label: "Settings", href: "/mentor/settings", icon: Settings },
 ];
 
-// "Settings" here is the shared account-settings surface, not the deferred
-// platform-settings IA (DECISIONS.md Q13).
+// M5c — trimmed to only the routes that actually exist. Programs, Batches,
+// Mentors (the standalone directory), Curriculum, and Settings all 404'd —
+// a dead nav item is worse than an absent one. Content authoring for
+// programs/modules/lessons/assessments/assignments stays seed-only for now
+// (M5c is deliberately narrow); mentor assignment moved into
+// /admin/users/[userId] instead of a standalone directory.
 export const ADMIN_NAV_ITEMS: NavItem[] = [
   { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
   { label: "Users", href: "/admin/users", icon: Users },
-  { label: "Programs", href: "/admin/programs", icon: GraduationCap },
-  { label: "Batches", href: "/admin/batches", icon: Layers },
   { label: "Enrollments", href: "/admin/enrollments", icon: UserCheck },
-  { label: "Mentors", href: "/admin/mentors", icon: Users },
-  { label: "Curriculum", href: "/admin/curriculum", icon: BookOpen },
   { label: "Certificates", href: "/admin/certificates", icon: Award },
-  { label: "Settings", href: "/admin/settings", icon: Settings },
 ];
