@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { requireRole } from "@/lib/auth-guards";
 import { prisma } from "@/lib/prisma";
 import { updateEnrollmentStatusSchema } from "@/lib/validations/admin";
+import { sendAccessGrantedEmail } from "@/lib/mail";
 
 function revalidateEnrollments(): void {
   revalidatePath("/admin/enrollments");
@@ -18,7 +19,14 @@ export type EnrollmentActionResult = { ok: true } | { ok: false; error: string }
 export async function grantAccess(enrollmentId: string): Promise<EnrollmentActionResult> {
   await requireRole("ADMIN");
 
-  const enrollment = await prisma.enrollment.findUnique({ where: { id: enrollmentId } });
+  const enrollment = await prisma.enrollment.findUnique({
+    where: { id: enrollmentId },
+    select: {
+      accessState: true,
+      user: { select: { name: true, email: true } },
+      program: { select: { name: true } },
+    },
+  });
   if (!enrollment) return { ok: false, error: "Enrollment not found." };
   if (enrollment.accessState !== "AWAITING") {
     return { ok: false, error: "Only an AWAITING enrollment can be granted access." };
@@ -30,6 +38,16 @@ export async function grantAccess(enrollmentId: string): Promise<EnrollmentActio
   });
 
   revalidateEnrollments();
+
+  // Fire-and-forget-safe: sendAccessGrantedEmail never throws (see mail.ts),
+  // so an email/Resend failure here can't roll back the grant that already
+  // committed above or fail this action.
+  await sendAccessGrantedEmail(enrollment.user.email, {
+    learnerName: enrollment.user.name,
+    programName: enrollment.program.name,
+    loginUrl: "/login",
+  });
+
   return { ok: true };
 }
 

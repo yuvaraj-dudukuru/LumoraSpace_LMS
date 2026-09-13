@@ -11,6 +11,7 @@ import {
   validateRubricScoresComplete,
 } from "@/lib/validations/review";
 import { prisma } from "@/lib/prisma";
+import { sendAssignmentReviewedEmail } from "@/lib/mail";
 
 type AuthorizedSubmission = Awaited<ReturnType<typeof getSubmissionForReview>>;
 
@@ -181,5 +182,18 @@ export async function submitReview(
   revalidateSubmission(submissionId);
   revalidatePath(`/learn/submissions/${submissionId}`);
   revalidatePath(`/learn/assignments/${submission.assignment.id}`);
+
+  // Fire-and-forget-safe: sendAssignmentReviewedEmail never throws (see
+  // mail.ts), so an email/Resend failure here can't undo the review that
+  // already committed above or fail this action. submission.learner.email
+  // comes from getSubmissionForReview's own DB read, not the caller's
+  // session (the caller here is the mentor, not the learner, anyway).
+  await sendAssignmentReviewedEmail(submission.learner.email, {
+    learnerName: submission.learner.name,
+    assignmentTitle: submission.assignment.title,
+    outcome: parsed.data.outcome,
+    reviewUrl: `/learn/submissions/${submissionId}`,
+  });
+
   return { ok: true };
 }
