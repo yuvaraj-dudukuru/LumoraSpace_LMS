@@ -45,7 +45,22 @@ export function AssignmentFileUpload({
     setState("uploading");
     setFileName(file.name);
 
-    const result = await getAssignmentUploadUrl(assignmentId, file.name, file.type, file.size);
+    // getAssignmentUploadUrl can throw (not just return { ok: false }) if
+    // storage isn't configured — getPresignedUploadUrl's S3 client is
+    // deliberately lazy (see storage.ts) so a missing S3_* env var only ever
+    // fails HERE, on first real upload attempt, not at build/import time.
+    // File upload is optional (submitAssignment accepts githubUrl/notes/
+    // fileUrl, any one of the three), so this must degrade to a clear error
+    // message rather than leave the control stuck on "Uploading…" forever.
+    let result: Awaited<ReturnType<typeof getAssignmentUploadUrl>>;
+    try {
+      result = await getAssignmentUploadUrl(assignmentId, file.name, file.type, file.size);
+    } catch {
+      setState("error");
+      setError("File upload isn't available right now. You can still submit with a GitHub link or notes.");
+      onUploadComplete(null);
+      return;
+    }
     if (!result.ok) {
       setState("error");
       setError(result.error);
