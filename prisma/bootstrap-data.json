@@ -111,6 +111,36 @@
       ]
     }
   ],
+  "assignments": [
+    {
+      "moduleOrder": 2,
+      "title": "Spreadsheet Data Cleanup",
+      "type": "ASSIGNMENT",
+      "overview": "Clean and organize a small spreadsheet dataset using the formulas and functions from this module, then summarize your findings.",
+      "requirements": [
+        "Remove duplicate rows and handle blank cells",
+        "Use at least one lookup formula (e.g. VLOOKUP) to enrich the data",
+        "Add a summary section with SUM/AVERAGE calculations",
+        "Share the finished spreadsheet or a public link to it"
+      ],
+      "instructions": [
+        { "step": 1, "title": "Review the data", "description": "Open the provided sample dataset and identify duplicate rows, blank cells, and inconsistent formatting." },
+        { "step": 2, "title": "Clean it up", "description": "Remove duplicates, fill or flag missing values, and standardize formatting." },
+        { "step": 3, "title": "Summarize", "description": "Add a summary section using SUM/AVERAGE and at least one lookup formula." },
+        { "step": 4, "title": "Submit", "description": "Submit a link to your spreadsheet (Google Sheets/GitHub) along with brief notes on what you changed." }
+      ],
+      "estimatedMins": 60,
+      "dueAt": "2026-12-07",
+      "maxAttempts": 2,
+      "allowGithubUrl": true,
+      "rubricCriteria": [
+        { "name": "Data Quality", "description": "Duplicates removed and missing values handled appropriately.", "maxScore": 25, "order": 1 },
+        { "name": "Formula Usage", "description": "At least one lookup formula and SUM/AVERAGE used correctly.", "maxScore": 25, "order": 2 },
+        { "name": "Summary Clarity", "description": "Summary section clearly communicates key figures.", "maxScore": 25, "order": 3 },
+        { "name": "Documentation", "description": "Notes clearly explain what was changed and why.", "maxScore": 25, "order": 4 }
+      ]
+    }
+  ],
   "batches": [
     {
       "name": "Batch 01",

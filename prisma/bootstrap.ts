@@ -11,7 +11,7 @@
 // chars), BOOTSTRAP_ADMIN_NAME. See DEPLOYMENT.md.
 import { readFileSync } from "fs";
 import { join } from "path";
-import { PrismaClient, LessonType } from "@prisma/client";
+import { PrismaClient, LessonType, AssignmentType } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { z } from "zod";
 
@@ -71,6 +71,27 @@ const moduleSchema = z.object({
   lessons: z.array(lessonSchema),
 });
 
+const rubricCriterionSchema = z.object({
+  name: z.string(),
+  description: z.string().optional(),
+  maxScore: z.number().int().positive(),
+  order: z.number().int(),
+});
+
+const assignmentSchema = z.object({
+  moduleOrder: z.number().int(),
+  title: z.string(),
+  type: z.enum(["ASSIGNMENT", "PROJECT"]),
+  overview: z.string(),
+  requirements: z.array(z.string()),
+  instructions: z.array(z.object({ step: z.number().int(), title: z.string(), description: z.string() })),
+  estimatedMins: z.number().int().positive().optional(),
+  dueAt: z.string().optional(),
+  maxAttempts: z.number().int().positive(),
+  allowGithubUrl: z.boolean(),
+  rubricCriteria: z.array(rubricCriterionSchema).min(1),
+});
+
 const bootstrapDataSchema = z.object({
   program: z.object({
     name: z.string(),
@@ -84,6 +105,7 @@ const bootstrapDataSchema = z.object({
   }),
   modules: z.array(moduleSchema).min(1),
   assessments: z.array(assessmentSchema),
+  assignments: z.array(assignmentSchema).default([]),
   batches: z.array(
     z.object({
       name: z.string(),
@@ -250,6 +272,45 @@ async function main(): Promise<void> {
         }
       }
 
+      let rubricCriterionCount = 0;
+      for (const assignmentDef of data.assignments) {
+        const moduleId = moduleIdByOrder.get(assignmentDef.moduleOrder);
+        if (!moduleId) {
+          throw new Error(
+            `bootstrap-data.json: assignment "${assignmentDef.title}" references moduleOrder ` +
+              `${assignmentDef.moduleOrder}, which doesn't match any module's order.`,
+          );
+        }
+
+        const assignment = await tx.assignment.create({
+          data: {
+            moduleId,
+            title: assignmentDef.title,
+            type: assignmentDef.type as AssignmentType,
+            overview: assignmentDef.overview,
+            requirements: assignmentDef.requirements,
+            instructions: assignmentDef.instructions,
+            estimatedMins: assignmentDef.estimatedMins,
+            dueAt: assignmentDef.dueAt ? new Date(assignmentDef.dueAt) : undefined,
+            maxAttempts: assignmentDef.maxAttempts,
+            allowGithubUrl: assignmentDef.allowGithubUrl,
+          },
+        });
+
+        for (const criterionDef of assignmentDef.rubricCriteria) {
+          await tx.rubricCriterion.create({
+            data: {
+              assignmentId: assignment.id,
+              name: criterionDef.name,
+              description: criterionDef.description,
+              maxScore: criterionDef.maxScore,
+              order: criterionDef.order,
+            },
+          });
+          rubricCriterionCount++;
+        }
+      }
+
       const batches = [];
       for (const batchDef of data.batches) {
         const batch = await tx.batch.create({
@@ -275,6 +336,8 @@ async function main(): Promise<void> {
         lessonCount,
         assessmentCount: data.assessments.length,
         questionCount,
+        assignmentCount: data.assignments.length,
+        rubricCriterionCount,
         batches: batches.map((b) => ({ name: b.name, code: b.code })),
       };
     },
@@ -287,6 +350,7 @@ async function main(): Promise<void> {
   console.log(`  Modules:        ${summary.moduleCount}`);
   console.log(`  Lessons:        ${summary.lessonCount}`);
   console.log(`  Assessments:    ${summary.assessmentCount} (${summary.questionCount} questions total)`);
+  console.log(`  Assignments:    ${summary.assignmentCount} (${summary.rubricCriterionCount} rubric criteria total)`);
   console.log(`  Batches:        ${summary.batches.map((b) => `${b.code} (${b.name})`).join(", ")}`);
   console.log("\nNothing was deleted. This script will refuse to run again while any User row exists.");
 }
