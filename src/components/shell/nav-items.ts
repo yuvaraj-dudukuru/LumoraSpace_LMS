@@ -6,7 +6,6 @@ import {
   Settings,
   LayoutDashboard,
   Users,
-  BookOpen,
   ClipboardCheck,
   UserCheck,
   Award,
@@ -32,10 +31,13 @@ export const LEARNER_NAV_ITEMS: NavItem[] = [
 
 // "Submissions", not "Reviews" — DECISIONS.md Q5. "Profile" folded into
 // Settings — both are the same ANY-role account-settings surface (Q9).
+// "Courses" (API.md's documented GET /mentor/programs, Stitch:
+// courses_lumoraspace/course_detail_forge_data_analyst) was never built —
+// removed rather than left pointing at a 404, same call as ADMIN_NAV_ITEMS
+// below: a dead nav item is worse than an absent one.
 export const MENTOR_NAV_ITEMS: NavItem[] = [
   { label: "Dashboard", href: "/mentor", icon: LayoutDashboard },
   { label: "Learners", href: "/mentor/learners", icon: Users },
-  { label: "Courses", href: "/mentor/courses", icon: BookOpen },
   { label: "Submissions", href: "/mentor/submissions", icon: ClipboardCheck },
   { label: "Settings", href: "/mentor/settings", icon: Settings },
 ];
