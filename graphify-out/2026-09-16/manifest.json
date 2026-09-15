@@ -245,8 +245,8 @@
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1789506858.8476374,
-    "ast_hash": "17a858337e59cf417b9bd6bc28649acb",
+    "mtime": 1789407376.0174596,
+    "ast_hash": "1bcef88b3699503b8b797f0d2bdcbcbd",
     "semantic_hash": ""
   },
   "postcss.config.mjs": {
@@ -255,13 +255,13 @@
     "semantic_hash": ""
   },
   "prisma/bootstrap-data.json": {
-    "mtime": 1789506587.7300317,
-    "ast_hash": "9b7de13b4cf6d46ec62c6ca2e72705b9",
+    "mtime": 1789332765.5663664,
+    "ast_hash": "332979fdeae83115dfc34855acab7488",
     "semantic_hash": ""
   },
   "prisma/bootstrap.ts": {
-    "mtime": 1789506841.6265323,
-    "ast_hash": "817838bcc9b63077d54a7f4d3fce8e15",
+    "mtime": 1789332800.864922,
+    "ast_hash": "b1cb49f02d4db8932a5f7faf5517a9e7",
     "semantic_hash": ""
   },
   "prisma/dev-password.ts": {
@@ -4492,16 +4492,6 @@
   "src/lib/validations/settings.ts": {
     "mtime": 1789506200.225141,
     "ast_hash": "697a8b368fd8a23e670ffedab01bf8b8",
-    "semantic_hash": ""
-  },
-  "prisma/bootstrap-curriculum.ts": {
-    "mtime": 1789506854.3486402,
-    "ast_hash": "99716beade0b3e540de9cf0339e79022",
-    "semantic_hash": ""
-  },
-  "prisma/bootstrap-schema.ts": {
-    "mtime": 1789506826.453289,
-    "ast_hash": "3cd40bcd7ac7618765c9dd13d8ac0280",
     "semantic_hash": ""
   }
 }

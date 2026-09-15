@@ -6276,21 +6276,10 @@
       "norm_label": "bootstrap"
     },
     {
-      "label": "bootstrap:curriculum",
-      "file_type": "code",
-      "source_file": "package.json",
-      "source_location": "L11",
-      "_origin": "ast",
-      "id": "package_scripts_bootstrap_curriculum",
-      "community": 316,
-      "community_name": "package.json",
-      "norm_label": "bootstrap:curriculum"
-    },
-    {
       "label": "build",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L12",
+      "source_location": "L11",
       "_origin": "ast",
       "id": "package_scripts_build",
       "community": 316,
@@ -6301,7 +6290,7 @@
       "label": "dependencies",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L14",
+      "source_location": "L13",
       "_origin": "ast",
       "id": "package_dependencies",
       "community": 84,
@@ -6312,7 +6301,7 @@
       "label": "@auth/prisma-adapter",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L15",
+      "source_location": "L14",
       "_origin": "ast",
       "id": "package_dependencies_auth_prisma_adapter",
       "community": 84,
@@ -6323,7 +6312,7 @@
       "label": "@auth/prisma-adapter",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L15",
+      "source_location": "L14",
       "_origin": "ast",
       "id": "auth_prisma_adapter",
       "community": 84,
@@ -6334,7 +6323,7 @@
       "label": "@aws-sdk/client-s3",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L16",
+      "source_location": "L15",
       "_origin": "ast",
       "id": "package_dependencies_aws_sdk_client_s3",
       "community": 84,
@@ -6345,7 +6334,7 @@
       "label": "@aws-sdk/client-s3",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L16",
+      "source_location": "L15",
       "_origin": "ast",
       "id": "aws_sdk_client_s3",
       "community": 84,
@@ -6356,7 +6345,7 @@
       "label": "@aws-sdk/s3-request-presigner",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L17",
+      "source_location": "L16",
       "_origin": "ast",
       "id": "package_dependencies_aws_sdk_s3_request_presigner",
       "community": 84,
@@ -6367,7 +6356,7 @@
       "label": "@aws-sdk/s3-request-presigner",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L17",
+      "source_location": "L16",
       "_origin": "ast",
       "id": "aws_sdk_s3_request_presigner",
       "community": 84,
@@ -6378,7 +6367,7 @@
       "label": "@base-ui/react",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L18",
+      "source_location": "L17",
       "_origin": "ast",
       "id": "package_dependencies_base_ui_react",
       "community": 84,
@@ -6389,7 +6378,7 @@
       "label": "@base-ui/react",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L18",
+      "source_location": "L17",
       "_origin": "ast",
       "id": "base_ui_react",
       "community": 84,
@@ -6400,7 +6389,7 @@
       "label": "@prisma/client",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L19",
+      "source_location": "L18",
       "_origin": "ast",
       "id": "package_dependencies_prisma_client",
       "community": 230,
@@ -6411,7 +6400,7 @@
       "label": "@prisma/client",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L19",
+      "source_location": "L18",
       "_origin": "ast",
       "id": "prisma_client",
       "community": 230,
@@ -6422,7 +6411,7 @@
       "label": "@react-email/components",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L20",
+      "source_location": "L19",
       "_origin": "ast",
       "id": "package_dependencies_react_email_components",
       "community": 84,
@@ -6433,7 +6422,7 @@
       "label": "@react-email/components",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L20",
+      "source_location": "L19",
       "_origin": "ast",
       "id": "react_email_components",
       "community": 84,
@@ -6444,73 +6433,73 @@
       "label": "bcryptjs",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L21",
+      "source_location": "L20",
       "_origin": "ast",
       "id": "package_dependencies_bcryptjs",
-      "community": 84,
-      "community_name": "dependencies",
+      "community": 820,
+      "community_name": "bcryptjs",
       "norm_label": "bcryptjs"
     },
     {
       "label": "bcryptjs",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L21",
+      "source_location": "L20",
       "_origin": "ast",
       "id": "bcryptjs",
-      "community": 84,
-      "community_name": "dependencies",
+      "community": 820,
+      "community_name": "bcryptjs",
       "norm_label": "bcryptjs"
     },
     {
       "label": "class-variance-authority",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L22",
+      "source_location": "L21",
       "_origin": "ast",
       "id": "package_dependencies_class_variance_authority",
-      "community": 84,
-      "community_name": "dependencies",
+      "community": 821,
+      "community_name": "class-variance-authority",
       "norm_label": "class-variance-authority"
     },
     {
       "label": "class-variance-authority",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L22",
+      "source_location": "L21",
       "_origin": "ast",
       "id": "class_variance_authority",
-      "community": 84,
-      "community_name": "dependencies",
+      "community": 821,
+      "community_name": "class-variance-authority",
       "norm_label": "class-variance-authority"
     },
     {
       "label": "cn",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L23",
+      "source_location": "L22",
       "_origin": "ast",
       "id": "package_dependencies_cn",
-      "community": 84,
-      "community_name": "dependencies",
+      "community": 833,
+      "community_name": "cn",
       "norm_label": "cn"
     },
     {
       "label": "cn",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L23",
+      "source_location": "L22",
       "_origin": "ast",
       "id": "cn",
-      "community": 84,
-      "community_name": "dependencies",
+      "community": 833,
+      "community_name": "cn",
       "norm_label": "cn"
     },
     {
       "label": "lucide-react",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L24",
+      "source_location": "L23",
       "_origin": "ast",
       "id": "package_dependencies_lucide_react",
       "community": 84,
@@ -6521,7 +6510,7 @@
       "label": "lucide-react",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L24",
+      "source_location": "L23",
       "_origin": "ast",
       "id": "lucide_react",
       "community": 84,
@@ -6532,29 +6521,29 @@
       "label": "next",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L25",
+      "source_location": "L24",
       "_origin": "ast",
       "id": "package_dependencies_next",
-      "community": 84,
-      "community_name": "dependencies",
+      "community": 881,
+      "community_name": "next",
       "norm_label": "next"
     },
     {
       "label": "next",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L25",
+      "source_location": "L24",
       "_origin": "ast",
       "id": "next",
-      "community": 84,
-      "community_name": "dependencies",
+      "community": 881,
+      "community_name": "next",
       "norm_label": "next"
     },
     {
       "label": "next-auth",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L26",
+      "source_location": "L25",
       "_origin": "ast",
       "id": "package_dependencies_next_auth",
       "community": 84,
@@ -6565,7 +6554,7 @@
       "label": "next-auth",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L26",
+      "source_location": "L25",
       "_origin": "ast",
       "id": "next_auth",
       "community": 84,
@@ -6576,7 +6565,7 @@
       "label": "prisma",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L27",
+      "source_location": "L26",
       "_origin": "ast",
       "id": "package_dependencies_prisma",
       "community": 838,
@@ -6587,7 +6576,7 @@
       "label": "prisma",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L27",
+      "source_location": "L26",
       "_origin": "ast",
       "id": "prisma",
       "community": 838,
@@ -6598,7 +6587,7 @@
       "label": "react",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L28",
+      "source_location": "L27",
       "_origin": "ast",
       "id": "package_dependencies_react",
       "community": 84,
@@ -6609,7 +6598,7 @@
       "label": "react",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L28",
+      "source_location": "L27",
       "_origin": "ast",
       "id": "react",
       "community": 84,
@@ -6620,7 +6609,7 @@
       "label": "react-dom",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L29",
+      "source_location": "L28",
       "_origin": "ast",
       "id": "package_dependencies_react_dom",
       "community": 84,
@@ -6631,7 +6620,7 @@
       "label": "react-dom",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L29",
+      "source_location": "L28",
       "_origin": "ast",
       "id": "react_dom",
       "community": 84,
@@ -6642,7 +6631,7 @@
       "label": "resend",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L30",
+      "source_location": "L29",
       "_origin": "ast",
       "id": "package_dependencies_resend",
       "community": 84,
@@ -6653,7 +6642,7 @@
       "label": "resend",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L30",
+      "source_location": "L29",
       "_origin": "ast",
       "id": "resend",
       "community": 84,
@@ -6664,7 +6653,7 @@
       "label": "server-only",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L31",
+      "source_location": "L30",
       "_origin": "ast",
       "id": "package_dependencies_server_only",
       "community": 84,
@@ -6675,7 +6664,7 @@
       "label": "server-only",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L31",
+      "source_location": "L30",
       "_origin": "ast",
       "id": "server_only",
       "community": 84,
@@ -6686,7 +6675,7 @@
       "label": "shadcn",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L32",
+      "source_location": "L31",
       "_origin": "ast",
       "id": "package_dependencies_shadcn",
       "community": 84,
@@ -6697,7 +6686,7 @@
       "label": "shadcn",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L32",
+      "source_location": "L31",
       "_origin": "ast",
       "id": "shadcn",
       "community": 84,
@@ -6708,51 +6697,51 @@
       "label": "tw-animate-css",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L33",
+      "source_location": "L32",
       "_origin": "ast",
       "id": "package_dependencies_tw_animate_css",
-      "community": 814,
-      "community_name": "Quick Reference",
+      "community": 84,
+      "community_name": "dependencies",
       "norm_label": "tw-animate-css"
     },
     {
       "label": "tw-animate-css",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L33",
+      "source_location": "L32",
       "_origin": "ast",
       "id": "tw_animate_css",
-      "community": 814,
-      "community_name": "Quick Reference",
+      "community": 84,
+      "community_name": "dependencies",
       "norm_label": "tw-animate-css"
     },
     {
       "label": "zod",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L34",
+      "source_location": "L33",
       "_origin": "ast",
       "id": "package_dependencies_zod",
-      "community": 84,
-      "community_name": "dependencies",
+      "community": 840,
+      "community_name": "zod",
       "norm_label": "zod"
     },
     {
       "label": "zod",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L34",
+      "source_location": "L33",
       "_origin": "ast",
       "id": "zod",
-      "community": 84,
-      "community_name": "dependencies",
+      "community": 840,
+      "community_name": "zod",
       "norm_label": "zod"
     },
     {
       "label": "devDependencies",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L36",
+      "source_location": "L35",
       "_origin": "ast",
       "id": "package_devdependencies",
       "community": 133,
@@ -6763,7 +6752,7 @@
       "label": "@eslint/eslintrc",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L37",
+      "source_location": "L36",
       "_origin": "ast",
       "id": "package_devdependencies_eslint_eslintrc",
       "community": 133,
@@ -6774,7 +6763,7 @@
       "label": "@eslint/eslintrc",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L37",
+      "source_location": "L36",
       "_origin": "ast",
       "id": "eslint_eslintrc",
       "community": 133,
@@ -6785,7 +6774,7 @@
       "label": "@tailwindcss/postcss",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L38",
+      "source_location": "L37",
       "_origin": "ast",
       "id": "package_devdependencies_tailwindcss_postcss",
       "community": 133,
@@ -6796,7 +6785,7 @@
       "label": "@tailwindcss/postcss",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L38",
+      "source_location": "L37",
       "_origin": "ast",
       "id": "tailwindcss_postcss",
       "community": 133,
@@ -6807,7 +6796,7 @@
       "label": "@types/bcryptjs",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L39",
+      "source_location": "L38",
       "_origin": "ast",
       "id": "package_devdependencies_types_bcryptjs",
       "community": 133,
@@ -6818,7 +6807,7 @@
       "label": "@types/bcryptjs",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L39",
+      "source_location": "L38",
       "_origin": "ast",
       "id": "types_bcryptjs",
       "community": 133,
@@ -6829,7 +6818,7 @@
       "label": "@types/node",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L40",
+      "source_location": "L39",
       "_origin": "ast",
       "id": "package_devdependencies_types_node",
       "community": 133,
@@ -6840,7 +6829,7 @@
       "label": "@types/node",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L40",
+      "source_location": "L39",
       "_origin": "ast",
       "id": "types_node",
       "community": 133,
@@ -6851,7 +6840,7 @@
       "label": "@types/react",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L41",
+      "source_location": "L40",
       "_origin": "ast",
       "id": "package_devdependencies_types_react",
       "community": 133,
@@ -6862,7 +6851,7 @@
       "label": "@types/react",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L41",
+      "source_location": "L40",
       "_origin": "ast",
       "id": "types_react",
       "community": 133,
@@ -6873,7 +6862,7 @@
       "label": "@types/react-dom",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L42",
+      "source_location": "L41",
       "_origin": "ast",
       "id": "package_devdependencies_types_react_dom",
       "community": 133,
@@ -6884,7 +6873,7 @@
       "label": "@types/react-dom",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L42",
+      "source_location": "L41",
       "_origin": "ast",
       "id": "types_react_dom",
       "community": 133,
@@ -6895,7 +6884,7 @@
       "label": "eslint",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L43",
+      "source_location": "L42",
       "_origin": "ast",
       "id": "package_devdependencies_eslint",
       "community": 133,
@@ -6906,7 +6895,7 @@
       "label": "eslint",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L43",
+      "source_location": "L42",
       "_origin": "ast",
       "id": "eslint",
       "community": 133,
@@ -6917,7 +6906,7 @@
       "label": "eslint-config-next",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L44",
+      "source_location": "L43",
       "_origin": "ast",
       "id": "package_devdependencies_eslint_config_next",
       "community": 133,
@@ -6928,7 +6917,7 @@
       "label": "eslint-config-next",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L44",
+      "source_location": "L43",
       "_origin": "ast",
       "id": "eslint_config_next",
       "community": 133,
@@ -6939,7 +6928,7 @@
       "label": "tailwindcss",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L45",
+      "source_location": "L44",
       "_origin": "ast",
       "id": "package_devdependencies_tailwindcss",
       "community": 133,
@@ -6950,7 +6939,7 @@
       "label": "tailwindcss",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L45",
+      "source_location": "L44",
       "_origin": "ast",
       "id": "tailwindcss",
       "community": 133,
@@ -6961,7 +6950,7 @@
       "label": "tsx",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L46",
+      "source_location": "L45",
       "_origin": "ast",
       "id": "package_devdependencies_tsx",
       "community": 133,
@@ -6972,7 +6961,7 @@
       "label": "tsx",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L46",
+      "source_location": "L45",
       "_origin": "ast",
       "id": "tsx",
       "community": 133,
@@ -6983,7 +6972,7 @@
       "label": "typescript",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L47",
+      "source_location": "L46",
       "_origin": "ast",
       "id": "package_devdependencies_typescript",
       "community": 133,
@@ -6994,7 +6983,7 @@
       "label": "typescript",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L47",
+      "source_location": "L46",
       "_origin": "ast",
       "id": "typescript",
       "community": 133,
@@ -7005,7 +6994,7 @@
       "label": "prisma",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L49",
+      "source_location": "L48",
       "_origin": "ast",
       "id": "package_prisma",
       "community": 316,
@@ -7016,7 +7005,7 @@
       "label": "seed",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L50",
+      "source_location": "L49",
       "_origin": "ast",
       "id": "package_prisma_seed",
       "community": 316,
@@ -7046,182 +7035,6 @@
       "norm_label": "config"
     },
     {
-      "label": "bootstrap-curriculum.ts",
-      "file_type": "code",
-      "source_file": "prisma/bootstrap-curriculum.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "prisma_bootstrap_curriculum",
-      "community": 230,
-      "community_name": "bootstrap.ts",
-      "norm_label": "bootstrap-curriculum.ts"
-    },
-    {
-      "label": "prisma",
-      "file_type": "code",
-      "source_file": "prisma/bootstrap-curriculum.ts",
-      "source_location": "L21",
-      "_origin": "ast",
-      "id": "prisma_bootstrap_curriculum_prisma",
-      "community": 230,
-      "community_name": "bootstrap.ts",
-      "norm_label": "prisma"
-    },
-    {
-      "label": "main()",
-      "file_type": "code",
-      "source_file": "prisma/bootstrap-curriculum.ts",
-      "source_location": "L23",
-      "_origin": "ast",
-      "id": "prisma_bootstrap_curriculum_main",
-      "community": 230,
-      "community_name": "bootstrap.ts",
-      "norm_label": "main()"
-    },
-    {
-      "label": "bootstrap-schema.ts",
-      "file_type": "code",
-      "source_file": "prisma/bootstrap-schema.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "prisma_bootstrap_schema",
-      "community": 580,
-      "community_name": "\ud83d\udd12 Security Best Practices",
-      "norm_label": "bootstrap-schema.ts"
-    },
-    {
-      "label": "optionSchema",
-      "file_type": "code",
-      "source_file": "prisma/bootstrap-schema.ts",
-      "source_location": "L12",
-      "_origin": "ast",
-      "id": "prisma_bootstrap_schema_optionschema",
-      "community": 580,
-      "community_name": "\ud83d\udd12 Security Best Practices",
-      "norm_label": "optionschema"
-    },
-    {
-      "label": "questionSchema",
-      "file_type": "code",
-      "source_file": "prisma/bootstrap-schema.ts",
-      "source_location": "L18",
-      "_origin": "ast",
-      "id": "prisma_bootstrap_schema_questionschema",
-      "community": 580,
-      "community_name": "\ud83d\udd12 Security Best Practices",
-      "norm_label": "questionschema"
-    },
-    {
-      "label": "assessmentSchema",
-      "file_type": "code",
-      "source_file": "prisma/bootstrap-schema.ts",
-      "source_location": "L27",
-      "_origin": "ast",
-      "id": "prisma_bootstrap_schema_assessmentschema",
-      "community": 580,
-      "community_name": "\ud83d\udd12 Security Best Practices",
-      "norm_label": "assessmentschema"
-    },
-    {
-      "label": "lessonSchema",
-      "file_type": "code",
-      "source_file": "prisma/bootstrap-schema.ts",
-      "source_location": "L41",
-      "_origin": "ast",
-      "id": "prisma_bootstrap_schema_lessonschema",
-      "community": 580,
-      "community_name": "\ud83d\udd12 Security Best Practices",
-      "norm_label": "lessonschema"
-    },
-    {
-      "label": "moduleSchema",
-      "file_type": "code",
-      "source_file": "prisma/bootstrap-schema.ts",
-      "source_location": "L52",
-      "_origin": "ast",
-      "id": "prisma_bootstrap_schema_moduleschema",
-      "community": 580,
-      "community_name": "\ud83d\udd12 Security Best Practices",
-      "norm_label": "moduleschema"
-    },
-    {
-      "label": "rubricCriterionSchema",
-      "file_type": "code",
-      "source_file": "prisma/bootstrap-schema.ts",
-      "source_location": "L60",
-      "_origin": "ast",
-      "id": "prisma_bootstrap_schema_rubriccriterionschema",
-      "community": 580,
-      "community_name": "\ud83d\udd12 Security Best Practices",
-      "norm_label": "rubriccriterionschema"
-    },
-    {
-      "label": "assignmentSchema",
-      "file_type": "code",
-      "source_file": "prisma/bootstrap-schema.ts",
-      "source_location": "L67",
-      "_origin": "ast",
-      "id": "prisma_bootstrap_schema_assignmentschema",
-      "community": 580,
-      "community_name": "\ud83d\udd12 Security Best Practices",
-      "norm_label": "assignmentschema"
-    },
-    {
-      "label": "bootstrapDataSchema",
-      "file_type": "code",
-      "source_file": "prisma/bootstrap-schema.ts",
-      "source_location": "L81",
-      "_origin": "ast",
-      "id": "prisma_bootstrap_schema_bootstrapdataschema",
-      "community": 580,
-      "community_name": "\ud83d\udd12 Security Best Practices",
-      "norm_label": "bootstrapdataschema"
-    },
-    {
-      "label": "BootstrapData",
-      "file_type": "code",
-      "source_file": "prisma/bootstrap-schema.ts",
-      "source_location": "L108",
-      "_origin": "ast",
-      "id": "prisma_bootstrap_schema_bootstrapdata",
-      "community": 580,
-      "community_name": "\ud83d\udd12 Security Best Practices",
-      "norm_label": "bootstrapdata"
-    },
-    {
-      "label": "loadBootstrapData()",
-      "file_type": "code",
-      "source_file": "prisma/bootstrap-schema.ts",
-      "source_location": "L110",
-      "_origin": "ast",
-      "id": "prisma_bootstrap_schema_loadbootstrapdata",
-      "community": 230,
-      "community_name": "bootstrap.ts",
-      "norm_label": "loadbootstrapdata()"
-    },
-    {
-      "label": "CurriculumSummary",
-      "file_type": "code",
-      "source_file": "prisma/bootstrap-schema.ts",
-      "source_location": "L124",
-      "_origin": "ast",
-      "id": "prisma_bootstrap_schema_curriculumsummary",
-      "community": 580,
-      "community_name": "\ud83d\udd12 Security Best Practices",
-      "norm_label": "curriculumsummary"
-    },
-    {
-      "label": "createCurriculum()",
-      "file_type": "code",
-      "source_file": "prisma/bootstrap-schema.ts",
-      "source_location": "L142",
-      "_origin": "ast",
-      "id": "prisma_bootstrap_schema_createcurriculum",
-      "community": 230,
-      "community_name": "bootstrap.ts",
-      "norm_label": "createcurriculum()"
-    },
-    {
       "label": "bootstrap.ts",
       "file_type": "code",
       "source_file": "prisma/bootstrap.ts",
@@ -7236,7 +7049,7 @@
       "label": "prisma",
       "file_type": "code",
       "source_file": "prisma/bootstrap.ts",
-      "source_location": "L21",
+      "source_location": "L18",
       "_origin": "ast",
       "id": "prisma_bootstrap_prisma",
       "community": 230,
@@ -7247,7 +7060,7 @@
       "label": "envSchema",
       "file_type": "code",
       "source_file": "prisma/bootstrap.ts",
-      "source_location": "L23",
+      "source_location": "L20",
       "_origin": "ast",
       "id": "prisma_bootstrap_envschema",
       "community": 230,
@@ -7255,10 +7068,98 @@
       "norm_label": "envschema"
     },
     {
+      "label": "optionSchema",
+      "file_type": "code",
+      "source_file": "prisma/bootstrap.ts",
+      "source_location": "L26",
+      "_origin": "ast",
+      "id": "prisma_bootstrap_optionschema",
+      "community": 230,
+      "community_name": "bootstrap.ts",
+      "norm_label": "optionschema"
+    },
+    {
+      "label": "questionSchema",
+      "file_type": "code",
+      "source_file": "prisma/bootstrap.ts",
+      "source_location": "L32",
+      "_origin": "ast",
+      "id": "prisma_bootstrap_questionschema",
+      "community": 230,
+      "community_name": "bootstrap.ts",
+      "norm_label": "questionschema"
+    },
+    {
+      "label": "assessmentSchema",
+      "file_type": "code",
+      "source_file": "prisma/bootstrap.ts",
+      "source_location": "L41",
+      "_origin": "ast",
+      "id": "prisma_bootstrap_assessmentschema",
+      "community": 230,
+      "community_name": "bootstrap.ts",
+      "norm_label": "assessmentschema"
+    },
+    {
+      "label": "lessonSchema",
+      "file_type": "code",
+      "source_file": "prisma/bootstrap.ts",
+      "source_location": "L55",
+      "_origin": "ast",
+      "id": "prisma_bootstrap_lessonschema",
+      "community": 230,
+      "community_name": "bootstrap.ts",
+      "norm_label": "lessonschema"
+    },
+    {
+      "label": "moduleSchema",
+      "file_type": "code",
+      "source_file": "prisma/bootstrap.ts",
+      "source_location": "L66",
+      "_origin": "ast",
+      "id": "prisma_bootstrap_moduleschema",
+      "community": 230,
+      "community_name": "bootstrap.ts",
+      "norm_label": "moduleschema"
+    },
+    {
+      "label": "bootstrapDataSchema",
+      "file_type": "code",
+      "source_file": "prisma/bootstrap.ts",
+      "source_location": "L74",
+      "_origin": "ast",
+      "id": "prisma_bootstrap_bootstrapdataschema",
+      "community": 230,
+      "community_name": "bootstrap.ts",
+      "norm_label": "bootstrapdataschema"
+    },
+    {
+      "label": "BootstrapData",
+      "file_type": "code",
+      "source_file": "prisma/bootstrap.ts",
+      "source_location": "L100",
+      "_origin": "ast",
+      "id": "prisma_bootstrap_bootstrapdata",
+      "community": 230,
+      "community_name": "bootstrap.ts",
+      "norm_label": "bootstrapdata"
+    },
+    {
+      "label": "loadBootstrapData()",
+      "file_type": "code",
+      "source_file": "prisma/bootstrap.ts",
+      "source_location": "L102",
+      "_origin": "ast",
+      "id": "prisma_bootstrap_loadbootstrapdata",
+      "community": 230,
+      "community_name": "bootstrap.ts",
+      "norm_label": "loadbootstrapdata()"
+    },
+    {
       "label": "main()",
       "file_type": "code",
       "source_file": "prisma/bootstrap.ts",
-      "source_location": "L29",
+      "source_location": "L116",
       "_origin": "ast",
       "id": "prisma_bootstrap_main",
       "community": 230,
@@ -7547,8 +7448,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "scripts_verify_certificates",
-      "community": 26,
-      "community_name": "formatDate",
+      "community": 149,
+      "community_name": "requireUser",
       "norm_label": "verify-certificates.ts"
     },
     {
@@ -7558,8 +7459,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "scripts_verify_certificates_prisma",
-      "community": 26,
-      "community_name": "formatDate",
+      "community": 149,
+      "community_name": "requireUser",
       "norm_label": "prisma"
     },
     {
@@ -7569,8 +7470,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "scripts_verify_certificates_check",
-      "community": 26,
-      "community_name": "formatDate",
+      "community": 149,
+      "community_name": "requireUser",
       "norm_label": "check"
     },
     {
@@ -7580,8 +7481,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "scripts_verify_certificates_main",
-      "community": 26,
-      "community_name": "formatDate",
+      "community": 149,
+      "community_name": "requireUser",
       "norm_label": "main()"
     },
     {
@@ -7591,8 +7492,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "scripts_verify_guards",
-      "community": 599,
-      "community_name": "Best Practices",
+      "community": 73,
+      "community_name": "prisma.ts",
       "norm_label": "verify-guards.ts"
     },
     {
@@ -7602,8 +7503,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "scripts_verify_guards_prisma",
-      "community": 599,
-      "community_name": "Best Practices",
+      "community": 73,
+      "community_name": "prisma.ts",
       "norm_label": "prisma"
     },
     {
@@ -7613,8 +7514,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "scripts_verify_guards_check",
-      "community": 599,
-      "community_name": "Best Practices",
+      "community": 73,
+      "community_name": "prisma.ts",
       "norm_label": "check"
     },
     {
@@ -7624,8 +7525,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "scripts_verify_guards_main",
-      "community": 599,
-      "community_name": "Best Practices",
+      "community": 73,
+      "community_name": "prisma.ts",
       "norm_label": "main()"
     },
     {
@@ -7635,8 +7536,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "scripts_verify_mentor",
-      "community": 25,
-      "community_name": "[submissionId]/actions.ts",
+      "community": 26,
+      "community_name": "formatDate",
       "norm_label": "verify-mentor.ts"
     },
     {
@@ -7646,8 +7547,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "scripts_verify_mentor_prisma",
-      "community": 25,
-      "community_name": "[submissionId]/actions.ts",
+      "community": 26,
+      "community_name": "formatDate",
       "norm_label": "prisma"
     },
     {
@@ -7657,8 +7558,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "scripts_verify_mentor_check",
-      "community": 25,
-      "community_name": "[submissionId]/actions.ts",
+      "community": 26,
+      "community_name": "formatDate",
       "norm_label": "check"
     },
     {
@@ -7668,8 +7569,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "scripts_verify_mentor_main",
-      "community": 25,
-      "community_name": "[submissionId]/actions.ts",
+      "community": 26,
+      "community_name": "formatDate",
       "norm_label": "main()"
     },
     {
@@ -8427,8 +8328,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_api_auth_nextauth_route",
-      "community": 318,
-      "community_name": "auth.config.ts",
+      "community": 599,
+      "community_name": "Best Practices",
       "norm_label": "route.ts"
     },
     {
@@ -8460,8 +8361,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_layout",
-      "community": 318,
-      "community_name": "auth.config.ts",
+      "community": 599,
+      "community_name": "Best Practices",
       "norm_label": "app/layout.tsx"
     },
     {
@@ -8471,8 +8372,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_app_layout_inter",
-      "community": 318,
-      "community_name": "auth.config.ts",
+      "community": 599,
+      "community_name": "Best Practices",
       "norm_label": "inter"
     },
     {
@@ -8482,8 +8383,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "src_app_layout_metadata",
-      "community": 318,
-      "community_name": "auth.config.ts",
+      "community": 599,
+      "community_name": "Best Practices",
       "norm_label": "metadata"
     },
     {
@@ -8493,8 +8394,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "src_app_layout_rootlayout",
-      "community": 318,
-      "community_name": "auth.config.ts",
+      "community": 599,
+      "community_name": "Best Practices",
       "norm_label": "rootlayout()"
     },
     {
@@ -9021,8 +8922,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_learn_certificates_id_page",
-      "community": 26,
-      "community_name": "formatDate",
+      "community": 149,
+      "community_name": "requireUser",
       "norm_label": "learn/certificates/[id]/page.tsx"
     },
     {
@@ -9032,8 +8933,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "src_app_learn_certificates_id_page_certificatedetailpage",
-      "community": 26,
-      "community_name": "formatDate",
+      "community": 149,
+      "community_name": "requireUser",
       "norm_label": "certificatedetailpage()"
     },
     {
@@ -9065,8 +8966,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_learn_certificates_page",
-      "community": 26,
-      "community_name": "formatDate",
+      "community": 149,
+      "community_name": "requireUser",
       "norm_label": "learn/certificates/page.tsx"
     },
     {
@@ -9076,8 +8977,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_app_learn_certificates_page_certificatespage",
-      "community": 26,
-      "community_name": "formatDate",
+      "community": 149,
+      "community_name": "requireUser",
       "norm_label": "certificatespage()"
     },
     {
@@ -9131,8 +9032,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_learn_lessons_lessonid_actions",
-      "community": 0,
-      "community_name": "auth-guards.ts",
+      "community": 10,
+      "community_name": "progress/page.tsx",
       "norm_label": "[lessonid]/actions.ts"
     },
     {
@@ -9142,8 +9043,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "src_app_learn_lessons_lessonid_actions_markcompleteresult",
-      "community": 0,
-      "community_name": "auth-guards.ts",
+      "community": 10,
+      "community_name": "progress/page.tsx",
       "norm_label": "markcompleteresult"
     },
     {
@@ -9153,8 +9054,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "src_app_learn_lessons_lessonid_actions_marklessoncomplete",
-      "community": 0,
-      "community_name": "auth-guards.ts",
+      "community": 10,
+      "community_name": "progress/page.tsx",
       "norm_label": "marklessoncomplete()"
     },
     {
@@ -9164,8 +9065,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "src_app_learn_lessons_lessonid_actions_savenotesresult",
-      "community": 0,
-      "community_name": "auth-guards.ts",
+      "community": 10,
+      "community_name": "progress/page.tsx",
       "norm_label": "savenotesresult"
     },
     {
@@ -9175,8 +9076,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "src_app_learn_lessons_lessonid_actions_savelessonnotes",
-      "community": 0,
-      "community_name": "auth-guards.ts",
+      "community": 10,
+      "community_name": "progress/page.tsx",
       "norm_label": "savelessonnotes()"
     },
     {
@@ -9219,8 +9120,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_app_learn_lessons_lessonid_mark_complete_button_markcompletebutton",
-      "community": 0,
-      "community_name": "auth-guards.ts",
+      "community": 4,
+      "community_name": "button.tsx",
       "norm_label": "markcompletebutton()"
     },
     {
@@ -9230,8 +9131,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_learn_lessons_lessonid_notes_panel",
-      "community": 0,
-      "community_name": "auth-guards.ts",
+      "community": 10,
+      "community_name": "progress/page.tsx",
       "norm_label": "notes-panel.tsx"
     },
     {
@@ -9241,8 +9142,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "src_app_learn_lessons_lessonid_notes_panel_notespanel",
-      "community": 0,
-      "community_name": "auth-guards.ts",
+      "community": 10,
+      "community_name": "progress/page.tsx",
       "norm_label": "notespanel()"
     },
     {
@@ -9252,8 +9153,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_learn_lessons_lessonid_page",
-      "community": 0,
-      "community_name": "auth-guards.ts",
+      "community": 10,
+      "community_name": "progress/page.tsx",
       "norm_label": "[lessonid]/page.tsx"
     },
     {
@@ -9263,8 +9164,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "src_app_learn_lessons_lessonid_page_lessonpage",
-      "community": 0,
-      "community_name": "auth-guards.ts",
+      "community": 10,
+      "community_name": "progress/page.tsx",
       "norm_label": "lessonpage()"
     },
     {
@@ -9274,8 +9175,8 @@
       "source_location": "L120",
       "_origin": "ast",
       "id": "src_app_learn_lessons_lessonid_page_lessoncontent",
-      "community": 0,
-      "community_name": "auth-guards.ts",
+      "community": 10,
+      "community_name": "progress/page.tsx",
       "norm_label": "lessoncontent()"
     },
     {
@@ -9329,8 +9230,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_learn_my_learning_my_learning_grid",
-      "community": 10,
-      "community_name": "progress/page.tsx",
+      "community": 4,
+      "community_name": "button.tsx",
       "norm_label": "my-learning-grid.tsx"
     },
     {
@@ -9340,8 +9241,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_app_learn_my_learning_my_learning_grid_enrollmentcarddata",
-      "community": 10,
-      "community_name": "progress/page.tsx",
+      "community": 4,
+      "community_name": "button.tsx",
       "norm_label": "enrollmentcarddata"
     },
     {
@@ -9351,8 +9252,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "src_app_learn_my_learning_my_learning_grid_filter",
-      "community": 10,
-      "community_name": "progress/page.tsx",
+      "community": 4,
+      "community_name": "button.tsx",
       "norm_label": "filter"
     },
     {
@@ -9362,8 +9263,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "src_app_learn_my_learning_my_learning_grid_matchesfilter",
-      "community": 10,
-      "community_name": "progress/page.tsx",
+      "community": 4,
+      "community_name": "button.tsx",
       "norm_label": "matchesfilter()"
     },
     {
@@ -9373,8 +9274,8 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "src_app_learn_my_learning_my_learning_grid_mylearninggrid",
-      "community": 10,
-      "community_name": "progress/page.tsx",
+      "community": 4,
+      "community_name": "button.tsx",
       "norm_label": "mylearninggrid()"
     },
     {
@@ -9384,8 +9285,8 @@
       "source_location": "L82",
       "_origin": "ast",
       "id": "src_app_learn_my_learning_my_learning_grid_enrollmentcard",
-      "community": 10,
-      "community_name": "progress/page.tsx",
+      "community": 4,
+      "community_name": "button.tsx",
       "norm_label": "enrollmentcard()"
     },
     {
@@ -9417,8 +9318,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_learn_page",
-      "community": 26,
-      "community_name": "formatDate",
+      "community": 4,
+      "community_name": "button.tsx",
       "norm_label": "learn/page.tsx"
     },
     {
@@ -9428,8 +9329,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "src_app_learn_page_learnhomepage",
-      "community": 26,
-      "community_name": "formatDate",
+      "community": 4,
+      "community_name": "button.tsx",
       "norm_label": "learnhomepage()"
     },
     {
@@ -9560,8 +9461,8 @@
       "source_location": "L265",
       "_origin": "ast",
       "id": "src_app_learn_progress_page_certificatessection",
-      "community": 10,
-      "community_name": "progress/page.tsx",
+      "community": 149,
+      "community_name": "requireUser",
       "norm_label": "certificatessection()"
     },
     {
@@ -9703,8 +9604,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_learn_submissions_submissionid_page",
-      "community": 26,
-      "community_name": "formatDate",
+      "community": 18,
+      "community_name": "assignments.ts",
       "norm_label": "learn/submissions/[submissionid]/page.tsx"
     },
     {
@@ -9714,8 +9615,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "src_app_learn_submissions_submissionid_page_status_label",
-      "community": 26,
-      "community_name": "formatDate",
+      "community": 18,
+      "community_name": "assignments.ts",
       "norm_label": "status_label"
     },
     {
@@ -9725,8 +9626,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "src_app_learn_submissions_submissionid_page_status_style",
-      "community": 26,
-      "community_name": "formatDate",
+      "community": 18,
+      "community_name": "assignments.ts",
       "norm_label": "status_style"
     },
     {
@@ -9736,8 +9637,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "src_app_learn_submissions_submissionid_page_submissiondetailpage",
-      "community": 26,
-      "community_name": "formatDate",
+      "community": 18,
+      "community_name": "assignments.ts",
       "norm_label": "submissiondetailpage()"
     },
     {
@@ -10396,8 +10297,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "src_app_onboarding_page_onboardingpage",
-      "community": 34,
-      "community_name": "enroll-form.tsx",
+      "community": 4,
+      "community_name": "button.tsx",
       "norm_label": "onboardingpage()"
     },
     {
@@ -10407,8 +10308,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_page",
-      "community": 34,
-      "community_name": "enroll-form.tsx",
+      "community": 4,
+      "community_name": "button.tsx",
       "norm_label": "app/page.tsx"
     },
     {
@@ -10418,8 +10319,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_app_page_features",
-      "community": 34,
-      "community_name": "enroll-form.tsx",
+      "community": 4,
+      "community_name": "button.tsx",
       "norm_label": "features"
     },
     {
@@ -10429,8 +10330,8 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "src_app_page_landingpage",
-      "community": 34,
-      "community_name": "enroll-form.tsx",
+      "community": 4,
+      "community_name": "button.tsx",
       "norm_label": "landingpage()"
     },
     {
@@ -10572,8 +10473,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_programs_layout",
-      "community": 34,
-      "community_name": "enroll-form.tsx",
+      "community": 4,
+      "community_name": "button.tsx",
       "norm_label": "programs/layout.tsx"
     },
     {
@@ -10583,8 +10484,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_app_programs_layout_programslayout",
-      "community": 34,
-      "community_name": "enroll-form.tsx",
+      "community": 4,
+      "community_name": "button.tsx",
       "norm_label": "programslayout()"
     },
     {
@@ -10770,8 +10671,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_verify_certificatenumber_page",
-      "community": 26,
-      "community_name": "formatDate",
+      "community": 149,
+      "community_name": "requireUser",
       "norm_label": "[certificatenumber]/page.tsx"
     },
     {
@@ -10781,8 +10682,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "src_app_verify_certificatenumber_page_verifycertificatepage",
-      "community": 26,
-      "community_name": "formatDate",
+      "community": 149,
+      "community_name": "requireUser",
       "norm_label": "verifycertificatepage()"
     },
     {
@@ -10792,8 +10693,8 @@
       "source_location": "L49",
       "_origin": "ast",
       "id": "src_app_verify_certificatenumber_page_validresult",
-      "community": 26,
-      "community_name": "formatDate",
+      "community": 149,
+      "community_name": "requireUser",
       "norm_label": "validresult()"
     },
     {
@@ -10803,8 +10704,8 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "src_app_verify_certificatenumber_page_revokedresult",
-      "community": 26,
-      "community_name": "formatDate",
+      "community": 149,
+      "community_name": "requireUser",
       "norm_label": "revokedresult()"
     },
     {
@@ -10814,8 +10715,8 @@
       "source_location": "L85",
       "_origin": "ast",
       "id": "src_app_verify_certificatenumber_page_notfoundresult",
-      "community": 26,
-      "community_name": "formatDate",
+      "community": 149,
+      "community_name": "requireUser",
       "norm_label": "notfoundresult()"
     },
     {
@@ -10935,8 +10836,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_auth",
-      "community": 318,
-      "community_name": "auth.config.ts",
+      "community": 599,
+      "community_name": "Best Practices",
       "norm_label": "src/auth.ts"
     },
     {
@@ -10946,8 +10847,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "src_auth_credentialsschema",
-      "community": 318,
-      "community_name": "auth.config.ts",
+      "community": 599,
+      "community_name": "Best Practices",
       "norm_label": "credentialsschema"
     },
     {
@@ -10957,8 +10858,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "src_auth_handlers_auth_signin_signout",
-      "community": 318,
-      "community_name": "auth.config.ts",
+      "community": 599,
+      "community_name": "Best Practices",
       "norm_label": "{ handlers, auth, signin, signout }"
     },
     {
@@ -11133,8 +11034,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_marketing_public_header",
-      "community": 34,
-      "community_name": "enroll-form.tsx",
+      "community": 4,
+      "community_name": "button.tsx",
       "norm_label": "public-header.tsx"
     },
     {
@@ -11144,8 +11045,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_components_marketing_public_header_publicheader",
-      "community": 34,
-      "community_name": "enroll-form.tsx",
+      "community": 4,
+      "community_name": "button.tsx",
       "norm_label": "publicheader()"
     },
     {
@@ -11331,8 +11232,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_components_ui_button_buttonvariants",
-      "community": 34,
-      "community_name": "enroll-form.tsx",
+      "community": 4,
+      "community_name": "button.tsx",
       "norm_label": "buttonvariants"
     },
     {
@@ -11485,8 +11386,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_emails_accessgrantedemail",
-      "community": 149,
-      "community_name": "requireUser",
+      "community": 25,
+      "community_name": "[submissionId]/actions.ts",
       "norm_label": "accessgrantedemail.tsx"
     },
     {
@@ -11496,8 +11397,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "src_emails_accessgrantedemail_accessgrantedemailprops",
-      "community": 149,
-      "community_name": "requireUser",
+      "community": 25,
+      "community_name": "[submissionId]/actions.ts",
       "norm_label": "accessgrantedemailprops"
     },
     {
@@ -11507,8 +11408,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "src_emails_accessgrantedemail_accessgrantedemail",
-      "community": 149,
-      "community_name": "requireUser",
+      "community": 25,
+      "community_name": "[submissionId]/actions.ts",
       "norm_label": "accessgrantedemail()"
     },
     {
@@ -11518,8 +11419,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_emails_assignmentreviewedemail",
-      "community": 149,
-      "community_name": "requireUser",
+      "community": 25,
+      "community_name": "[submissionId]/actions.ts",
       "norm_label": "assignmentreviewedemail.tsx"
     },
     {
@@ -11529,8 +11430,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "src_emails_assignmentreviewedemail_assignmentreviewedoutcome",
-      "community": 149,
-      "community_name": "requireUser",
+      "community": 25,
+      "community_name": "[submissionId]/actions.ts",
       "norm_label": "assignmentreviewedoutcome"
     },
     {
@@ -11540,8 +11441,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_emails_assignmentreviewedemail_assignmentreviewedemailprops",
-      "community": 149,
-      "community_name": "requireUser",
+      "community": 25,
+      "community_name": "[submissionId]/actions.ts",
       "norm_label": "assignmentreviewedemailprops"
     },
     {
@@ -11551,8 +11452,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "src_emails_assignmentreviewedemail_outcome_copy",
-      "community": 149,
-      "community_name": "requireUser",
+      "community": 25,
+      "community_name": "[submissionId]/actions.ts",
       "norm_label": "outcome_copy"
     },
     {
@@ -11562,8 +11463,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "src_emails_assignmentreviewedemail_assignmentreviewedemail",
-      "community": 149,
-      "community_name": "requireUser",
+      "community": 25,
+      "community_name": "[submissionId]/actions.ts",
       "norm_label": "assignmentreviewedemail()"
     },
     {
@@ -11595,8 +11496,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_auth_guards",
-      "community": 599,
-      "community_name": "Best Practices",
+      "community": 73,
+      "community_name": "prisma.ts",
       "norm_label": "auth-guards.ts"
     },
     {
@@ -11606,8 +11507,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "src_lib_auth_guards_currentuser",
-      "community": 599,
-      "community_name": "Best Practices",
+      "community": 73,
+      "community_name": "prisma.ts",
       "norm_label": "currentuser"
     },
     {
@@ -11617,8 +11518,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "src_lib_auth_guards_findcurrentuserbyid",
-      "community": 599,
-      "community_name": "Best Practices",
+      "community": 73,
+      "community_name": "prisma.ts",
       "norm_label": "findcurrentuserbyid()"
     },
     {
@@ -11628,8 +11529,8 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "src_lib_auth_guards_findenrollment",
-      "community": 599,
-      "community_name": "Best Practices",
+      "community": 73,
+      "community_name": "prisma.ts",
       "norm_label": "findenrollment()"
     },
     {
@@ -11639,8 +11540,8 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "src_lib_auth_guards_isenrollmentgranted",
-      "community": 599,
-      "community_name": "Best Practices",
+      "community": 73,
+      "community_name": "prisma.ts",
       "norm_label": "isenrollmentgranted()"
     },
     {
@@ -11650,8 +11551,8 @@
       "source_location": "L62",
       "_origin": "ast",
       "id": "src_lib_auth_guards_ismentorforbatch",
-      "community": 599,
-      "community_name": "Best Practices",
+      "community": 73,
+      "community_name": "prisma.ts",
       "norm_label": "ismentorforbatch()"
     },
     {
@@ -11661,8 +11562,8 @@
       "source_location": "L77",
       "_origin": "ast",
       "id": "src_lib_auth_guards_getcurrentuser",
-      "community": 599,
-      "community_name": "Best Practices",
+      "community": 73,
+      "community_name": "prisma.ts",
       "norm_label": "getcurrentuser()"
     },
     {
@@ -11672,8 +11573,8 @@
       "source_location": "L84",
       "_origin": "ast",
       "id": "src_lib_auth_guards_requireuser",
-      "community": 26,
-      "community_name": "formatDate",
+      "community": 73,
+      "community_name": "prisma.ts",
       "norm_label": "requireuser()"
     },
     {
@@ -11694,8 +11595,8 @@
       "source_location": "L98",
       "_origin": "ast",
       "id": "src_lib_auth_guards_requireenrollment",
-      "community": 599,
-      "community_name": "Best Practices",
+      "community": 73,
+      "community_name": "prisma.ts",
       "norm_label": "requireenrollment()"
     },
     {
@@ -11716,8 +11617,8 @@
       "source_location": "L114",
       "_origin": "ast",
       "id": "src_lib_auth_guards_requirementorforbatch",
-      "community": 599,
-      "community_name": "Best Practices",
+      "community": 73,
+      "community_name": "prisma.ts",
       "norm_label": "requirementorforbatch()"
     },
     {
@@ -11782,8 +11683,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_email",
-      "community": 149,
-      "community_name": "requireUser",
+      "community": 25,
+      "community_name": "[submissionId]/actions.ts",
       "norm_label": "email.ts"
     },
     {
@@ -11793,8 +11694,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "src_lib_email_getresendclient",
-      "community": 149,
-      "community_name": "requireUser",
+      "community": 25,
+      "community_name": "[submissionId]/actions.ts",
       "norm_label": "getresendclient()"
     },
     {
@@ -11804,8 +11705,8 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "src_lib_email_getresend",
-      "community": 149,
-      "community_name": "requireUser",
+      "community": 25,
+      "community_name": "[submissionId]/actions.ts",
       "norm_label": "getresend()"
     },
     {
@@ -11837,8 +11738,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "src_lib_format_formatdate",
-      "community": 26,
-      "community_name": "formatDate",
+      "community": 149,
+      "community_name": "requireUser",
       "norm_label": "formatdate()"
     },
     {
@@ -11848,8 +11749,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_mail",
-      "community": 149,
-      "community_name": "requireUser",
+      "community": 25,
+      "community_name": "[submissionId]/actions.ts",
       "norm_label": "mail.ts"
     },
     {
@@ -11859,8 +11760,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "src_lib_mail_sendaccessgrantedemail",
-      "community": 149,
-      "community_name": "requireUser",
+      "community": 25,
+      "community_name": "[submissionId]/actions.ts",
       "norm_label": "sendaccessgrantedemail()"
     },
     {
@@ -11870,8 +11771,8 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "src_lib_mail_sendassignmentreviewedemail",
-      "community": 149,
-      "community_name": "requireUser",
+      "community": 25,
+      "community_name": "[submissionId]/actions.ts",
       "norm_label": "sendassignmentreviewedemail()"
     },
     {
@@ -11903,8 +11804,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "src_lib_progress_rollup_refreshenrollmentprogress",
-      "community": 0,
-      "community_name": "auth-guards.ts",
+      "community": 10,
+      "community_name": "progress/page.tsx",
       "norm_label": "refreshenrollmentprogress()"
     },
     {
@@ -12409,8 +12310,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_queries_certificates",
-      "community": 26,
-      "community_name": "formatDate",
+      "community": 149,
+      "community_name": "requireUser",
       "norm_label": "queries/certificates.ts"
     },
     {
@@ -12420,8 +12321,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "src_lib_queries_certificates_learnercertificate",
-      "community": 26,
-      "community_name": "formatDate",
+      "community": 149,
+      "community_name": "requireUser",
       "norm_label": "learnercertificate"
     },
     {
@@ -12431,8 +12332,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "src_lib_queries_certificates_getcertificatesforuser",
-      "community": 26,
-      "community_name": "formatDate",
+      "community": 149,
+      "community_name": "requireUser",
       "norm_label": "getcertificatesforuser()"
     },
     {
@@ -12442,8 +12343,8 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "src_lib_queries_certificates_certificatedetailforuser",
-      "community": 26,
-      "community_name": "formatDate",
+      "community": 149,
+      "community_name": "requireUser",
       "norm_label": "certificatedetailforuser"
     },
     {
@@ -12453,8 +12354,8 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "src_lib_queries_certificates_getcertificatedetailforuser",
-      "community": 26,
-      "community_name": "formatDate",
+      "community": 149,
+      "community_name": "requireUser",
       "norm_label": "getcertificatedetailforuser()"
     },
     {
@@ -12464,8 +12365,8 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "src_lib_queries_certificates_verifiedcertificate",
-      "community": 26,
-      "community_name": "formatDate",
+      "community": 149,
+      "community_name": "requireUser",
       "norm_label": "verifiedcertificate"
     },
     {
@@ -12475,8 +12376,8 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "src_lib_queries_certificates_getcertificateforverification",
-      "community": 26,
-      "community_name": "formatDate",
+      "community": 149,
+      "community_name": "requireUser",
       "norm_label": "getcertificateforverification()"
     },
     {
@@ -12530,8 +12431,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "src_lib_queries_dashboard_getdashboarddata",
-      "community": 26,
-      "community_name": "formatDate",
+      "community": 10,
+      "community_name": "progress/page.tsx",
       "norm_label": "getdashboarddata()"
     },
     {
@@ -12585,8 +12486,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_queries_lessons",
-      "community": 0,
-      "community_name": "auth-guards.ts",
+      "community": 10,
+      "community_name": "progress/page.tsx",
       "norm_label": "lessons.ts"
     },
     {
@@ -12596,8 +12497,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_lib_queries_lessons_resolvelessonprogram",
-      "community": 0,
-      "community_name": "auth-guards.ts",
+      "community": 10,
+      "community_name": "progress/page.tsx",
       "norm_label": "resolvelessonprogram()"
     },
     {
@@ -12607,8 +12508,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "src_lib_queries_lessons_lessondetail",
-      "community": 0,
-      "community_name": "auth-guards.ts",
+      "community": 10,
+      "community_name": "progress/page.tsx",
       "norm_label": "lessondetail"
     },
     {
@@ -12618,8 +12519,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "src_lib_queries_lessons_getlessondetail",
-      "community": 0,
-      "community_name": "auth-guards.ts",
+      "community": 10,
+      "community_name": "progress/page.tsx",
       "norm_label": "getlessondetail()"
     },
     {
@@ -13047,8 +12948,8 @@
       "source_location": "L238",
       "_origin": "ast",
       "id": "src_lib_queries_progress_flattenlessons",
-      "community": 0,
-      "community_name": "auth-guards.ts",
+      "community": 10,
+      "community_name": "progress/page.tsx",
       "norm_label": "flattenlessons()"
     },
     {
@@ -13498,8 +13399,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_validations_lesson",
-      "community": 0,
-      "community_name": "auth-guards.ts",
+      "community": 10,
+      "community_name": "progress/page.tsx",
       "norm_label": "lesson.ts"
     },
     {
@@ -13509,8 +13410,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "src_lib_validations_lesson_lessonnotesschema",
-      "community": 0,
-      "community_name": "auth-guards.ts",
+      "community": 10,
+      "community_name": "progress/page.tsx",
       "norm_label": "lessonnotesschema"
     },
     {
@@ -13520,8 +13421,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_lib_validations_lesson_lessonnotesinput",
-      "community": 0,
-      "community_name": "auth-guards.ts",
+      "community": 10,
+      "community_name": "progress/page.tsx",
       "norm_label": "lessonnotesinput"
     },
     {
@@ -13575,8 +13476,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "src_lib_validations_review_validaterubricscoreentries",
-      "community": 25,
-      "community_name": "[submissionId]/actions.ts",
+      "community": 26,
+      "community_name": "formatDate",
       "norm_label": "validaterubricscoreentries()"
     },
     {
@@ -13586,8 +13487,8 @@
       "source_location": "L43",
       "_origin": "ast",
       "id": "src_lib_validations_review_validaterubricscorescomplete",
-      "community": 25,
-      "community_name": "[submissionId]/actions.ts",
+      "community": 26,
+      "community_name": "formatDate",
       "norm_label": "validaterubricscorescomplete()"
     },
     {
@@ -18723,8 +18624,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "agents_skills_github_code_review_skill_quick_start",
-      "community": 777,
-      "community_name": "\ud83c\udfaf Quick Start",
+      "community": 320,
+      "community_name": "GitHub Code Review Skill",
       "norm_label": "\ud83c\udfaf quick start"
     },
     {
@@ -18734,8 +18635,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "agents_skills_github_code_review_skill_simple_review",
-      "community": 777,
-      "community_name": "\ud83c\udfaf Quick Start",
+      "community": 320,
+      "community_name": "GitHub Code Review Skill",
       "norm_label": "simple review"
     },
     {
@@ -18745,8 +18646,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "agents_skills_github_code_review_skill_complete_review_workflow",
-      "community": 777,
-      "community_name": "\ud83c\udfaf Quick Start",
+      "community": 320,
+      "community_name": "GitHub Code Review Skill",
       "norm_label": "complete review workflow"
     },
     {
@@ -22738,8 +22639,8 @@
       "source_location": "L647",
       "_origin": "ast",
       "id": "agents_skills_github_workflow_automation_skill_security_best_practices",
-      "community": 321,
-      "community_name": "\u26a1 Performance Optimization",
+      "community": 580,
+      "community_name": "\ud83d\udd12 Security Best Practices",
       "norm_label": "\ud83d\udd12 security best practices"
     },
     {
@@ -22749,8 +22650,8 @@
       "source_location": "L652",
       "_origin": "ast",
       "id": "agents_skills_github_workflow_automation_skill_1_store_configurations_securely",
-      "community": 321,
-      "community_name": "\u26a1 Performance Optimization",
+      "community": 580,
+      "community_name": "\ud83d\udd12 Security Best Practices",
       "norm_label": "1. store configurations securely"
     },
     {
@@ -22760,8 +22661,8 @@
       "source_location": "L662",
       "_origin": "ast",
       "id": "agents_skills_github_workflow_automation_skill_2_use_oidc_authentication",
-      "community": 321,
-      "community_name": "\u26a1 Performance Optimization",
+      "community": 580,
+      "community_name": "\ud83d\udd12 Security Best Practices",
       "norm_label": "2. use oidc authentication"
     },
     {
@@ -22771,8 +22672,8 @@
       "source_location": "L675",
       "_origin": "ast",
       "id": "agents_skills_github_workflow_automation_skill_3_implement_least_privilege",
-      "community": 321,
-      "community_name": "\u26a1 Performance Optimization",
+      "community": 580,
+      "community_name": "\ud83d\udd12 Security Best Practices",
       "norm_label": "3. implement least-privilege"
     },
     {
@@ -22782,8 +22683,8 @@
       "source_location": "L683",
       "_origin": "ast",
       "id": "agents_skills_github_workflow_automation_skill_4_audit_swarm_operations",
-      "community": 321,
-      "community_name": "\u26a1 Performance Optimization",
+      "community": 580,
+      "community_name": "\ud83d\udd12 Security Best Practices",
       "norm_label": "4. audit swarm operations"
     },
     {
@@ -22793,8 +22694,8 @@
       "source_location": "L694",
       "_origin": "ast",
       "id": "agents_skills_github_workflow_automation_skill_performance_optimization",
-      "community": 600,
-      "community_name": "\ud83c\udfaf GitHub-Specific Optimizations",
+      "community": 321,
+      "community_name": "\u26a1 Performance Optimization",
       "norm_label": "\u26a1 performance optimization"
     },
     {
@@ -22804,8 +22705,8 @@
       "source_location": "L699",
       "_origin": "ast",
       "id": "agents_skills_github_workflow_automation_skill_1_cache_swarm_dependencies",
-      "community": 600,
-      "community_name": "\ud83c\udfaf GitHub-Specific Optimizations",
+      "community": 321,
+      "community_name": "\u26a1 Performance Optimization",
       "norm_label": "1. cache swarm dependencies"
     },
     {
@@ -22815,8 +22716,8 @@
       "source_location": "L709",
       "_origin": "ast",
       "id": "agents_skills_github_workflow_automation_skill_2_use_appropriate_runner_sizes",
-      "community": 600,
-      "community_name": "\ud83c\udfaf GitHub-Specific Optimizations",
+      "community": 321,
+      "community_name": "\u26a1 Performance Optimization",
       "norm_label": "2. use appropriate runner sizes"
     },
     {
@@ -22826,8 +22727,8 @@
       "source_location": "L718",
       "_origin": "ast",
       "id": "agents_skills_github_workflow_automation_skill_3_implement_early_termination",
-      "community": 600,
-      "community_name": "\ud83c\udfaf GitHub-Specific Optimizations",
+      "community": 321,
+      "community_name": "\u26a1 Performance Optimization",
       "norm_label": "3. implement early termination"
     },
     {
@@ -22837,8 +22738,8 @@
       "source_location": "L728",
       "_origin": "ast",
       "id": "agents_skills_github_workflow_automation_skill_4_optimize_parallel_execution",
-      "community": 600,
-      "community_name": "\ud83c\udfaf GitHub-Specific Optimizations",
+      "community": 321,
+      "community_name": "\u26a1 Performance Optimization",
       "norm_label": "4. optimize parallel execution"
     },
     {
@@ -56178,8 +56079,8 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "claude_agents_github_multi_repo_swarm_core_features",
-      "community": 706,
-      "community_name": "Advanced Synchronization",
+      "community": 7,
+      "community_name": "Multi-Repo Swarm - Cross-Repository Swarm Orchestration",
       "norm_label": "core features"
     },
     {
@@ -56189,8 +56090,8 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "claude_agents_github_multi_repo_swarm_1_cross_repo_initialization",
-      "community": 706,
-      "community_name": "Advanced Synchronization",
+      "community": 7,
+      "community_name": "Multi-Repo Swarm - Cross-Repository Swarm Orchestration",
       "norm_label": "1. cross-repo initialization"
     },
     {
@@ -56200,8 +56101,8 @@
       "source_location": "L63",
       "_origin": "ast",
       "id": "claude_agents_github_multi_repo_swarm_2_repository_discovery",
-      "community": 706,
-      "community_name": "Advanced Synchronization",
+      "community": 7,
+      "community_name": "Multi-Repo Swarm - Cross-Repository Swarm Orchestration",
       "norm_label": "2. repository discovery"
     },
     {
@@ -56211,8 +56112,8 @@
       "source_location": "L88",
       "_origin": "ast",
       "id": "claude_agents_github_multi_repo_swarm_3_synchronized_operations",
-      "community": 706,
-      "community_name": "Advanced Synchronization",
+      "community": 7,
+      "community_name": "Multi-Repo Swarm - Cross-Repository Swarm Orchestration",
       "norm_label": "3. synchronized operations"
     },
     {
@@ -56255,8 +56156,8 @@
       "source_location": "L185",
       "_origin": "ast",
       "id": "claude_agents_github_multi_repo_swarm_orchestration_commands",
-      "community": 710,
-      "community_name": "Best Practices",
+      "community": 7,
+      "community_name": "Multi-Repo Swarm - Cross-Repository Swarm Orchestration",
       "norm_label": "orchestration commands"
     },
     {
@@ -56266,8 +56167,8 @@
       "source_location": "L187",
       "_origin": "ast",
       "id": "claude_agents_github_multi_repo_swarm_dependency_management",
-      "community": 710,
-      "community_name": "Best Practices",
+      "community": 7,
+      "community_name": "Multi-Repo Swarm - Cross-Repository Swarm Orchestration",
       "norm_label": "dependency management"
     },
     {
@@ -56277,8 +56178,8 @@
       "source_location": "L238",
       "_origin": "ast",
       "id": "claude_agents_github_multi_repo_swarm_refactoring_operations",
-      "community": 710,
-      "community_name": "Best Practices",
+      "community": 7,
+      "community_name": "Multi-Repo Swarm - Cross-Repository Swarm Orchestration",
       "norm_label": "refactoring operations"
     },
     {
@@ -56288,8 +56189,8 @@
       "source_location": "L248",
       "_origin": "ast",
       "id": "claude_agents_github_multi_repo_swarm_security_updates",
-      "community": 710,
-      "community_name": "Best Practices",
+      "community": 7,
+      "community_name": "Multi-Repo Swarm - Cross-Repository Swarm Orchestration",
       "norm_label": "security updates"
     },
     {
@@ -56299,8 +56200,8 @@
       "source_location": "L258",
       "_origin": "ast",
       "id": "claude_agents_github_multi_repo_swarm_communication_strategies",
-      "community": 708,
-      "community_name": "Board Commands",
+      "community": 7,
+      "community_name": "Multi-Repo Swarm - Cross-Repository Swarm Orchestration",
       "norm_label": "communication strategies"
     },
     {
@@ -56310,8 +56211,8 @@
       "source_location": "L260",
       "_origin": "ast",
       "id": "claude_agents_github_multi_repo_swarm_1_webhook_based_coordination",
-      "community": 708,
-      "community_name": "Board Commands",
+      "community": 7,
+      "community_name": "Multi-Repo Swarm - Cross-Repository Swarm Orchestration",
       "norm_label": "1. webhook-based coordination"
     },
     {
@@ -56321,8 +56222,8 @@
       "source_location": "L281",
       "_origin": "ast",
       "id": "claude_agents_github_multi_repo_swarm_2_graphql_federation",
-      "community": 708,
-      "community_name": "Board Commands",
+      "community": 7,
+      "community_name": "Multi-Repo Swarm - Cross-Repository Swarm Orchestration",
       "norm_label": "2. graphql federation"
     },
     {
@@ -56332,8 +56233,8 @@
       "source_location": "L300",
       "_origin": "ast",
       "id": "claude_agents_github_multi_repo_swarm_3_event_streaming",
-      "community": 708,
-      "community_name": "Board Commands",
+      "community": 7,
+      "community_name": "Multi-Repo Swarm - Cross-Repository Swarm Orchestration",
       "norm_label": "3. event streaming"
     },
     {
@@ -56519,8 +56420,8 @@
       "source_location": "L453",
       "_origin": "ast",
       "id": "claude_agents_github_multi_repo_swarm_best_practices",
-      "community": 707,
-      "community_name": "Visualization & Reporting",
+      "community": 7,
+      "community_name": "Multi-Repo Swarm - Cross-Repository Swarm Orchestration",
       "norm_label": "best practices"
     },
     {
@@ -56530,8 +56431,8 @@
       "source_location": "L455",
       "_origin": "ast",
       "id": "claude_agents_github_multi_repo_swarm_1_repository_organization",
-      "community": 707,
-      "community_name": "Visualization & Reporting",
+      "community": 7,
+      "community_name": "Multi-Repo Swarm - Cross-Repository Swarm Orchestration",
       "norm_label": "1. repository organization"
     },
     {
@@ -56541,8 +56442,8 @@
       "source_location": "L461",
       "_origin": "ast",
       "id": "claude_agents_github_multi_repo_swarm_2_communication",
-      "community": 707,
-      "community_name": "Visualization & Reporting",
+      "community": 7,
+      "community_name": "Multi-Repo Swarm - Cross-Repository Swarm Orchestration",
       "norm_label": "2. communication"
     },
     {
@@ -56552,8 +56453,8 @@
       "source_location": "L467",
       "_origin": "ast",
       "id": "claude_agents_github_multi_repo_swarm_3_security",
-      "community": 707,
-      "community_name": "Visualization & Reporting",
+      "community": 7,
+      "community_name": "Multi-Repo Swarm - Cross-Repository Swarm Orchestration",
       "norm_label": "3. security"
     },
     {
@@ -56607,8 +56508,8 @@
       "source_location": "L502",
       "_origin": "ast",
       "id": "claude_agents_github_multi_repo_swarm_troubleshooting",
-      "community": 709,
-      "community_name": "Troubleshooting",
+      "community": 7,
+      "community_name": "Multi-Repo Swarm - Cross-Repository Swarm Orchestration",
       "norm_label": "troubleshooting"
     },
     {
@@ -56618,8 +56519,8 @@
       "source_location": "L504",
       "_origin": "ast",
       "id": "claude_agents_github_multi_repo_swarm_connectivity_issues",
-      "community": 709,
-      "community_name": "Troubleshooting",
+      "community": 7,
+      "community_name": "Multi-Repo Swarm - Cross-Repository Swarm Orchestration",
       "norm_label": "connectivity issues"
     },
     {
@@ -56629,8 +56530,8 @@
       "source_location": "L513",
       "_origin": "ast",
       "id": "claude_agents_github_multi_repo_swarm_memory_synchronization",
-      "community": 709,
-      "community_name": "Troubleshooting",
+      "community": 7,
+      "community_name": "Multi-Repo Swarm - Cross-Repository Swarm Orchestration",
       "norm_label": "memory synchronization"
     },
     {
@@ -56640,8 +56541,8 @@
       "source_location": "L522",
       "_origin": "ast",
       "id": "claude_agents_github_multi_repo_swarm_performance_bottlenecks",
-      "community": 709,
-      "community_name": "Troubleshooting",
+      "community": 7,
+      "community_name": "Multi-Repo Swarm - Cross-Repository Swarm Orchestration",
       "norm_label": "performance bottlenecks"
     },
     {
@@ -57938,8 +57839,8 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "claude_agents_github_release_swarm_core_features",
-      "community": 27,
-      "community_name": "Release Swarm - Intelligent Release Automation",
+      "community": 713,
+      "community_name": "Integration Examples",
       "norm_label": "core features"
     },
     {
@@ -57949,8 +57850,8 @@
       "source_location": "L47",
       "_origin": "ast",
       "id": "claude_agents_github_release_swarm_1_release_planning",
-      "community": 27,
-      "community_name": "Release Swarm - Intelligent Release Automation",
+      "community": 713,
+      "community_name": "Integration Examples",
       "norm_label": "1. release planning"
     },
     {
@@ -57960,8 +57861,8 @@
       "source_location": "L68",
       "_origin": "ast",
       "id": "claude_agents_github_release_swarm_2_automated_versioning",
-      "community": 27,
-      "community_name": "Release Swarm - Intelligent Release Automation",
+      "community": 713,
+      "community_name": "Integration Examples",
       "norm_label": "2. automated versioning"
     },
     {
@@ -57971,8 +57872,8 @@
       "source_location": "L78",
       "_origin": "ast",
       "id": "claude_agents_github_release_swarm_3_release_orchestration",
-      "community": 27,
-      "community_name": "Release Swarm - Intelligent Release Automation",
+      "community": 713,
+      "community_name": "Integration Examples",
       "norm_label": "3. release orchestration"
     },
     {
@@ -58147,8 +58048,8 @@
       "source_location": "L384",
       "_origin": "ast",
       "id": "claude_agents_github_release_swarm_release_validation",
-      "community": 711,
-      "community_name": "Advanced Swarm PR Coordination",
+      "community": 27,
+      "community_name": "Release Swarm - Intelligent Release Automation",
       "norm_label": "release validation"
     },
     {
@@ -58158,8 +58059,8 @@
       "source_location": "L386",
       "_origin": "ast",
       "id": "claude_agents_github_release_swarm_pre_release_checks",
-      "community": 711,
-      "community_name": "Advanced Swarm PR Coordination",
+      "community": 27,
+      "community_name": "Release Swarm - Intelligent Release Automation",
       "norm_label": "pre-release checks"
     },
     {
@@ -58169,8 +58070,8 @@
       "source_location": "L401",
       "_origin": "ast",
       "id": "claude_agents_github_release_swarm_compatibility_testing",
-      "community": 711,
-      "community_name": "Advanced Swarm PR Coordination",
+      "community": 27,
+      "community_name": "Release Swarm - Intelligent Release Automation",
       "norm_label": "compatibility testing"
     },
     {
@@ -58180,8 +58081,8 @@
       "source_location": "L411",
       "_origin": "ast",
       "id": "claude_agents_github_release_swarm_security_scanning",
-      "community": 711,
-      "community_name": "Advanced Swarm PR Coordination",
+      "community": 27,
+      "community_name": "Release Swarm - Intelligent Release Automation",
       "norm_label": "security scanning"
     },
     {
@@ -58818,8 +58719,8 @@
       "source_location": "L247",
       "_origin": "ast",
       "id": "claude_agents_github_swarm_issue_advanced_features",
-      "community": 11,
-      "community_name": "Swarm Issue - Issue-Based Swarm Coordination",
+      "community": 719,
+      "community_name": "Monitoring & Insights",
       "norm_label": "advanced features"
     },
     {
@@ -58829,8 +58730,8 @@
       "source_location": "L249",
       "_origin": "ast",
       "id": "claude_agents_github_swarm_issue_1_issue_dependencies",
-      "community": 11,
-      "community_name": "Swarm Issue - Issue-Based Swarm Coordination",
+      "community": 719,
+      "community_name": "Monitoring & Insights",
       "norm_label": "1. issue dependencies"
     },
     {
@@ -58840,8 +58741,8 @@
       "source_location": "L258",
       "_origin": "ast",
       "id": "claude_agents_github_swarm_issue_2_epic_management",
-      "community": 11,
-      "community_name": "Swarm Issue - Issue-Based Swarm Coordination",
+      "community": 719,
+      "community_name": "Monitoring & Insights",
       "norm_label": "2. epic management"
     },
     {
@@ -58851,8 +58752,8 @@
       "source_location": "L267",
       "_origin": "ast",
       "id": "claude_agents_github_swarm_issue_3_issue_templates",
-      "community": 11,
-      "community_name": "Swarm Issue - Issue-Based Swarm Coordination",
+      "community": 719,
+      "community_name": "Monitoring & Insights",
       "norm_label": "3. issue templates"
     },
     {
@@ -58895,8 +58796,8 @@
       "source_location": "L311",
       "_origin": "ast",
       "id": "claude_agents_github_swarm_issue_issue_types_strategies",
-      "community": 11,
-      "community_name": "Swarm Issue - Issue-Based Swarm Coordination",
+      "community": 723,
+      "community_name": "Monitoring & Rollback",
       "norm_label": "issue types & strategies"
     },
     {
@@ -58906,8 +58807,8 @@
       "source_location": "L313",
       "_origin": "ast",
       "id": "claude_agents_github_swarm_issue_bug_reports",
-      "community": 11,
-      "community_name": "Swarm Issue - Issue-Based Swarm Coordination",
+      "community": 723,
+      "community_name": "Monitoring & Rollback",
       "norm_label": "bug reports"
     },
     {
@@ -58917,8 +58818,8 @@
       "source_location": "L323",
       "_origin": "ast",
       "id": "claude_agents_github_swarm_issue_feature_requests",
-      "community": 11,
-      "community_name": "Swarm Issue - Issue-Based Swarm Coordination",
+      "community": 723,
+      "community_name": "Monitoring & Rollback",
       "norm_label": "feature requests"
     },
     {
@@ -58928,8 +58829,8 @@
       "source_location": "L333",
       "_origin": "ast",
       "id": "claude_agents_github_swarm_issue_technical_debt",
-      "community": 11,
-      "community_name": "Swarm Issue - Issue-Based Swarm Coordination",
+      "community": 723,
+      "community_name": "Monitoring & Rollback",
       "norm_label": "technical debt"
     },
     {
@@ -58939,8 +58840,8 @@
       "source_location": "L343",
       "_origin": "ast",
       "id": "claude_agents_github_swarm_issue_automation_examples",
-      "community": 11,
-      "community_name": "Swarm Issue - Issue-Based Swarm Coordination",
+      "community": 721,
+      "community_name": "Core Features",
       "norm_label": "automation examples"
     },
     {
@@ -58950,8 +58851,8 @@
       "source_location": "L345",
       "_origin": "ast",
       "id": "claude_agents_github_swarm_issue_auto_close_stale_issues",
-      "community": 11,
-      "community_name": "Swarm Issue - Issue-Based Swarm Coordination",
+      "community": 721,
+      "community_name": "Core Features",
       "norm_label": "auto-close stale issues"
     },
     {
@@ -58961,8 +58862,8 @@
       "source_location": "L389",
       "_origin": "ast",
       "id": "claude_agents_github_swarm_issue_issue_triage",
-      "community": 11,
-      "community_name": "Swarm Issue - Issue-Based Swarm Coordination",
+      "community": 721,
+      "community_name": "Core Features",
       "norm_label": "issue triage"
     },
     {
@@ -58972,8 +58873,8 @@
       "source_location": "L399",
       "_origin": "ast",
       "id": "claude_agents_github_swarm_issue_duplicate_detection",
-      "community": 11,
-      "community_name": "Swarm Issue - Issue-Based Swarm Coordination",
+      "community": 721,
+      "community_name": "Core Features",
       "norm_label": "duplicate detection"
     },
     {
@@ -59115,8 +59016,8 @@
       "source_location": "L482",
       "_origin": "ast",
       "id": "claude_agents_github_swarm_issue_examples",
-      "community": 11,
-      "community_name": "Swarm Issue - Issue-Based Swarm Coordination",
+      "community": 724,
+      "community_name": "Integration Patterns",
       "norm_label": "examples"
     },
     {
@@ -59126,8 +59027,8 @@
       "source_location": "L484",
       "_origin": "ast",
       "id": "claude_agents_github_swarm_issue_complex_bug_investigation",
-      "community": 11,
-      "community_name": "Swarm Issue - Issue-Based Swarm Coordination",
+      "community": 724,
+      "community_name": "Integration Patterns",
       "norm_label": "complex bug investigation"
     },
     {
@@ -59137,8 +59038,8 @@
       "source_location": "L494",
       "_origin": "ast",
       "id": "claude_agents_github_swarm_issue_feature_implementation",
-      "community": 11,
-      "community_name": "Swarm Issue - Issue-Based Swarm Coordination",
+      "community": 724,
+      "community_name": "Integration Patterns",
       "norm_label": "feature implementation"
     },
     {
@@ -59148,8 +59049,8 @@
       "source_location": "L504",
       "_origin": "ast",
       "id": "claude_agents_github_swarm_issue_documentation_update",
-      "community": 11,
-      "community_name": "Swarm Issue - Issue-Based Swarm Coordination",
+      "community": 724,
+      "community_name": "Integration Patterns",
       "norm_label": "documentation update"
     },
     {
@@ -59555,8 +59456,8 @@
       "source_location": "L321",
       "_origin": "ast",
       "id": "claude_agents_github_swarm_pr_advanced_swarm_pr_coordination",
-      "community": 713,
-      "community_name": "Integration Examples",
+      "community": 78,
+      "community_name": "Swarm PR - Managing Swarms through Pull Requests",
       "norm_label": "advanced swarm pr coordination"
     },
     {
@@ -59566,8 +59467,8 @@
       "source_location": "L323",
       "_origin": "ast",
       "id": "claude_agents_github_swarm_pr_multi_agent_pr_analysis",
-      "community": 713,
-      "community_name": "Integration Examples",
+      "community": 78,
+      "community_name": "Swarm PR - Managing Swarms through Pull Requests",
       "norm_label": "multi-agent pr analysis"
     },
     {
@@ -59577,8 +59478,8 @@
       "source_location": "L354",
       "_origin": "ast",
       "id": "claude_agents_github_swarm_pr_swarm_coordinated_pr_lifecycle",
-      "community": 713,
-      "community_name": "Integration Examples",
+      "community": 78,
+      "community_name": "Swarm PR - Managing Swarms through Pull Requests",
       "norm_label": "swarm-coordinated pr lifecycle"
     },
     {
@@ -59588,8 +59489,8 @@
       "source_location": "L403",
       "_origin": "ast",
       "id": "claude_agents_github_swarm_pr_intelligent_pr_merge_coordination",
-      "community": 713,
-      "community_name": "Integration Examples",
+      "community": 78,
+      "community_name": "Swarm PR - Managing Swarms through Pull Requests",
       "norm_label": "intelligent pr merge coordination"
     },
     {
@@ -60028,8 +59929,8 @@
       "source_location": "L231",
       "_origin": "ast",
       "id": "claude_agents_github_workflow_automation_github_specific_optimizations",
-      "community": 704,
-      "community_name": "Automation Features",
+      "community": 495,
+      "community_name": "Workflow Automation - GitHub Actions Integration",
       "norm_label": "\ud83c\udfaf github-specific optimizations"
     },
     {
@@ -60039,8 +59940,8 @@
       "source_location": "L233",
       "_origin": "ast",
       "id": "claude_agents_github_workflow_automation_pattern_based_workflow_generation",
-      "community": 704,
-      "community_name": "Automation Features",
+      "community": 495,
+      "community_name": "Workflow Automation - GitHub Actions Integration",
       "norm_label": "pattern-based workflow generation"
     },
     {
@@ -60050,8 +59951,8 @@
       "source_location": "L249",
       "_origin": "ast",
       "id": "claude_agents_github_workflow_automation_attention_based_job_prioritization",
-      "community": 704,
-      "community_name": "Automation Features",
+      "community": 495,
+      "community_name": "Workflow Automation - GitHub Actions Integration",
       "norm_label": "attention-based job prioritization"
     },
     {
@@ -60061,8 +59962,8 @@
       "source_location": "L267",
       "_origin": "ast",
       "id": "claude_agents_github_workflow_automation_gnn_enhanced_failure_prediction",
-      "community": 704,
-      "community_name": "Automation Features",
+      "community": 495,
+      "community_name": "Workflow Automation - GitHub Actions Integration",
       "norm_label": "gnn-enhanced failure prediction"
     },
     {
@@ -60072,8 +59973,8 @@
       "source_location": "L292",
       "_origin": "ast",
       "id": "claude_agents_github_workflow_automation_adaptive_workflow_learning",
-      "community": 704,
-      "community_name": "Automation Features",
+      "community": 495,
+      "community_name": "Workflow Automation - GitHub Actions Integration",
       "norm_label": "adaptive workflow learning"
     },
     {
@@ -60083,8 +59984,8 @@
       "source_location": "L311",
       "_origin": "ast",
       "id": "claude_agents_github_workflow_automation_core_features",
-      "community": 721,
-      "community_name": "Core Features",
+      "community": 495,
+      "community_name": "Workflow Automation - GitHub Actions Integration",
       "norm_label": "core features"
     },
     {
@@ -60094,8 +59995,8 @@
       "source_location": "L313",
       "_origin": "ast",
       "id": "claude_agents_github_workflow_automation_1_swarm_powered_actions",
-      "community": 721,
-      "community_name": "Core Features",
+      "community": 495,
+      "community_name": "Workflow Automation - GitHub Actions Integration",
       "norm_label": "1. swarm-powered actions"
     },
     {
@@ -60105,8 +60006,8 @@
       "source_location": "L339",
       "_origin": "ast",
       "id": "claude_agents_github_workflow_automation_2_dynamic_workflow_generation",
-      "community": 721,
-      "community_name": "Core Features",
+      "community": 495,
+      "community_name": "Workflow Automation - GitHub Actions Integration",
       "norm_label": "2. dynamic workflow generation"
     },
     {
@@ -60116,8 +60017,8 @@
       "source_location": "L348",
       "_origin": "ast",
       "id": "claude_agents_github_workflow_automation_3_intelligent_test_selection",
-      "community": 721,
-      "community_name": "Core Features",
+      "community": 495,
+      "community_name": "Workflow Automation - GitHub Actions Integration",
       "norm_label": "3. intelligent test selection"
     },
     {
@@ -60127,8 +60028,8 @@
       "source_location": "L359",
       "_origin": "ast",
       "id": "claude_agents_github_workflow_automation_workflow_templates",
-      "community": 795,
-      "community_name": "Workflow Templates",
+      "community": 495,
+      "community_name": "Workflow Automation - GitHub Actions Integration",
       "norm_label": "workflow templates"
     },
     {
@@ -60138,8 +60039,8 @@
       "source_location": "L361",
       "_origin": "ast",
       "id": "claude_agents_github_workflow_automation_multi_language_detection",
-      "community": 795,
-      "community_name": "Workflow Templates",
+      "community": 495,
+      "community_name": "Workflow Automation - GitHub Actions Integration",
       "norm_label": "multi-language detection"
     },
     {
@@ -60149,8 +60050,8 @@
       "source_location": "L386",
       "_origin": "ast",
       "id": "claude_agents_github_workflow_automation_adaptive_security_scanning",
-      "community": 795,
-      "community_name": "Workflow Templates",
+      "community": 495,
+      "community_name": "Workflow Automation - GitHub Actions Integration",
       "norm_label": "adaptive security scanning"
     },
     {
@@ -60270,8 +60171,8 @@
       "source_location": "L549",
       "_origin": "ast",
       "id": "claude_agents_github_workflow_automation_matrix_strategies",
-      "community": 796,
-      "community_name": "Matrix Strategies",
+      "community": 495,
+      "community_name": "Workflow Automation - GitHub Actions Integration",
       "norm_label": "matrix strategies"
     },
     {
@@ -60281,8 +60182,8 @@
       "source_location": "L551",
       "_origin": "ast",
       "id": "claude_agents_github_workflow_automation_dynamic_test_matrix",
-      "community": 796,
-      "community_name": "Matrix Strategies",
+      "community": 495,
+      "community_name": "Workflow Automation - GitHub Actions Integration",
       "norm_label": "dynamic test matrix"
     },
     {
@@ -60292,8 +60193,8 @@
       "source_location": "L572",
       "_origin": "ast",
       "id": "claude_agents_github_workflow_automation_intelligent_parallelization",
-      "community": 796,
-      "community_name": "Matrix Strategies",
+      "community": 495,
+      "community_name": "Workflow Automation - GitHub Actions Integration",
       "norm_label": "intelligent parallelization"
     },
     {
@@ -60303,8 +60204,8 @@
       "source_location": "L581",
       "_origin": "ast",
       "id": "claude_agents_github_workflow_automation_monitoring_insights",
-      "community": 723,
-      "community_name": "Monitoring & Rollback",
+      "community": 495,
+      "community_name": "Workflow Automation - GitHub Actions Integration",
       "norm_label": "monitoring & insights"
     },
     {
@@ -60314,8 +60215,8 @@
       "source_location": "L583",
       "_origin": "ast",
       "id": "claude_agents_github_workflow_automation_workflow_analytics",
-      "community": 723,
-      "community_name": "Monitoring & Rollback",
+      "community": 495,
+      "community_name": "Workflow Automation - GitHub Actions Integration",
       "norm_label": "workflow analytics"
     },
     {
@@ -60325,8 +60226,8 @@
       "source_location": "L593",
       "_origin": "ast",
       "id": "claude_agents_github_workflow_automation_cost_optimization",
-      "community": 723,
-      "community_name": "Monitoring & Rollback",
+      "community": 495,
+      "community_name": "Workflow Automation - GitHub Actions Integration",
       "norm_label": "cost optimization"
     },
     {
@@ -60336,8 +60237,8 @@
       "source_location": "L602",
       "_origin": "ast",
       "id": "claude_agents_github_workflow_automation_failure_patterns",
-      "community": 723,
-      "community_name": "Monitoring & Rollback",
+      "community": 495,
+      "community_name": "Workflow Automation - GitHub Actions Integration",
       "norm_label": "failure patterns"
     },
     {
@@ -60347,8 +60248,8 @@
       "source_location": "L611",
       "_origin": "ast",
       "id": "claude_agents_github_workflow_automation_integration_examples",
-      "community": 719,
-      "community_name": "Monitoring & Insights",
+      "community": 495,
+      "community_name": "Workflow Automation - GitHub Actions Integration",
       "norm_label": "integration examples"
     },
     {
@@ -60358,8 +60259,8 @@
       "source_location": "L613",
       "_origin": "ast",
       "id": "claude_agents_github_workflow_automation_1_pr_validation_swarm",
-      "community": 719,
-      "community_name": "Monitoring & Insights",
+      "community": 495,
+      "community_name": "Workflow Automation - GitHub Actions Integration",
       "norm_label": "1. pr validation swarm"
     },
     {
@@ -60369,8 +60270,8 @@
       "source_location": "L638",
       "_origin": "ast",
       "id": "claude_agents_github_workflow_automation_2_release_automation",
-      "community": 719,
-      "community_name": "Monitoring & Insights",
+      "community": 495,
+      "community_name": "Workflow Automation - GitHub Actions Integration",
       "norm_label": "2. release automation"
     },
     {
@@ -60380,8 +60281,8 @@
       "source_location": "L658",
       "_origin": "ast",
       "id": "claude_agents_github_workflow_automation_3_documentation_updates",
-      "community": 719,
-      "community_name": "Monitoring & Insights",
+      "community": 495,
+      "community_name": "Workflow Automation - GitHub Actions Integration",
       "norm_label": "3. documentation updates"
     },
     {
@@ -77914,8 +77815,8 @@
       "source_location": "L224",
       "_origin": "ast",
       "id": "claude_commands_github_multi_repo_swarm_communication_strategies",
-      "community": 727,
-      "community_name": "Issue Types & Strategies",
+      "community": 8,
+      "community_name": "Multi-Repo Swarm - Cross-Repository Swarm Orchestration",
       "norm_label": "communication strategies"
     },
     {
@@ -77925,8 +77826,8 @@
       "source_location": "L226",
       "_origin": "ast",
       "id": "claude_commands_github_multi_repo_swarm_1_webhook_based_coordination",
-      "community": 727,
-      "community_name": "Issue Types & Strategies",
+      "community": 8,
+      "community_name": "Multi-Repo Swarm - Cross-Repository Swarm Orchestration",
       "norm_label": "1. webhook-based coordination"
     },
     {
@@ -77936,8 +77837,8 @@
       "source_location": "L247",
       "_origin": "ast",
       "id": "claude_commands_github_multi_repo_swarm_2_graphql_federation",
-      "community": 727,
-      "community_name": "Issue Types & Strategies",
+      "community": 8,
+      "community_name": "Multi-Repo Swarm - Cross-Repository Swarm Orchestration",
       "norm_label": "2. graphql federation"
     },
     {
@@ -77947,8 +77848,8 @@
       "source_location": "L266",
       "_origin": "ast",
       "id": "claude_commands_github_multi_repo_swarm_3_event_streaming",
-      "community": 727,
-      "community_name": "Issue Types & Strategies",
+      "community": 8,
+      "community_name": "Multi-Repo Swarm - Cross-Repository Swarm Orchestration",
       "norm_label": "3. event streaming"
     },
     {
@@ -77958,8 +77859,8 @@
       "source_location": "L280",
       "_origin": "ast",
       "id": "claude_commands_github_multi_repo_swarm_advanced_features",
-      "community": 724,
-      "community_name": "Integration Patterns",
+      "community": 8,
+      "community_name": "Multi-Repo Swarm - Cross-Repository Swarm Orchestration",
       "norm_label": "advanced features"
     },
     {
@@ -77969,8 +77870,8 @@
       "source_location": "L282",
       "_origin": "ast",
       "id": "claude_commands_github_multi_repo_swarm_1_distributed_task_queue",
-      "community": 724,
-      "community_name": "Integration Patterns",
+      "community": 8,
+      "community_name": "Multi-Repo Swarm - Cross-Repository Swarm Orchestration",
       "norm_label": "1. distributed task queue"
     },
     {
@@ -77980,8 +77881,8 @@
       "source_location": "L292",
       "_origin": "ast",
       "id": "claude_commands_github_multi_repo_swarm_2_cross_repo_testing",
-      "community": 724,
-      "community_name": "Integration Patterns",
+      "community": 8,
+      "community_name": "Multi-Repo Swarm - Cross-Repository Swarm Orchestration",
       "norm_label": "2. cross-repo testing"
     },
     {
@@ -77991,8 +77892,8 @@
       "source_location": "L302",
       "_origin": "ast",
       "id": "claude_commands_github_multi_repo_swarm_3_monorepo_migration",
-      "community": 724,
-      "community_name": "Integration Patterns",
+      "community": 8,
+      "community_name": "Multi-Repo Swarm - Cross-Repository Swarm Orchestration",
       "norm_label": "3. monorepo migration"
     },
     {
@@ -78090,8 +77991,8 @@
       "source_location": "L386",
       "_origin": "ast",
       "id": "claude_commands_github_multi_repo_swarm_use_cases",
-      "community": 725,
-      "community_name": "Best Practices",
+      "community": 8,
+      "community_name": "Multi-Repo Swarm - Cross-Repository Swarm Orchestration",
       "norm_label": "use cases"
     },
     {
@@ -78101,8 +78002,8 @@
       "source_location": "L388",
       "_origin": "ast",
       "id": "claude_commands_github_multi_repo_swarm_1_microservices_coordination",
-      "community": 725,
-      "community_name": "Best Practices",
+      "community": 8,
+      "community_name": "Multi-Repo Swarm - Cross-Repository Swarm Orchestration",
       "norm_label": "1. microservices coordination"
     },
     {
@@ -78112,8 +78013,8 @@
       "source_location": "L398",
       "_origin": "ast",
       "id": "claude_commands_github_multi_repo_swarm_2_library_updates",
-      "community": 725,
-      "community_name": "Best Practices",
+      "community": 8,
+      "community_name": "Multi-Repo Swarm - Cross-Repository Swarm Orchestration",
       "norm_label": "2. library updates"
     },
     {
@@ -78123,8 +78024,8 @@
       "source_location": "L409",
       "_origin": "ast",
       "id": "claude_commands_github_multi_repo_swarm_3_organization_wide_changes",
-      "community": 725,
-      "community_name": "Best Practices",
+      "community": 8,
+      "community_name": "Multi-Repo Swarm - Cross-Repository Swarm Orchestration",
       "norm_label": "3. organization-wide changes"
     },
     {
@@ -78134,8 +78035,8 @@
       "source_location": "L419",
       "_origin": "ast",
       "id": "claude_commands_github_multi_repo_swarm_best_practices",
-      "community": 726,
-      "community_name": "Automation Examples",
+      "community": 8,
+      "community_name": "Multi-Repo Swarm - Cross-Repository Swarm Orchestration",
       "norm_label": "best practices"
     },
     {
@@ -78145,8 +78046,8 @@
       "source_location": "L421",
       "_origin": "ast",
       "id": "claude_commands_github_multi_repo_swarm_1_repository_organization",
-      "community": 726,
-      "community_name": "Automation Examples",
+      "community": 8,
+      "community_name": "Multi-Repo Swarm - Cross-Repository Swarm Orchestration",
       "norm_label": "1. repository organization"
     },
     {
@@ -78156,8 +78057,8 @@
       "source_location": "L427",
       "_origin": "ast",
       "id": "claude_commands_github_multi_repo_swarm_2_communication",
-      "community": 726,
-      "community_name": "Automation Examples",
+      "community": 8,
+      "community_name": "Multi-Repo Swarm - Cross-Repository Swarm Orchestration",
       "norm_label": "2. communication"
     },
     {
@@ -78167,8 +78068,8 @@
       "source_location": "L433",
       "_origin": "ast",
       "id": "claude_commands_github_multi_repo_swarm_3_security",
-      "community": 726,
-      "community_name": "Automation Examples",
+      "community": 8,
+      "community_name": "Multi-Repo Swarm - Cross-Repository Swarm Orchestration",
       "norm_label": "3. security"
     },
     {
@@ -78178,8 +78079,8 @@
       "source_location": "L439",
       "_origin": "ast",
       "id": "claude_commands_github_multi_repo_swarm_performance_optimization",
-      "community": 728,
-      "community_name": "Examples",
+      "community": 8,
+      "community_name": "Multi-Repo Swarm - Cross-Repository Swarm Orchestration",
       "norm_label": "performance optimization"
     },
     {
@@ -78189,8 +78090,8 @@
       "source_location": "L441",
       "_origin": "ast",
       "id": "claude_commands_github_multi_repo_swarm_caching_strategy",
-      "community": 728,
-      "community_name": "Examples",
+      "community": 8,
+      "community_name": "Multi-Repo Swarm - Cross-Repository Swarm Orchestration",
       "norm_label": "caching strategy"
     },
     {
@@ -78200,8 +78101,8 @@
       "source_location": "L450",
       "_origin": "ast",
       "id": "claude_commands_github_multi_repo_swarm_parallel_execution",
-      "community": 728,
-      "community_name": "Examples",
+      "community": 8,
+      "community_name": "Multi-Repo Swarm - Cross-Repository Swarm Orchestration",
       "norm_label": "parallel execution"
     },
     {
@@ -78211,8 +78112,8 @@
       "source_location": "L459",
       "_origin": "ast",
       "id": "claude_commands_github_multi_repo_swarm_resource_pooling",
-      "community": 728,
-      "community_name": "Examples",
+      "community": 8,
+      "community_name": "Multi-Repo Swarm - Cross-Repository Swarm Orchestration",
       "norm_label": "resource pooling"
     },
     {
@@ -79641,8 +79542,8 @@
       "source_location": "L345",
       "_origin": "ast",
       "id": "claude_commands_github_release_swarm_release_validation",
-      "community": 88,
-      "community_name": "Release Swarm - Intelligent Release Automation",
+      "community": 725,
+      "community_name": "Best Practices",
       "norm_label": "release validation"
     },
     {
@@ -79652,8 +79553,8 @@
       "source_location": "L347",
       "_origin": "ast",
       "id": "claude_commands_github_release_swarm_pre_release_checks",
-      "community": 88,
-      "community_name": "Release Swarm - Intelligent Release Automation",
+      "community": 725,
+      "community_name": "Best Practices",
       "norm_label": "pre-release checks"
     },
     {
@@ -79663,8 +79564,8 @@
       "source_location": "L362",
       "_origin": "ast",
       "id": "claude_commands_github_release_swarm_compatibility_testing",
-      "community": 88,
-      "community_name": "Release Swarm - Intelligent Release Automation",
+      "community": 725,
+      "community_name": "Best Practices",
       "norm_label": "compatibility testing"
     },
     {
@@ -79674,8 +79575,8 @@
       "source_location": "L372",
       "_origin": "ast",
       "id": "claude_commands_github_release_swarm_security_scanning",
-      "community": 88,
-      "community_name": "Release Swarm - Intelligent Release Automation",
+      "community": 725,
+      "community_name": "Best Practices",
       "norm_label": "security scanning"
     },
     {
@@ -79806,8 +79707,8 @@
       "source_location": "L490",
       "_origin": "ast",
       "id": "claude_commands_github_release_swarm_integration_examples",
-      "community": 88,
-      "community_name": "Release Swarm - Intelligent Release Automation",
+      "community": 726,
+      "community_name": "Automation Examples",
       "norm_label": "integration examples"
     },
     {
@@ -79817,8 +79718,8 @@
       "source_location": "L492",
       "_origin": "ast",
       "id": "claude_commands_github_release_swarm_npm_package_release",
-      "community": 88,
-      "community_name": "Release Swarm - Intelligent Release Automation",
+      "community": 726,
+      "community_name": "Automation Examples",
       "norm_label": "npm package release"
     },
     {
@@ -79828,8 +79729,8 @@
       "source_location": "L502",
       "_origin": "ast",
       "id": "claude_commands_github_release_swarm_docker_image_release",
-      "community": 88,
-      "community_name": "Release Swarm - Intelligent Release Automation",
+      "community": 726,
+      "community_name": "Automation Examples",
       "norm_label": "docker image release"
     },
     {
@@ -79839,8 +79740,8 @@
       "source_location": "L512",
       "_origin": "ast",
       "id": "claude_commands_github_release_swarm_mobile_app_release",
-      "community": 88,
-      "community_name": "Release Swarm - Intelligent Release Automation",
+      "community": 726,
+      "community_name": "Automation Examples",
       "norm_label": "mobile app release"
     },
     {
@@ -80873,8 +80774,8 @@
       "source_location": "L133",
       "_origin": "ast",
       "id": "claude_commands_github_swarm_pr_advanced_features",
-      "community": 60,
-      "community_name": "Swarm PR - Managing Swarms through Pull Requests",
+      "community": 727,
+      "community_name": "Issue Types & Strategies",
       "norm_label": "advanced features"
     },
     {
@@ -80884,8 +80785,8 @@
       "source_location": "L135",
       "_origin": "ast",
       "id": "claude_commands_github_swarm_pr_1_multi_pr_swarm_coordination",
-      "community": 60,
-      "community_name": "Swarm PR - Managing Swarms through Pull Requests",
+      "community": 727,
+      "community_name": "Issue Types & Strategies",
       "norm_label": "1. multi-pr swarm coordination"
     },
     {
@@ -80895,8 +80796,8 @@
       "source_location": "L144",
       "_origin": "ast",
       "id": "claude_commands_github_swarm_pr_2_pr_dependency_analysis",
-      "community": 60,
-      "community_name": "Swarm PR - Managing Swarms through Pull Requests",
+      "community": 727,
+      "community_name": "Issue Types & Strategies",
       "norm_label": "2. pr dependency analysis"
     },
     {
@@ -80906,8 +80807,8 @@
       "source_location": "L152",
       "_origin": "ast",
       "id": "claude_commands_github_swarm_pr_3_automated_pr_fixes",
-      "community": 60,
-      "community_name": "Swarm PR - Managing Swarms through Pull Requests",
+      "community": 727,
+      "community_name": "Issue Types & Strategies",
       "norm_label": "3. automated pr fixes"
     },
     {
@@ -80983,8 +80884,8 @@
       "source_location": "L225",
       "_origin": "ast",
       "id": "claude_commands_github_swarm_pr_examples",
-      "community": 60,
-      "community_name": "Swarm PR - Managing Swarms through Pull Requests",
+      "community": 728,
+      "community_name": "Examples",
       "norm_label": "examples"
     },
     {
@@ -80994,8 +80895,8 @@
       "source_location": "L227",
       "_origin": "ast",
       "id": "claude_commands_github_swarm_pr_feature_development_pr",
-      "community": 60,
-      "community_name": "Swarm PR - Managing Swarms through Pull Requests",
+      "community": 728,
+      "community_name": "Examples",
       "norm_label": "feature development pr"
     },
     {
@@ -81005,8 +80906,8 @@
       "source_location": "L236",
       "_origin": "ast",
       "id": "claude_commands_github_swarm_pr_bug_fix_pr",
-      "community": 60,
-      "community_name": "Swarm PR - Managing Swarms through Pull Requests",
+      "community": 728,
+      "community_name": "Examples",
       "norm_label": "bug fix pr"
     },
     {
@@ -81016,8 +80917,8 @@
       "source_location": "L245",
       "_origin": "ast",
       "id": "claude_commands_github_swarm_pr_documentation_pr",
-      "community": 60,
-      "community_name": "Swarm PR - Managing Swarms through Pull Requests",
+      "community": 728,
+      "community_name": "Examples",
       "norm_label": "documentation pr"
     },
     {
@@ -81478,8 +81379,8 @@
       "source_location": "L113",
       "_origin": "ast",
       "id": "claude_commands_github_workflow_automation_action_commands",
-      "community": 731,
-      "community_name": "Advanced Features",
+      "community": 107,
+      "community_name": "Workflow Automation - GitHub Actions Integration",
       "norm_label": "action commands"
     },
     {
@@ -81489,8 +81390,8 @@
       "source_location": "L115",
       "_origin": "ast",
       "id": "claude_commands_github_workflow_automation_pipeline_optimization",
-      "community": 731,
-      "community_name": "Advanced Features",
+      "community": 107,
+      "community_name": "Workflow Automation - GitHub Actions Integration",
       "norm_label": "pipeline optimization"
     },
     {
@@ -81500,8 +81401,8 @@
       "source_location": "L125",
       "_origin": "ast",
       "id": "claude_commands_github_workflow_automation_failure_analysis",
-      "community": 731,
-      "community_name": "Advanced Features",
+      "community": 107,
+      "community_name": "Workflow Automation - GitHub Actions Integration",
       "norm_label": "failure analysis"
     },
     {
@@ -81511,8 +81412,8 @@
       "source_location": "L142",
       "_origin": "ast",
       "id": "claude_commands_github_workflow_automation_resource_management",
-      "community": 731,
-      "community_name": "Advanced Features",
+      "community": 107,
+      "community_name": "Workflow Automation - GitHub Actions Integration",
       "norm_label": "resource management"
     },
     {
@@ -81588,8 +81489,8 @@
       "source_location": "L244",
       "_origin": "ast",
       "id": "claude_commands_github_workflow_automation_matrix_strategies",
-      "community": 107,
-      "community_name": "Workflow Automation - GitHub Actions Integration",
+      "community": 879,
+      "community_name": "Matrix Strategies",
       "norm_label": "matrix strategies"
     },
     {
@@ -81599,8 +81500,8 @@
       "source_location": "L246",
       "_origin": "ast",
       "id": "claude_commands_github_workflow_automation_dynamic_test_matrix",
-      "community": 107,
-      "community_name": "Workflow Automation - GitHub Actions Integration",
+      "community": 879,
+      "community_name": "Matrix Strategies",
       "norm_label": "dynamic test matrix"
     },
     {
@@ -81610,8 +81511,8 @@
       "source_location": "L267",
       "_origin": "ast",
       "id": "claude_commands_github_workflow_automation_intelligent_parallelization",
-      "community": 107,
-      "community_name": "Workflow Automation - GitHub Actions Integration",
+      "community": 879,
+      "community_name": "Matrix Strategies",
       "norm_label": "intelligent parallelization"
     },
     {
@@ -81709,8 +81610,8 @@
       "source_location": "L372",
       "_origin": "ast",
       "id": "claude_commands_github_workflow_automation_best_practices",
-      "community": 107,
-      "community_name": "Workflow Automation - GitHub Actions Integration",
+      "community": 731,
+      "community_name": "Advanced Features",
       "norm_label": "best practices"
     },
     {
@@ -81720,8 +81621,8 @@
       "source_location": "L374",
       "_origin": "ast",
       "id": "claude_commands_github_workflow_automation_1_workflow_organization",
-      "community": 107,
-      "community_name": "Workflow Automation - GitHub Actions Integration",
+      "community": 731,
+      "community_name": "Advanced Features",
       "norm_label": "1. workflow organization"
     },
     {
@@ -81731,8 +81632,8 @@
       "source_location": "L380",
       "_origin": "ast",
       "id": "claude_commands_github_workflow_automation_2_security",
-      "community": 107,
-      "community_name": "Workflow Automation - GitHub Actions Integration",
+      "community": 731,
+      "community_name": "Advanced Features",
       "norm_label": "2. security"
     },
     {
@@ -81742,8 +81643,8 @@
       "source_location": "L386",
       "_origin": "ast",
       "id": "claude_commands_github_workflow_automation_3_performance",
-      "community": 107,
-      "community_name": "Workflow Automation - GitHub Actions Integration",
+      "community": 731,
+      "community_name": "Advanced Features",
       "norm_label": "3. performance"
     },
     {
@@ -81797,8 +81698,8 @@
       "source_location": "L421",
       "_origin": "ast",
       "id": "claude_commands_github_workflow_automation_debugging_troubleshooting",
-      "community": 107,
-      "community_name": "Workflow Automation - GitHub Actions Integration",
+      "community": 839,
+      "community_name": "server-only",
       "norm_label": "debugging & troubleshooting"
     },
     {
@@ -81808,8 +81709,8 @@
       "source_location": "L423",
       "_origin": "ast",
       "id": "claude_commands_github_workflow_automation_debug_mode",
-      "community": 107,
-      "community_name": "Workflow Automation - GitHub Actions Integration",
+      "community": 839,
+      "community_name": "server-only",
       "norm_label": "debug mode"
     },
     {
@@ -81819,8 +81720,8 @@
       "source_location": "L433",
       "_origin": "ast",
       "id": "claude_commands_github_workflow_automation_performance_profiling",
-      "community": 107,
-      "community_name": "Workflow Automation - GitHub Actions Integration",
+      "community": 839,
+      "community_name": "server-only",
       "norm_label": "performance profiling"
     },
     {
@@ -84657,8 +84558,8 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "claude_commands_pair_readme_modes",
-      "community": 89,
-      "community_name": "\ud83d\udc65 Pair Programming Command",
+      "community": 739,
+      "community_name": "Quality Features",
       "norm_label": "modes"
     },
     {
@@ -84668,8 +84569,8 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "claude_commands_pair_readme_driver_mode",
-      "community": 89,
-      "community_name": "\ud83d\udc65 Pair Programming Command",
+      "community": 739,
+      "community_name": "Quality Features",
       "norm_label": "driver mode"
     },
     {
@@ -84679,8 +84580,8 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "claude_commands_pair_readme_navigator_mode",
-      "community": 89,
-      "community_name": "\ud83d\udc65 Pair Programming Command",
+      "community": 739,
+      "community_name": "Quality Features",
       "norm_label": "navigator mode"
     },
     {
@@ -84690,8 +84591,8 @@
       "source_location": "L54",
       "_origin": "ast",
       "id": "claude_commands_pair_readme_switch_mode_default",
-      "community": 89,
-      "community_name": "\ud83d\udc65 Pair Programming Command",
+      "community": 739,
+      "community_name": "Quality Features",
       "norm_label": "switch mode (default)"
     },
     {
@@ -84701,8 +84602,8 @@
       "source_location": "L60",
       "_origin": "ast",
       "id": "claude_commands_pair_readme_features",
-      "community": 89,
-      "community_name": "\ud83d\udc65 Pair Programming Command",
+      "community": 708,
+      "community_name": "Board Commands",
       "norm_label": "features"
     },
     {
@@ -84712,8 +84613,8 @@
       "source_location": "L62",
       "_origin": "ast",
       "id": "claude_commands_pair_readme_real_time_verification",
-      "community": 89,
-      "community_name": "\ud83d\udc65 Pair Programming Command",
+      "community": 708,
+      "community_name": "Board Commands",
       "norm_label": "real-time verification"
     },
     {
@@ -84723,8 +84624,8 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "claude_commands_pair_readme_code_review",
-      "community": 89,
-      "community_name": "\ud83d\udc65 Pair Programming Command",
+      "community": 708,
+      "community_name": "Board Commands",
       "norm_label": "code review"
     },
     {
@@ -84734,8 +84635,8 @@
       "source_location": "L73",
       "_origin": "ast",
       "id": "claude_commands_pair_readme_test_integration",
-      "community": 89,
-      "community_name": "\ud83d\udc65 Pair Programming Command",
+      "community": 708,
+      "community_name": "Board Commands",
       "norm_label": "test integration"
     },
     {
@@ -84745,8 +84646,8 @@
       "source_location": "L79",
       "_origin": "ast",
       "id": "claude_commands_pair_readme_collaboration_tools",
-      "community": 89,
-      "community_name": "\ud83d\udc65 Pair Programming Command",
+      "community": 708,
+      "community_name": "Board Commands",
       "norm_label": "collaboration tools"
     },
     {
@@ -84800,8 +84701,8 @@
       "source_location": "L124",
       "_origin": "ast",
       "id": "claude_commands_pair_readme_examples",
-      "community": 705,
-      "community_name": "Best Practices",
+      "community": 89,
+      "community_name": "\ud83d\udc65 Pair Programming Command",
       "norm_label": "examples"
     },
     {
@@ -84811,8 +84712,8 @@
       "source_location": "L126",
       "_origin": "ast",
       "id": "claude_commands_pair_readme_refactoring_session",
-      "community": 705,
-      "community_name": "Best Practices",
+      "community": 89,
+      "community_name": "\ud83d\udc65 Pair Programming Command",
       "norm_label": "refactoring session"
     },
     {
@@ -84822,8 +84723,8 @@
       "source_location": "L134",
       "_origin": "ast",
       "id": "claude_commands_pair_readme_test_driven_development",
-      "community": 705,
-      "community_name": "Best Practices",
+      "community": 89,
+      "community_name": "\ud83d\udc65 Pair Programming Command",
       "norm_label": "test-driven development"
     },
     {
@@ -84833,8 +84734,8 @@
       "source_location": "L142",
       "_origin": "ast",
       "id": "claude_commands_pair_readme_bug_fixing",
-      "community": 705,
-      "community_name": "Best Practices",
+      "community": 89,
+      "community_name": "\ud83d\udc65 Pair Programming Command",
       "norm_label": "bug fixing"
     },
     {
@@ -84844,8 +84745,8 @@
       "source_location": "L150",
       "_origin": "ast",
       "id": "claude_commands_pair_readme_code_review_session",
-      "community": 705,
-      "community_name": "Best Practices",
+      "community": 89,
+      "community_name": "\ud83d\udc65 Pair Programming Command",
       "norm_label": "code review session"
     },
     {
@@ -86120,8 +86021,8 @@
       "source_location": "L226",
       "_origin": "ast",
       "id": "claude_commands_pair_config_mode_specific_configuration",
-      "community": 68,
-      "community_name": "Pair Programming Configuration",
+      "community": 733,
+      "community_name": "CLI Configuration",
       "norm_label": "mode-specific configuration"
     },
     {
@@ -86131,8 +86032,8 @@
       "source_location": "L228",
       "_origin": "ast",
       "id": "claude_commands_pair_config_driver_mode",
-      "community": 68,
-      "community_name": "Pair Programming Configuration",
+      "community": 733,
+      "community_name": "CLI Configuration",
       "norm_label": "driver mode"
     },
     {
@@ -86142,8 +86043,8 @@
       "source_location": "L251",
       "_origin": "ast",
       "id": "claude_commands_pair_config_navigator_mode",
-      "community": 68,
-      "community_name": "Pair Programming Configuration",
+      "community": 733,
+      "community_name": "CLI Configuration",
       "norm_label": "navigator mode"
     },
     {
@@ -86153,8 +86054,8 @@
       "source_location": "L269",
       "_origin": "ast",
       "id": "claude_commands_pair_config_switch_mode",
-      "community": 68,
-      "community_name": "Pair Programming Configuration",
+      "community": 733,
+      "community_name": "CLI Configuration",
       "norm_label": "switch mode"
     },
     {
@@ -86219,8 +86120,8 @@
       "source_location": "L354",
       "_origin": "ast",
       "id": "claude_commands_pair_config_cli_configuration",
-      "community": 733,
-      "community_name": "CLI Configuration",
+      "community": 68,
+      "community_name": "Pair Programming Configuration",
       "norm_label": "cli configuration"
     },
     {
@@ -86230,8 +86131,8 @@
       "source_location": "L356",
       "_origin": "ast",
       "id": "claude_commands_pair_config_set_configuration",
-      "community": 733,
-      "community_name": "CLI Configuration",
+      "community": 68,
+      "community_name": "Pair Programming Configuration",
       "norm_label": "set configuration"
     },
     {
@@ -86241,8 +86142,8 @@
       "source_location": "L368",
       "_origin": "ast",
       "id": "claude_commands_pair_config_get_configuration",
-      "community": 733,
-      "community_name": "CLI Configuration",
+      "community": 68,
+      "community_name": "Pair Programming Configuration",
       "norm_label": "get configuration"
     },
     {
@@ -86252,8 +86153,8 @@
       "source_location": "L380",
       "_origin": "ast",
       "id": "claude_commands_pair_config_reset_configuration",
-      "community": 733,
-      "community_name": "CLI Configuration",
+      "community": 68,
+      "community_name": "Pair Programming Configuration",
       "norm_label": "reset configuration"
     },
     {
@@ -86263,8 +86164,8 @@
       "source_location": "L389",
       "_origin": "ast",
       "id": "claude_commands_pair_config_profile_management",
-      "community": 68,
-      "community_name": "Pair Programming Configuration",
+      "community": 705,
+      "community_name": "Best Practices",
       "norm_label": "profile management"
     },
     {
@@ -86274,8 +86175,8 @@
       "source_location": "L391",
       "_origin": "ast",
       "id": "claude_commands_pair_config_create_profile",
-      "community": 68,
-      "community_name": "Pair Programming Configuration",
+      "community": 705,
+      "community_name": "Best Practices",
       "norm_label": "create profile"
     },
     {
@@ -86285,8 +86186,8 @@
       "source_location": "L400",
       "_origin": "ast",
       "id": "claude_commands_pair_config_use_profile",
-      "community": 68,
-      "community_name": "Pair Programming Configuration",
+      "community": 705,
+      "community_name": "Best Practices",
       "norm_label": "use profile"
     },
     {
@@ -86296,8 +86197,8 @@
       "source_location": "L405",
       "_origin": "ast",
       "id": "claude_commands_pair_config_list_profiles",
-      "community": 68,
-      "community_name": "Pair Programming Configuration",
+      "community": 705,
+      "community_name": "Best Practices",
       "norm_label": "list profiles"
     },
     {
@@ -86307,8 +86208,8 @@
       "source_location": "L410",
       "_origin": "ast",
       "id": "claude_commands_pair_config_profiles_configuration",
-      "community": 68,
-      "community_name": "Pair Programming Configuration",
+      "community": 705,
+      "community_name": "Best Practices",
       "norm_label": "profiles configuration"
     },
     {
@@ -87110,8 +87011,8 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "claude_commands_pair_modes_navigator_mode",
-      "community": 28,
-      "community_name": "Pair Programming Modes",
+      "community": 704,
+      "community_name": "Automation Features",
       "norm_label": "navigator mode"
     },
     {
@@ -87121,8 +87022,8 @@
       "source_location": "L57",
       "_origin": "ast",
       "id": "claude_commands_pair_modes_usage_57",
-      "community": 28,
-      "community_name": "Pair Programming Modes",
+      "community": 704,
+      "community_name": "Automation Features",
       "norm_label": "usage"
     },
     {
@@ -87132,8 +87033,8 @@
       "source_location": "L62",
       "_origin": "ast",
       "id": "claude_commands_pair_modes_responsibilities_62",
-      "community": 28,
-      "community_name": "Pair Programming Modes",
+      "community": 704,
+      "community_name": "Automation Features",
       "norm_label": "responsibilities"
     },
     {
@@ -87143,8 +87044,8 @@
       "source_location": "L77",
       "_origin": "ast",
       "id": "claude_commands_pair_modes_best_for_77",
-      "community": 28,
-      "community_name": "Pair Programming Modes",
+      "community": 704,
+      "community_name": "Automation Features",
       "norm_label": "best for"
     },
     {
@@ -87154,8 +87055,8 @@
       "source_location": "L83",
       "_origin": "ast",
       "id": "claude_commands_pair_modes_example_session_83",
-      "community": 28,
-      "community_name": "Pair Programming Modes",
+      "community": 704,
+      "community_name": "Automation Features",
       "norm_label": "example session"
     },
     {
@@ -87165,8 +87066,8 @@
       "source_location": "L92",
       "_origin": "ast",
       "id": "claude_commands_pair_modes_commands_in_navigator_mode",
-      "community": 28,
-      "community_name": "Pair Programming Modes",
+      "community": 704,
+      "community_name": "Automation Features",
       "norm_label": "commands in navigator mode"
     },
     {
@@ -87176,8 +87077,8 @@
       "source_location": "L101",
       "_origin": "ast",
       "id": "claude_commands_pair_modes_switch_mode",
-      "community": 28,
-      "community_name": "Pair Programming Modes",
+      "community": 600,
+      "community_name": "\ud83c\udfaf GitHub-Specific Optimizations",
       "norm_label": "switch mode"
     },
     {
@@ -87187,8 +87088,8 @@
       "source_location": "L105",
       "_origin": "ast",
       "id": "claude_commands_pair_modes_usage_105",
-      "community": 28,
-      "community_name": "Pair Programming Modes",
+      "community": 600,
+      "community_name": "\ud83c\udfaf GitHub-Specific Optimizations",
       "norm_label": "usage"
     },
     {
@@ -87198,8 +87099,8 @@
       "source_location": "L110",
       "_origin": "ast",
       "id": "claude_commands_pair_modes_default_intervals",
-      "community": 28,
-      "community_name": "Pair Programming Modes",
+      "community": 600,
+      "community_name": "\ud83c\udfaf GitHub-Specific Optimizations",
       "norm_label": "default intervals"
     },
     {
@@ -87209,8 +87110,8 @@
       "source_location": "L116",
       "_origin": "ast",
       "id": "claude_commands_pair_modes_configuration",
-      "community": 28,
-      "community_name": "Pair Programming Modes",
+      "community": 600,
+      "community_name": "\ud83c\udfaf GitHub-Specific Optimizations",
       "norm_label": "configuration"
     },
     {
@@ -87220,8 +87121,8 @@
       "source_location": "L128",
       "_origin": "ast",
       "id": "claude_commands_pair_modes_role_transitions",
-      "community": 28,
-      "community_name": "Pair Programming Modes",
+      "community": 600,
+      "community_name": "\ud83c\udfaf GitHub-Specific Optimizations",
       "norm_label": "role transitions"
     },
     {
@@ -87231,8 +87132,8 @@
       "source_location": "L137",
       "_origin": "ast",
       "id": "claude_commands_pair_modes_best_for_137",
-      "community": 28,
-      "community_name": "Pair Programming Modes",
+      "community": 600,
+      "community_name": "\ud83c\udfaf GitHub-Specific Optimizations",
       "norm_label": "best for"
     },
     {
@@ -87242,8 +87143,8 @@
       "source_location": "L143",
       "_origin": "ast",
       "id": "claude_commands_pair_modes_example_session_143",
-      "community": 28,
-      "community_name": "Pair Programming Modes",
+      "community": 600,
+      "community_name": "\ud83c\udfaf GitHub-Specific Optimizations",
       "norm_label": "example session"
     },
     {
@@ -87253,8 +87154,8 @@
       "source_location": "L152",
       "_origin": "ast",
       "id": "claude_commands_pair_modes_specialized_modes",
-      "community": 28,
-      "community_name": "Pair Programming Modes",
+      "community": 707,
+      "community_name": "Visualization & Reporting",
       "norm_label": "specialized modes"
     },
     {
@@ -87264,8 +87165,8 @@
       "source_location": "L154",
       "_origin": "ast",
       "id": "claude_commands_pair_modes_tdd_mode",
-      "community": 28,
-      "community_name": "Pair Programming Modes",
+      "community": 707,
+      "community_name": "Visualization & Reporting",
       "norm_label": "tdd mode"
     },
     {
@@ -87275,8 +87176,8 @@
       "source_location": "L170",
       "_origin": "ast",
       "id": "claude_commands_pair_modes_review_mode",
-      "community": 28,
-      "community_name": "Pair Programming Modes",
+      "community": 707,
+      "community_name": "Visualization & Reporting",
       "norm_label": "review mode"
     },
     {
@@ -87286,8 +87187,8 @@
       "source_location": "L186",
       "_origin": "ast",
       "id": "claude_commands_pair_modes_mentor_mode",
-      "community": 28,
-      "community_name": "Pair Programming Modes",
+      "community": 707,
+      "community_name": "Visualization & Reporting",
       "norm_label": "mentor mode"
     },
     {
@@ -87297,8 +87198,8 @@
       "source_location": "L202",
       "_origin": "ast",
       "id": "claude_commands_pair_modes_debug_mode",
-      "community": 28,
-      "community_name": "Pair Programming Modes",
+      "community": 707,
+      "community_name": "Visualization & Reporting",
       "norm_label": "debug mode"
     },
     {
@@ -87308,8 +87209,8 @@
       "source_location": "L218",
       "_origin": "ast",
       "id": "claude_commands_pair_modes_mode_selection_guide",
-      "community": 28,
-      "community_name": "Pair Programming Modes",
+      "community": 706,
+      "community_name": "Advanced Synchronization",
       "norm_label": "mode selection guide"
     },
     {
@@ -87319,8 +87220,8 @@
       "source_location": "L220",
       "_origin": "ast",
       "id": "claude_commands_pair_modes_choose_driver_mode_when",
-      "community": 28,
-      "community_name": "Pair Programming Modes",
+      "community": 706,
+      "community_name": "Advanced Synchronization",
       "norm_label": "choose driver mode when:"
     },
     {
@@ -87330,8 +87231,8 @@
       "source_location": "L226",
       "_origin": "ast",
       "id": "claude_commands_pair_modes_choose_navigator_mode_when",
-      "community": 28,
-      "community_name": "Pair Programming Modes",
+      "community": 706,
+      "community_name": "Advanced Synchronization",
       "norm_label": "choose navigator mode when:"
     },
     {
@@ -87341,8 +87242,8 @@
       "source_location": "L232",
       "_origin": "ast",
       "id": "claude_commands_pair_modes_choose_switch_mode_when",
-      "community": 28,
-      "community_name": "Pair Programming Modes",
+      "community": 706,
+      "community_name": "Advanced Synchronization",
       "norm_label": "choose switch mode when:"
     },
     {
@@ -87352,8 +87253,8 @@
       "source_location": "L238",
       "_origin": "ast",
       "id": "claude_commands_pair_modes_choose_specialized_modes_when",
-      "community": 28,
-      "community_name": "Pair Programming Modes",
+      "community": 706,
+      "community_name": "Advanced Synchronization",
       "norm_label": "choose specialized modes when:"
     },
     {
@@ -87858,8 +87759,8 @@
       "source_location": "L252",
       "_origin": "ast",
       "id": "claude_commands_pair_session_session_templates",
-      "community": 99,
-      "community_name": "Pair Programming Session Management",
+      "community": 709,
+      "community_name": "Troubleshooting",
       "norm_label": "session templates"
     },
     {
@@ -87869,8 +87770,8 @@
       "source_location": "L254",
       "_origin": "ast",
       "id": "claude_commands_pair_session_refactoring_template",
-      "community": 99,
-      "community_name": "Pair Programming Session Management",
+      "community": 709,
+      "community_name": "Troubleshooting",
       "norm_label": "refactoring template"
     },
     {
@@ -87880,8 +87781,8 @@
       "source_location": "L263",
       "_origin": "ast",
       "id": "claude_commands_pair_session_feature_template",
-      "community": 99,
-      "community_name": "Pair Programming Session Management",
+      "community": 709,
+      "community_name": "Troubleshooting",
       "norm_label": "feature template"
     },
     {
@@ -87891,8 +87792,8 @@
       "source_location": "L272",
       "_origin": "ast",
       "id": "claude_commands_pair_session_debug_template",
-      "community": 99,
-      "community_name": "Pair Programming Session Management",
+      "community": 709,
+      "community_name": "Troubleshooting",
       "norm_label": "debug template"
     },
     {
@@ -87902,8 +87803,8 @@
       "source_location": "L281",
       "_origin": "ast",
       "id": "claude_commands_pair_session_learning_template",
-      "community": 99,
-      "community_name": "Pair Programming Session Management",
+      "community": 709,
+      "community_name": "Troubleshooting",
       "norm_label": "learning template"
     },
     {
@@ -87924,8 +87825,8 @@
       "source_location": "L307",
       "_origin": "ast",
       "id": "claude_commands_pair_session_multi_session_management",
-      "community": 99,
-      "community_name": "Pair Programming Session Management",
+      "community": 795,
+      "community_name": "Workflow Templates",
       "norm_label": "multi-session management"
     },
     {
@@ -87935,8 +87836,8 @@
       "source_location": "L309",
       "_origin": "ast",
       "id": "claude_commands_pair_session_list_active_sessions",
-      "community": 99,
-      "community_name": "Pair Programming Session Management",
+      "community": 795,
+      "community_name": "Workflow Templates",
       "norm_label": "list active sessions"
     },
     {
@@ -87946,8 +87847,8 @@
       "source_location": "L314",
       "_origin": "ast",
       "id": "claude_commands_pair_session_switch_between_sessions",
-      "community": 99,
-      "community_name": "Pair Programming Session Management",
+      "community": 795,
+      "community_name": "Workflow Templates",
       "norm_label": "switch between sessions"
     },
     {
@@ -87957,8 +87858,8 @@
       "source_location": "L319",
       "_origin": "ast",
       "id": "claude_commands_pair_session_merge_sessions",
-      "community": 99,
-      "community_name": "Pair Programming Session Management",
+      "community": 795,
+      "community_name": "Workflow Templates",
       "norm_label": "merge sessions"
     },
     {
@@ -88012,8 +87913,8 @@
       "source_location": "L339",
       "_origin": "ast",
       "id": "claude_commands_pair_session_session_sharing",
-      "community": 99,
-      "community_name": "Pair Programming Session Management",
+      "community": 777,
+      "community_name": "\ud83c\udfaf Quick Start",
       "norm_label": "session sharing"
     },
     {
@@ -88023,8 +87924,8 @@
       "source_location": "L341",
       "_origin": "ast",
       "id": "claude_commands_pair_session_share_with_team",
-      "community": 99,
-      "community_name": "Pair Programming Session Management",
+      "community": 777,
+      "community_name": "\ud83c\udfaf Quick Start",
       "norm_label": "share with team"
     },
     {
@@ -88034,8 +87935,8 @@
       "source_location": "L347",
       "_origin": "ast",
       "id": "claude_commands_pair_session_export_for_review",
-      "community": 99,
-      "community_name": "Pair Programming Session Management",
+      "community": 777,
+      "community_name": "\ud83c\udfaf Quick Start",
       "norm_label": "export for review"
     },
     {
@@ -88045,8 +87946,8 @@
       "source_location": "L352",
       "_origin": "ast",
       "id": "claude_commands_pair_session_create_learning_material",
-      "community": 99,
-      "community_name": "Pair Programming Session Management",
+      "community": 777,
+      "community_name": "\ud83c\udfaf Quick Start",
       "norm_label": "create learning material"
     },
     {
@@ -88100,8 +88001,8 @@
       "source_location": "L377",
       "_origin": "ast",
       "id": "claude_commands_pair_session_troubleshooting",
-      "community": 99,
-      "community_name": "Pair Programming Session Management",
+      "community": 796,
+      "community_name": "Matrix Strategies",
       "norm_label": "troubleshooting"
     },
     {
@@ -88111,8 +88012,8 @@
       "source_location": "L379",
       "_origin": "ast",
       "id": "claude_commands_pair_session_session_won_t_start",
-      "community": 99,
-      "community_name": "Pair Programming Session Management",
+      "community": 796,
+      "community_name": "Matrix Strategies",
       "norm_label": "session won't start"
     },
     {
@@ -88122,8 +88023,8 @@
       "source_location": "L384",
       "_origin": "ast",
       "id": "claude_commands_pair_session_session_disconnected",
-      "community": 99,
-      "community_name": "Pair Programming Session Management",
+      "community": 796,
+      "community_name": "Matrix Strategies",
       "norm_label": "session disconnected"
     },
     {
@@ -88133,8 +88034,8 @@
       "source_location": "L389",
       "_origin": "ast",
       "id": "claude_commands_pair_session_poor_performance",
-      "community": 99,
-      "community_name": "Pair Programming Session Management",
+      "community": 796,
+      "community_name": "Matrix Strategies",
       "norm_label": "poor performance"
     },
     {
@@ -88210,8 +88111,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "claude_commands_pair_start_examples",
-      "community": 90,
-      "community_name": "pair --start",
+      "community": 710,
+      "community_name": "Best Practices",
       "norm_label": "examples"
     },
     {
@@ -88221,8 +88122,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "claude_commands_pair_start_basic_start",
-      "community": 90,
-      "community_name": "pair --start",
+      "community": 710,
+      "community_name": "Best Practices",
       "norm_label": "basic start"
     },
     {
@@ -88232,8 +88133,8 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "claude_commands_pair_start_expert_refactoring_session",
-      "community": 90,
-      "community_name": "pair --start",
+      "community": 710,
+      "community_name": "Best Practices",
       "norm_label": "expert refactoring session"
     },
     {
@@ -88243,8 +88144,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "claude_commands_pair_start_tdd_session",
-      "community": 90,
-      "community_name": "pair --start",
+      "community": 710,
+      "community_name": "Best Practices",
       "norm_label": "tdd session"
     },
     {
@@ -88254,8 +88155,8 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "claude_commands_pair_start_debugging_session",
-      "community": 90,
-      "community_name": "pair --start",
+      "community": 710,
+      "community_name": "Best Practices",
       "norm_label": "debugging session"
     },
     {
@@ -88320,8 +88221,8 @@
       "source_location": "L89",
       "_origin": "ast",
       "id": "claude_commands_pair_start_focus_areas",
-      "community": 90,
-      "community_name": "pair --start",
+      "community": 711,
+      "community_name": "Advanced Swarm PR Coordination",
       "norm_label": "focus areas"
     },
     {
@@ -88331,8 +88232,8 @@
       "source_location": "L91",
       "_origin": "ast",
       "id": "claude_commands_pair_start_refactor",
-      "community": 90,
-      "community_name": "pair --start",
+      "community": 711,
+      "community_name": "Advanced Swarm PR Coordination",
       "norm_label": "refactor"
     },
     {
@@ -88342,8 +88243,8 @@
       "source_location": "L97",
       "_origin": "ast",
       "id": "claude_commands_pair_start_test",
-      "community": 90,
-      "community_name": "pair --start",
+      "community": 711,
+      "community_name": "Advanced Swarm PR Coordination",
       "norm_label": "test"
     },
     {
@@ -88353,8 +88254,8 @@
       "source_location": "L103",
       "_origin": "ast",
       "id": "claude_commands_pair_start_debug",
-      "community": 90,
-      "community_name": "pair --start",
+      "community": 711,
+      "community_name": "Advanced Swarm PR Coordination",
       "norm_label": "debug"
     },
     {
@@ -88364,8 +88265,8 @@
       "source_location": "L109",
       "_origin": "ast",
       "id": "claude_commands_pair_start_implement",
-      "community": 90,
-      "community_name": "pair --start",
+      "community": 711,
+      "community_name": "Advanced Swarm PR Coordination",
       "norm_label": "implement"
     },
     {
@@ -88375,8 +88276,8 @@
       "source_location": "L115",
       "_origin": "ast",
       "id": "claude_commands_pair_start_quality_features",
-      "community": 739,
-      "community_name": "Quality Features",
+      "community": 90,
+      "community_name": "pair --start",
       "norm_label": "quality features"
     },
     {
@@ -88386,8 +88287,8 @@
       "source_location": "L117",
       "_origin": "ast",
       "id": "claude_commands_pair_start_verification",
-      "community": 739,
-      "community_name": "Quality Features",
+      "community": 90,
+      "community_name": "pair --start",
       "norm_label": "verification"
     },
     {
@@ -88397,8 +88298,8 @@
       "source_location": "L123",
       "_origin": "ast",
       "id": "claude_commands_pair_start_code_review",
-      "community": 739,
-      "community_name": "Quality Features",
+      "community": 90,
+      "community_name": "pair --start",
       "norm_label": "code review"
     },
     {
@@ -88408,8 +88309,8 @@
       "source_location": "L129",
       "_origin": "ast",
       "id": "claude_commands_pair_start_testing",
-      "community": 739,
-      "community_name": "Quality Features",
+      "community": 90,
+      "community_name": "pair --start",
       "norm_label": "testing"
     },
     {
@@ -100959,8 +100860,8 @@
       "source_location": "L536",
       "_origin": "ast",
       "id": "claude_skills_github_code_review_skill_intelligent_comment_generation",
-      "community": 343,
-      "community_name": "GitHub Code Review Skill",
+      "community": 799,
+      "community_name": "\ud83d\udcac Intelligent Comment Generation",
       "norm_label": "\ud83d\udcac intelligent comment generation"
     },
     {
@@ -100970,8 +100871,8 @@
       "source_location": "L538",
       "_origin": "ast",
       "id": "claude_skills_github_code_review_skill_generate_contextual_review_comments",
-      "community": 343,
-      "community_name": "GitHub Code Review Skill",
+      "community": 799,
+      "community_name": "\ud83d\udcac Intelligent Comment Generation",
       "norm_label": "generate contextual review comments"
     },
     {
@@ -100981,8 +100882,8 @@
       "source_location": "L572",
       "_origin": "ast",
       "id": "claude_skills_github_code_review_skill_batch_comment_management",
-      "community": 343,
-      "community_name": "GitHub Code Review Skill",
+      "community": 799,
+      "community_name": "\ud83d\udcac Intelligent Comment Generation",
       "norm_label": "batch comment management"
     },
     {
@@ -108846,8 +108747,8 @@
       "source_location": "L597",
       "_origin": "ast",
       "id": "claude_skills_sparc_methodology_skill_tdd_workflows",
-      "community": 799,
-      "community_name": "\ud83d\udcac Intelligent Comment Generation",
+      "community": 349,
+      "community_name": "SPARC Methodology - Comprehensive Development Framework",
       "norm_label": "tdd workflows"
     },
     {
@@ -108857,8 +108758,8 @@
       "source_location": "L599",
       "_origin": "ast",
       "id": "claude_skills_sparc_methodology_skill_complete_tdd_workflow",
-      "community": 799,
-      "community_name": "\ud83d\udcac Intelligent Comment Generation",
+      "community": 349,
+      "community_name": "SPARC Methodology - Comprehensive Development Framework",
       "norm_label": "complete tdd workflow"
     },
     {
@@ -108868,8 +108769,8 @@
       "source_location": "L648",
       "_origin": "ast",
       "id": "claude_skills_sparc_methodology_skill_red_green_refactor_cycle",
-      "community": 799,
-      "community_name": "\ud83d\udcac Intelligent Comment Generation",
+      "community": 349,
+      "community_name": "SPARC Methodology - Comprehensive Development Framework",
       "norm_label": "red-green-refactor cycle"
     },
     {
@@ -109132,8 +109033,8 @@
       "source_location": "L1067",
       "_origin": "ast",
       "id": "claude_skills_sparc_methodology_skill_quick_reference",
-      "community": 349,
-      "community_name": "SPARC Methodology - Comprehensive Development Framework",
+      "community": 814,
+      "community_name": "Quick Reference",
       "norm_label": "quick reference"
     },
     {
@@ -109143,8 +109044,8 @@
       "source_location": "L1069",
       "_origin": "ast",
       "id": "claude_skills_sparc_methodology_skill_most_common_commands",
-      "community": 349,
-      "community_name": "SPARC Methodology - Comprehensive Development Framework",
+      "community": 814,
+      "community_name": "Quick Reference",
       "norm_label": "most common commands"
     },
     {
@@ -109154,8 +109055,8 @@
       "source_location": "L1088",
       "_origin": "ast",
       "id": "claude_skills_sparc_methodology_skill_most_common_mcp_calls",
-      "community": 349,
-      "community_name": "SPARC Methodology - Comprehensive Development Framework",
+      "community": 814,
+      "community_name": "Quick Reference",
       "norm_label": "most common mcp calls"
     },
     {
@@ -109330,8 +109231,8 @@
       "source_location": "L130",
       "_origin": "ast",
       "id": "claude_skills_stream_chain_skill_predefined_pipelines_pipeline",
-      "community": 431,
-      "community_name": "Predefined Pipelines (`pipeline`)",
+      "community": 637,
+      "community_name": "Pipeline Examples",
       "norm_label": "predefined pipelines (`pipeline`)"
     },
     {
@@ -109341,8 +109242,8 @@
       "source_location": "L134",
       "_origin": "ast",
       "id": "claude_skills_stream_chain_skill_syntax_134",
-      "community": 431,
-      "community_name": "Predefined Pipelines (`pipeline`)",
+      "community": 637,
+      "community_name": "Pipeline Examples",
       "norm_label": "syntax"
     },
     {
@@ -109407,8 +109308,8 @@
       "source_location": "L218",
       "_origin": "ast",
       "id": "claude_skills_stream_chain_skill_pipeline_options",
-      "community": 431,
-      "community_name": "Predefined Pipelines (`pipeline`)",
+      "community": 637,
+      "community_name": "Pipeline Examples",
       "norm_label": "pipeline options"
     },
     {
@@ -109473,8 +109374,8 @@
       "source_location": "L252",
       "_origin": "ast",
       "id": "claude_skills_stream_chain_skill_pipeline_output",
-      "community": 431,
-      "community_name": "Predefined Pipelines (`pipeline`)",
+      "community": 637,
+      "community_name": "Pipeline Examples",
       "norm_label": "pipeline output"
     },
     {
@@ -123897,7 +123798,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L14",
+      "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
       "source": "package",
@@ -123908,7 +123809,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L36",
+      "source_location": "L35",
       "weight": 1.0,
       "_origin": "ast",
       "source": "package",
@@ -123930,7 +123831,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L49",
+      "source_location": "L48",
       "weight": 1.0,
       "_origin": "ast",
       "source": "package",
@@ -123989,17 +123890,6 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_scripts",
-      "target": "package_scripts_bootstrap_curriculum",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "package.json",
-      "source_location": "L12",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "package_scripts",
       "target": "package_scripts_build",
       "confidence_score": 1.0
     },
@@ -124040,7 +123930,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L15",
+      "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_dependencies",
@@ -124051,7 +123941,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L16",
+      "source_location": "L15",
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_dependencies",
@@ -124062,7 +123952,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L17",
+      "source_location": "L16",
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_dependencies",
@@ -124073,7 +123963,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L18",
+      "source_location": "L17",
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_dependencies",
@@ -124084,7 +123974,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L21",
+      "source_location": "L20",
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_dependencies",
@@ -124095,7 +123985,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L22",
+      "source_location": "L21",
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_dependencies",
@@ -124106,7 +123996,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L23",
+      "source_location": "L22",
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_dependencies",
@@ -124117,7 +124007,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L24",
+      "source_location": "L23",
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_dependencies",
@@ -124128,7 +124018,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L25",
+      "source_location": "L24",
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_dependencies",
@@ -124139,7 +124029,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L26",
+      "source_location": "L25",
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_dependencies",
@@ -124150,7 +124040,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L27",
+      "source_location": "L26",
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_dependencies",
@@ -124161,7 +124051,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L19",
+      "source_location": "L18",
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_dependencies",
@@ -124172,7 +124062,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L28",
+      "source_location": "L27",
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_dependencies",
@@ -124183,7 +124073,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L29",
+      "source_location": "L28",
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_dependencies",
@@ -124194,7 +124084,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L20",
+      "source_location": "L19",
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_dependencies",
@@ -124205,7 +124095,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L30",
+      "source_location": "L29",
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_dependencies",
@@ -124216,7 +124106,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L31",
+      "source_location": "L30",
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_dependencies",
@@ -124227,7 +124117,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L32",
+      "source_location": "L31",
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_dependencies",
@@ -124238,7 +124128,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L33",
+      "source_location": "L32",
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_dependencies",
@@ -124249,7 +124139,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L34",
+      "source_location": "L33",
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_dependencies",
@@ -124260,7 +124150,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L15",
+      "source_location": "L14",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -124272,7 +124162,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L16",
+      "source_location": "L15",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -124284,7 +124174,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L17",
+      "source_location": "L16",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -124296,7 +124186,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L18",
+      "source_location": "L17",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -124308,7 +124198,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L19",
+      "source_location": "L18",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -124321,20 +124211,8 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "source_file": "prisma/bootstrap-curriculum.ts",
-      "source_location": "L39",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "prisma_bootstrap_curriculum_main",
-      "target": "package_dependencies_prisma_client"
-    },
-    {
-      "relation": "references",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
       "source_file": "prisma/bootstrap.ts",
-      "source_location": "L58",
+      "source_location": "L144",
       "weight": 1.0,
       "_origin": "ast",
       "source": "prisma_bootstrap_main",
@@ -124344,7 +124222,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L20",
+      "source_location": "L19",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -124356,7 +124234,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L21",
+      "source_location": "L20",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -124368,7 +124246,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L22",
+      "source_location": "L21",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -124380,7 +124258,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L23",
+      "source_location": "L22",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -124392,7 +124270,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L24",
+      "source_location": "L23",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -124404,7 +124282,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L25",
+      "source_location": "L24",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -124416,7 +124294,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L26",
+      "source_location": "L25",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -124428,7 +124306,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L27",
+      "source_location": "L26",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -124440,7 +124318,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L28",
+      "source_location": "L27",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -124452,7 +124330,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L29",
+      "source_location": "L28",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -124464,7 +124342,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L30",
+      "source_location": "L29",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -124476,7 +124354,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L31",
+      "source_location": "L30",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -124488,7 +124366,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L32",
+      "source_location": "L31",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -124500,7 +124378,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L33",
+      "source_location": "L32",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -124512,7 +124390,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L34",
+      "source_location": "L33",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -124524,7 +124402,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L43",
+      "source_location": "L42",
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_devdependencies",
@@ -124535,7 +124413,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L44",
+      "source_location": "L43",
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_devdependencies",
@@ -124546,7 +124424,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L37",
+      "source_location": "L36",
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_devdependencies",
@@ -124557,7 +124435,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L45",
+      "source_location": "L44",
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_devdependencies",
@@ -124568,7 +124446,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L38",
+      "source_location": "L37",
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_devdependencies",
@@ -124579,7 +124457,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L46",
+      "source_location": "L45",
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_devdependencies",
@@ -124590,7 +124468,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L39",
+      "source_location": "L38",
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_devdependencies",
@@ -124601,7 +124479,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L40",
+      "source_location": "L39",
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_devdependencies",
@@ -124612,7 +124490,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L41",
+      "source_location": "L40",
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_devdependencies",
@@ -124623,7 +124501,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L42",
+      "source_location": "L41",
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_devdependencies",
@@ -124634,7 +124512,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L47",
+      "source_location": "L46",
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_devdependencies",
@@ -124645,7 +124523,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L37",
+      "source_location": "L36",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -124657,7 +124535,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L38",
+      "source_location": "L37",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -124669,7 +124547,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L39",
+      "source_location": "L38",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -124681,7 +124559,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L40",
+      "source_location": "L39",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -124693,7 +124571,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L41",
+      "source_location": "L40",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -124705,7 +124583,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L42",
+      "source_location": "L41",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -124717,7 +124595,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L43",
+      "source_location": "L42",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -124729,7 +124607,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L44",
+      "source_location": "L43",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -124741,7 +124619,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L45",
+      "source_location": "L44",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -124753,7 +124631,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L46",
+      "source_location": "L45",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -124765,7 +124643,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L47",
+      "source_location": "L46",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -124777,7 +124655,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L50",
+      "source_location": "L49",
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_prisma",
@@ -124798,282 +124676,41 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "prisma/bootstrap-curriculum.ts",
-      "source_location": "L23",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "prisma_bootstrap_curriculum",
-      "target": "prisma_bootstrap_curriculum_main",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "prisma/bootstrap-curriculum.ts",
-      "source_location": "L21",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "prisma_bootstrap_curriculum",
-      "target": "prisma_bootstrap_curriculum_prisma",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "prisma/bootstrap-curriculum.ts",
-      "source_location": "L19",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "prisma_bootstrap_curriculum",
-      "target": "prisma_bootstrap_schema",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "prisma/bootstrap-curriculum.ts",
-      "source_location": "L19",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "prisma_bootstrap_curriculum",
-      "target": "prisma_bootstrap_schema_createcurriculum",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "prisma/bootstrap-curriculum.ts",
-      "source_location": "L19",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "prisma_bootstrap_curriculum",
-      "target": "prisma_bootstrap_schema_loadbootstrapdata",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "prisma/bootstrap-curriculum.ts",
-      "source_location": "L39",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "prisma_bootstrap_curriculum_main",
-      "target": "prisma_bootstrap_schema_createcurriculum",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "prisma/bootstrap-curriculum.ts",
-      "source_location": "L37",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "prisma_bootstrap_curriculum_main",
-      "target": "prisma_bootstrap_schema_loadbootstrapdata",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "prisma/bootstrap.ts",
-      "source_location": "L19",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "prisma_bootstrap",
-      "target": "prisma_bootstrap_schema",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "prisma/bootstrap-schema.ts",
-      "source_location": "L27",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "prisma_bootstrap_schema",
-      "target": "prisma_bootstrap_schema_assessmentschema",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "prisma/bootstrap-schema.ts",
-      "source_location": "L67",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "prisma_bootstrap_schema",
-      "target": "prisma_bootstrap_schema_assignmentschema",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "prisma/bootstrap-schema.ts",
-      "source_location": "L108",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "prisma_bootstrap_schema",
-      "target": "prisma_bootstrap_schema_bootstrapdata",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "prisma/bootstrap-schema.ts",
-      "source_location": "L81",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "prisma_bootstrap_schema",
-      "target": "prisma_bootstrap_schema_bootstrapdataschema",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "prisma/bootstrap-schema.ts",
-      "source_location": "L142",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "prisma_bootstrap_schema",
-      "target": "prisma_bootstrap_schema_createcurriculum",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "prisma/bootstrap-schema.ts",
-      "source_location": "L124",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "prisma_bootstrap_schema",
-      "target": "prisma_bootstrap_schema_curriculumsummary",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "prisma/bootstrap-schema.ts",
       "source_location": "L41",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "prisma_bootstrap_schema",
-      "target": "prisma_bootstrap_schema_lessonschema",
+      "source": "prisma_bootstrap",
+      "target": "prisma_bootstrap_assessmentschema",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "prisma/bootstrap-schema.ts",
-      "source_location": "L110",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "prisma_bootstrap_schema",
-      "target": "prisma_bootstrap_schema_loadbootstrapdata",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "prisma/bootstrap-schema.ts",
-      "source_location": "L52",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "prisma_bootstrap_schema",
-      "target": "prisma_bootstrap_schema_moduleschema",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "prisma/bootstrap-schema.ts",
-      "source_location": "L12",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "prisma_bootstrap_schema",
-      "target": "prisma_bootstrap_schema_optionschema",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "prisma/bootstrap-schema.ts",
-      "source_location": "L18",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "prisma_bootstrap_schema",
-      "target": "prisma_bootstrap_schema_questionschema",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "prisma/bootstrap-schema.ts",
-      "source_location": "L60",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "prisma_bootstrap_schema",
-      "target": "prisma_bootstrap_schema_rubriccriterionschema",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "prisma/bootstrap.ts",
-      "source_location": "L19",
+      "source_location": "L100",
       "weight": 1.0,
       "_origin": "ast",
       "source": "prisma_bootstrap",
-      "target": "prisma_bootstrap_schema_loadbootstrapdata",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "prisma/bootstrap.ts",
-      "source_location": "L54",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "prisma_bootstrap_main",
-      "target": "prisma_bootstrap_schema_loadbootstrapdata",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "prisma/bootstrap.ts",
-      "source_location": "L19",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "prisma_bootstrap",
-      "target": "prisma_bootstrap_schema_createcurriculum",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "prisma/bootstrap.ts",
-      "source_location": "L71",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "prisma_bootstrap_main",
-      "target": "prisma_bootstrap_schema_createcurriculum",
+      "target": "prisma_bootstrap_bootstrapdata",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "prisma/bootstrap.ts",
-      "source_location": "L23",
+      "source_location": "L74",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "prisma_bootstrap",
+      "target": "prisma_bootstrap_bootstrapdataschema",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "prisma/bootstrap.ts",
+      "source_location": "L20",
       "weight": 1.0,
       "_origin": "ast",
       "source": "prisma_bootstrap",
@@ -125084,7 +124721,29 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "prisma/bootstrap.ts",
-      "source_location": "L29",
+      "source_location": "L55",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "prisma_bootstrap",
+      "target": "prisma_bootstrap_lessonschema",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "prisma/bootstrap.ts",
+      "source_location": "L102",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "prisma_bootstrap",
+      "target": "prisma_bootstrap_loadbootstrapdata",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "prisma/bootstrap.ts",
+      "source_location": "L116",
       "weight": 1.0,
       "_origin": "ast",
       "source": "prisma_bootstrap",
@@ -125095,11 +124754,56 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "prisma/bootstrap.ts",
-      "source_location": "L21",
+      "source_location": "L66",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "prisma_bootstrap",
+      "target": "prisma_bootstrap_moduleschema",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "prisma/bootstrap.ts",
+      "source_location": "L26",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "prisma_bootstrap",
+      "target": "prisma_bootstrap_optionschema",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "prisma/bootstrap.ts",
+      "source_location": "L18",
       "weight": 1.0,
       "_origin": "ast",
       "source": "prisma_bootstrap",
       "target": "prisma_bootstrap_prisma",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "prisma/bootstrap.ts",
+      "source_location": "L32",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "prisma_bootstrap",
+      "target": "prisma_bootstrap_questionschema",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "prisma/bootstrap.ts",
+      "source_location": "L140",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "prisma_bootstrap_main",
+      "target": "prisma_bootstrap_loadbootstrapdata",
       "confidence_score": 1.0
     },
     {
@@ -236014,5 +235718,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "c843582be1ff77341cce37bd231256255bd13c37"
+  "built_at_commit": "580271a6676e1e79894b92b708ccf3a4d6c3867f"
 }
