@@ -8,6 +8,8 @@ import { getLearningHoursStats } from "@/lib/queries/activity";
 import { getCertificatesForUser, type LearnerCertificate } from "@/lib/queries/certificates";
 import { formatDate } from "@/lib/format";
 import { buttonVariants } from "@/components/ui/button";
+import { deriveLearnerStatus, type LearnerStatus } from "@/lib/learner-status";
+import { LearnerStatusPill } from "@/components/learner-status-pill";
 import { WeeklyActivityChart } from "./weekly-activity-chart";
 
 type ActiveCourseCard = {
@@ -15,6 +17,7 @@ type ActiveCourseCard = {
   programId: string;
   programName: string;
   progress: ProgramProgress;
+  learnerStatus: LearnerStatus | null;
   currentModuleTitle: string | null;
   nextLessonId: string | null;
   nextLessonTitle: string | null;
@@ -48,6 +51,8 @@ export default async function ProgressPage() {
 
   const grantedEnrollments = enrollments.filter((e) => e.accessState === AccessState.GRANTED);
 
+  const now = new Date();
+
   const progressResults = await Promise.all(
     grantedEnrollments.map(async (enrollment) => {
       const progress = await getProgramProgress(enrollment.id);
@@ -55,12 +60,22 @@ export default async function ProgressPage() {
       const currentModule = next
         ? progress.modules.find((m) => m.moduleId === next.moduleId)
         : undefined;
+      const learnerStatus = enrollment.batch
+        ? deriveLearnerStatus({
+            batchStart: enrollment.batch.startDate,
+            batchEnd: enrollment.batch.endDate,
+            now,
+            progressPercent: progress.overallPercent,
+            enrollmentStatus: enrollment.status,
+          })
+        : null;
 
       return {
         enrollmentId: enrollment.id,
         programId: enrollment.programId,
         programName: enrollment.program.name,
         progress,
+        learnerStatus,
         currentModuleTitle: currentModule?.title ?? null,
         nextLessonId: next?.lesson.id ?? null,
         nextLessonTitle: next?.lesson.title ?? null,
@@ -227,15 +242,18 @@ function CourseProgressCard({ card }: { card: ActiveCourseCard }) {
             </p>
           ) : null}
         </div>
-        <span
-          className={`shrink-0 rounded-full px-sm py-xs font-label-md text-label-md ${
-            card.progress.overallPercent >= 50
-              ? "bg-primary-fixed text-primary"
-              : "bg-surface-container-highest text-on-surface-variant"
-          }`}
-        >
-          {card.progress.overallPercent}%
-        </span>
+        <div className="flex shrink-0 flex-wrap items-center justify-end gap-xs">
+          {card.learnerStatus ? <LearnerStatusPill status={card.learnerStatus} /> : null}
+          <span
+            className={`shrink-0 rounded-full px-sm py-xs font-label-md text-label-md ${
+              card.progress.overallPercent >= 50
+                ? "bg-primary-fixed text-primary"
+                : "bg-surface-container-highest text-on-surface-variant"
+            }`}
+          >
+            {card.progress.overallPercent}%
+          </span>
+        </div>
       </div>
 
       <div className="mb-sm h-2 w-full overflow-hidden rounded-full bg-surface-container-high">

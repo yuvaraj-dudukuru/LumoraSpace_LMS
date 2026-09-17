@@ -1,7 +1,8 @@
 import "server-only";
-import type { Role, SubmissionStatus, ReviewOutcome, AssignmentType } from "@prisma/client";
+import type { Role, SubmissionStatus, ReviewOutcome, AssignmentType, EnrollmentStatus } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { getProgramProgress, type ProgramProgress } from "@/lib/queries/progress";
+import { deriveLearnerStatus, type LearnerStatus } from "@/lib/learner-status";
 
 /** A learner with no activity signal at all in this many days (or ever)
  * counts as "needs attention" — chosen since the task didn't specify a
@@ -35,6 +36,9 @@ type EnrollmentActivity = {
   batchId: string;
   batchName: string;
   progressPercent: number;
+  enrollmentStatus: EnrollmentStatus;
+  batchStartDate: Date;
+  batchEndDate: Date;
   lastActiveAt: Date | null;
   hasFailedAttempt: boolean;
   hasOutstandingRevision: boolean;
@@ -57,7 +61,8 @@ async function getBatchEnrollmentsWithActivity(batchIds: string[]): Promise<Enro
       progressPercent: true,
       user: { select: { name: true, email: true } },
       program: { select: { name: true } },
-      batch: { select: { id: true, name: true } },
+      status: true,
+      batch: { select: { id: true, name: true, startDate: true, endDate: true } },
       lessonProgress: {
         where: { completed: true },
         orderBy: { completedAt: "desc" },
@@ -127,6 +132,9 @@ async function getBatchEnrollmentsWithActivity(batchIds: string[]): Promise<Enro
       batchId: enrollment.batch.id,
       batchName: enrollment.batch.name,
       progressPercent: enrollment.progressPercent,
+      enrollmentStatus: enrollment.status,
+      batchStartDate: enrollment.batch.startDate,
+      batchEndDate: enrollment.batch.endDate,
       lastActiveAt,
       hasFailedAttempt,
       hasOutstandingRevision,
@@ -446,6 +454,10 @@ export type MentorLearnerRow = {
   lastActiveAt: Date | null;
   outstandingItemsCount: number;
   needsAttention: boolean;
+  /** Pace vs the batch calendar — the SAME deriveLearnerStatus the learner
+   * pages use, fed the cached Enrollment.progressPercent this roster already
+   * shows. Independent of needsAttention (activity/failures/revisions). */
+  learnerStatus: LearnerStatus;
 };
 
 export async function getMentorLearners(
@@ -476,6 +488,13 @@ export async function getMentorLearners(
       lastActiveAt: enrollment.lastActiveAt,
       outstandingItemsCount,
       needsAttention: stale || enrollment.hasFailedAttempt || enrollment.hasOutstandingRevision,
+      learnerStatus: deriveLearnerStatus({
+        batchStart: enrollment.batchStartDate,
+        batchEnd: enrollment.batchEndDate,
+        now: new Date(now),
+        progressPercent: enrollment.progressPercent,
+        enrollmentStatus: enrollment.enrollmentStatus,
+      }),
     };
   });
 

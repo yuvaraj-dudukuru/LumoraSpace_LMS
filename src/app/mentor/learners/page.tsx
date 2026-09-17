@@ -3,6 +3,7 @@ import { Users, Search, ChevronRight } from "lucide-react";
 import { requireRole } from "@/lib/auth-guards";
 import { getMentorBatchIds, getMentorLearners } from "@/lib/queries/mentor";
 import { formatRelativeTime } from "@/lib/format";
+import { LearnerStatusPill } from "@/components/learner-status-pill";
 
 export default async function MentorLearnersPage({
   searchParams,
@@ -137,9 +138,7 @@ export default async function MentorLearnersPage({
                       Needs Attention
                     </span>
                   ) : (
-                    <span className="rounded-full bg-success-container px-md py-xs font-label-sm text-label-sm text-success">
-                      On Track
-                    </span>
+                    <LearnerStatusPill status={learner.learnerStatus} />
                   )}
                   <ChevronRight className="h-4 w-4 shrink-0 text-on-surface-variant" />
                 </div>

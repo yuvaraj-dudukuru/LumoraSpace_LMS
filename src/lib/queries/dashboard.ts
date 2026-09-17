@@ -2,6 +2,7 @@ import "server-only";
 import { AccessState, EnrollmentStatus } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { getProgramProgress, findNextIncompleteLesson, type ProgramProgress } from "@/lib/queries/progress";
+import { deriveLearnerStatus, type LearnerStatus } from "@/lib/learner-status";
 
 export type NextAssignment = {
   id: string;
@@ -19,6 +20,9 @@ export type DashboardData = {
   streakDays: number;
   enrollment: { id: string; programId: string; programName: string };
   progress: ProgramProgress;
+  /** Pace vs the batch calendar (src/lib/learner-status.ts); null only for a
+   * batch-less enrollment, which the schema allows and the MVP never creates. */
+  learnerStatus: LearnerStatus | null;
   nextLesson: { moduleId: string; lessonId: string; lessonTitle: string } | null;
   nextAssignment: NextAssignment | null;
   recentActivity: ActivityItem[];
@@ -38,7 +42,13 @@ export async function getDashboardData(userId: string): Promise<DashboardData> {
       accessState: AccessState.GRANTED,
     },
     orderBy: { enrolledAt: "desc" },
-    select: { id: true, programId: true, program: { select: { name: true } } },
+    select: {
+      id: true,
+      programId: true,
+      status: true,
+      program: { select: { name: true } },
+      batch: { select: { startDate: true, endDate: true } },
+    },
   });
 
   if (!enrollment) return null;
@@ -101,6 +111,15 @@ export async function getDashboardData(userId: string): Promise<DashboardData> {
       programName: enrollment.program.name,
     },
     progress,
+    learnerStatus: enrollment.batch
+      ? deriveLearnerStatus({
+          batchStart: enrollment.batch.startDate,
+          batchEnd: enrollment.batch.endDate,
+          now: new Date(),
+          progressPercent: progress.overallPercent,
+          enrollmentStatus: enrollment.status,
+        })
+      : null,
     nextLesson: next
       ? { moduleId: next.moduleId, lessonId: next.lesson.id, lessonTitle: next.lesson.title }
       : null,

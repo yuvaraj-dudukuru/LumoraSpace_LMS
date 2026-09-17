@@ -3,6 +3,7 @@ import { Flame, History, CalendarClock } from "lucide-react";
 import { requireUser } from "@/lib/auth-guards";
 import { getDashboardData } from "@/lib/queries/dashboard";
 import { buttonVariants } from "@/components/ui/button";
+import { LearnerStatusPill } from "@/components/learner-status-pill";
 import { formatRelativeTime, formatDate } from "@/lib/format";
 
 export default async function LearnHomePage() {
@@ -23,7 +24,7 @@ export default async function LearnHomePage() {
     );
   }
 
-  const { progress, nextLesson, nextAssignment, recentActivity, streakDays } = data;
+  const { progress, learnerStatus, nextLesson, nextAssignment, recentActivity, streakDays } = data;
 
   return (
     <div className="flex flex-col gap-3xl">
@@ -50,6 +51,7 @@ export default async function LearnHomePage() {
                   {nextLesson ? nextLesson.lessonTitle : "Program complete"}
                 </h2>
               </div>
+              {learnerStatus ? <LearnerStatusPill status={learnerStatus} /> : null}
             </div>
             <div className="flex flex-col gap-sm">
               <div className="flex items-end justify-between">
