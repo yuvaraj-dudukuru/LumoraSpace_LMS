@@ -334,7 +334,7 @@ export async function createCurriculum(
   let lessonCount = 0;
 
   for (const moduleDef of data.modules) {
-    const module = await tx.module.create({
+    const createdModule = await tx.module.create({
       data: {
         programId: program.id,
         title: moduleDef.title,
@@ -343,12 +343,12 @@ export async function createCurriculum(
         estimatedDurationMins: moduleDef.estimatedDurationMins,
       },
     });
-    moduleIdByOrder.set(moduleDef.order, module.id);
+    moduleIdByOrder.set(moduleDef.order, createdModule.id);
 
     for (const lessonDef of moduleDef.lessons) {
       const lesson = await tx.lesson.create({
         data: {
-          moduleId: module.id,
+          moduleId: createdModule.id,
           title: lessonDef.title,
           type: lessonDef.type as LessonType,
           order: lessonDef.order,
