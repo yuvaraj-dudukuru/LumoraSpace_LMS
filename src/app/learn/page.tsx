@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Flame, History, CalendarClock } from "lucide-react";
 import { requireUser } from "@/lib/auth-guards";
-import { getDashboardData } from "@/lib/queries/dashboard";
+import { getDashboardData, type ActivityItem } from "@/lib/queries/dashboard";
 import { buttonVariants } from "@/components/ui/button";
 import { LearnerStatusPill } from "@/components/learner-status-pill";
 import { PendingWorkList } from "@/components/pending-work-list";
@@ -16,9 +16,30 @@ const NEXT_STEP_REASON_LABEL: Record<NextStepReason, string> = {
   next_lesson: "Up next",
 };
 
+/** One verb line per activity kind — every value here is on the item. */
+function activityVerb(item: ActivityItem): string {
+  switch (item.kind) {
+    case "lesson_completed":
+      return "Completed";
+    case "assignment_submitted":
+      return "Submitted";
+    case "assessment_submitted": {
+      const score = item.scorePercent !== null ? ` • ${item.scorePercent}%` : "";
+      const result = item.passed === null ? "" : item.passed ? " • Passed" : " • Not passed";
+      return `Assessment submitted${score}${result}`;
+    }
+    case "submission_reviewed":
+      return item.outcome === "APPROVED" ? "Reviewed • Approved" : "Reviewed • Revision requested";
+    case "module_completed":
+      return "Module completed";
+    case "certificate_issued":
+      return `Certificate issued • ${item.certificateNumber}`;
+  }
+}
+
 export default async function LearnHomePage() {
   const user = await requireUser();
-  const data = await getDashboardData(user.id);
+  const data = await getDashboardData(user);
 
   if (!data) {
     return (
@@ -215,11 +236,10 @@ export default async function LearnHomePage() {
             ) : (
               <ul className="flex flex-col gap-md">
                 {recentActivity.map((item, index) => (
-                  <li key={index} className="flex flex-col">
+                  <li key={`${item.kind}-${index}`} className="flex flex-col">
                     <span className="font-label-md text-label-md text-on-surface">{item.label}</span>
                     <span className="font-body-md text-sm text-on-surface-variant">
-                      {item.kind === "lesson_completed" ? "Completed" : "Submitted"} •{" "}
-                      {formatRelativeTime(item.occurredAt)}
+                      {activityVerb(item)} • {formatRelativeTime(item.occurredAt)}
                     </span>
                   </li>
                 ))}

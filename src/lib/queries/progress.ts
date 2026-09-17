@@ -16,6 +16,10 @@ export type LessonProgressSummary = {
   order: number;
   durationMins: number | null;
   completed: boolean;
+  /** When this enrollment completed the lesson; null when not completed (or
+   * a legacy row without a timestamp). Phase A — lets the dashboard derive
+   * "module completed" times without a second query. */
+  completedAt: Date | null;
   assessmentId: string | null;
   attemptState: AttemptState | null;
 };
@@ -158,19 +162,19 @@ export async function getProgramProgress(enrollmentId: string): Promise<ProgramP
       },
       lessonProgress: {
         where: { completed: true },
-        select: { lessonId: true },
+        select: { lessonId: true, completedAt: true },
       },
     },
   });
 
-  const completedLessonIds = new Set(enrollment.lessonProgress.map((lp) => lp.lessonId));
+  const completedAtByLessonId = new Map(enrollment.lessonProgress.map((lp) => [lp.lessonId, lp.completedAt]));
 
   let totalLessons = 0;
   let completedLessons = 0;
 
   const modules: ModuleProgress[] = enrollment.program.modules.map((programModule) => {
     const lessons: LessonProgressSummary[] = programModule.lessons.map((lesson) => {
-      const completed = completedLessonIds.has(lesson.id);
+      const completed = completedAtByLessonId.has(lesson.id);
       return {
         id: lesson.id,
         title: lesson.title,
@@ -178,6 +182,7 @@ export async function getProgramProgress(enrollmentId: string): Promise<ProgramP
         order: lesson.order,
         durationMins: lesson.durationMins,
         completed,
+        completedAt: completedAtByLessonId.get(lesson.id) ?? null,
         assessmentId: lesson.assessmentId,
         attemptState: deriveAttemptState(lesson.assessmentId, completed, lesson.assessment),
       };

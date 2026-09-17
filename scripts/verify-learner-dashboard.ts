@@ -1,6 +1,7 @@
 // Phase A learner-experience checks against the real local seeded DB:
 //   step 2 — getPendingWork / sortPendingWork per seeded learner
 //   step 3 — getDashboardData().nextStep priority
+//   step 4 — getDashboardData().recentActivity kinds (derived only, newest 10)
 // Read-only. Assumes a FRESH seed (the SQL Optimization assignment is seeded
 // one week past due; batch elapsed% drifts by the day, so pace assertions
 // live in scripts/verify-learner-logic.ts with a fixed `now`, not here).
@@ -142,8 +143,8 @@ async function main(): Promise<void> {
 
   // ---- Step 3: next step priority (through the real getDashboardData) -----
   async function nextStepFor(email: string) {
-    const user = await prisma.user.findUniqueOrThrow({ where: { email }, select: { id: true } });
-    const data = await getDashboardData(user.id);
+    const user = await prisma.user.findUniqueOrThrow({ where: { email }, select: { id: true, name: true, streakDays: true } });
+    const data = await getDashboardData(user);
     return data?.nextStep ?? null;
   }
   const marcusStep = await nextStepFor("marcus.wei@example.com");
@@ -163,6 +164,62 @@ async function main(): Promise<void> {
     "Alex: nothing urgent (Data Cleaning due in 2 weeks) → next incomplete lesson with its durationMins",
     alexStep?.kind === "lesson" && alexStep.reason === "next_lesson" && alexStep.href.startsWith("/learn/lessons/"),
     JSON.stringify(alexStep),
+  );
+
+  // ---- Step 4: recent activity kinds ----------------------------------------
+  async function dashboardFor(email: string) {
+    const user = await prisma.user.findUniqueOrThrow({ where: { email }, select: { id: true, name: true, streakDays: true } });
+    return getDashboardData(user);
+  }
+  const alexDash = await dashboardFor("alex.morgan@example.com");
+  const alexActivity = alexDash?.recentActivity ?? [];
+  const alexAssessment = alexActivity.find((a) => a.kind === "assessment_submitted");
+  record(
+    "Alex: activity has assessment_submitted with scorePercent 87.5 and passed=true",
+    alexAssessment?.kind === "assessment_submitted" && alexAssessment.scorePercent === 87.5 && alexAssessment.passed === true,
+    alexActivity.map((a) => a.kind).join(","),
+  );
+  const alexReviewed = alexActivity.find((a) => a.kind === "submission_reviewed");
+  record(
+    "Alex: activity has submission_reviewed with outcome APPROVED",
+    alexReviewed?.kind === "submission_reviewed" && alexReviewed.outcome === "APPROVED",
+  );
+  record(
+    "Alex: activity has at least one module_completed (Module 1 is at 100% for a 12/19 learner)",
+    alexActivity.some((a) => a.kind === "module_completed"),
+  );
+  record(
+    "Activity is newest-first and capped at 10",
+    alexActivity.length <= 10 &&
+      alexActivity.every((a, i) => i === 0 || alexActivity[i - 1].occurredAt.getTime() >= a.occurredAt.getTime()),
+    `count=${alexActivity.length}`,
+  );
+
+  const marcusDash = await dashboardFor("marcus.wei@example.com");
+  const marcusReviewed = marcusDash?.recentActivity.find((a) => a.kind === "submission_reviewed");
+  record(
+    "Marcus: activity has submission_reviewed with outcome REVISION_REQUESTED",
+    marcusReviewed?.kind === "submission_reviewed" && marcusReviewed.outcome === "REVISION_REQUESTED",
+  );
+
+  // Noah's only enrollment is COMPLETED — Phase A widened the dashboard pick
+  // to GRANTED ACTIVE-or-COMPLETED so he still gets a dashboard.
+  const noahDash = await dashboardFor("noah.andersen@example.com");
+  const noahActivity = noahDash?.recentActivity ?? [];
+  record(
+    "Noah (COMPLETED enrollment): dashboard renders (not the empty state), learnerStatus COMPLETED, no next step",
+    noahDash !== null && noahDash.learnerStatus === "COMPLETED" && noahDash.nextStep === null,
+    noahDash ? `status=${noahDash.learnerStatus} nextStep=${JSON.stringify(noahDash.nextStep)}` : "null",
+  );
+  const noahCert = noahActivity.find((a) => a.kind === "certificate_issued");
+  record(
+    "Noah: activity has certificate_issued LUM-2026-00201",
+    noahCert?.kind === "certificate_issued" && noahCert.certificateNumber === "LUM-2026-00201",
+    noahActivity.map((a) => a.kind).join(","),
+  );
+  record(
+    "Noah: activity has 4 module_completed items (every Full Stack module is at 100%)",
+    noahActivity.filter((a) => a.kind === "module_completed").length === 4,
   );
 
   console.log("verify-learner-dashboard results:\n");

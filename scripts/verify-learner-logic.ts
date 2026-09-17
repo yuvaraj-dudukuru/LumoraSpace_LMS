@@ -96,7 +96,7 @@ function main(): void {
   }
   const lesson: { moduleId: string; lesson: LessonProgressSummary } = {
     moduleId: "m1",
-    lesson: { id: "l1", title: "Lesson One", type: "VIDEO", order: 1, durationMins: 12, completed: false, assessmentId: null, attemptState: null },
+    lesson: { id: "l1", title: "Lesson One", type: "VIDEO", order: 1, durationMins: 12, completed: false, completedAt: null, assessmentId: null, attemptState: null },
   };
   const inDays = (days: number) => new Date(now.getTime() + days * DAY_MS);
   const revision = item({ title: "Revise me", state: "revision_requested", action: "resubmit", dueAt: inDays(10) });
