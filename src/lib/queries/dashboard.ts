@@ -4,13 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { getProgramProgress, findNextIncompleteLesson, type ProgramProgress } from "@/lib/queries/progress";
 import { deriveLearnerStatus, type LearnerStatus } from "@/lib/learner-status";
 import { getPendingWork, type PendingWorkItem } from "@/lib/queries/pending-work";
-
-export type NextAssignment = {
-  id: string;
-  title: string;
-  dueAt: Date;
-  estimatedMins: number | null;
-};
+import { pickNextStep, type NextStep } from "@/lib/next-step";
 
 export type ActivityItem =
   | { kind: "lesson_completed"; label: string; occurredAt: Date }
@@ -28,7 +22,9 @@ export type DashboardData = {
    * (queries/pending-work.ts); the page sorts and slices. */
   pendingWork: PendingWorkItem[];
   nextLesson: { moduleId: string; lessonId: string; lessonTitle: string } | null;
-  nextAssignment: NextAssignment | null;
+  /** Priority pick (src/lib/next-step.ts): revision requested > overdue >
+   * due within 3 days > next incomplete lesson; null when nothing is left. */
+  nextStep: NextStep;
   recentActivity: ActivityItem[];
 } | null; // null => learner has no GRANTED/ACTIVE enrollment (empty state)
 
@@ -61,20 +57,8 @@ export async function getDashboardData(userId: string): Promise<DashboardData> {
   const progress = await getProgramProgress(enrollment.id);
   const next = findNextIncompleteLesson(progress);
 
-  const [pendingWork, nextAssignment, completedLessons, submissions] = await Promise.all([
+  const [pendingWork, completedLessons, submissions] = await Promise.all([
     getPendingWork(enrollment.id, now),
-    prisma.assignment.findFirst({
-      where: {
-        module: { programId: enrollment.programId },
-        dueAt: { not: null },
-        // M5a — a NOT_STARTED row is a seed placeholder, not a real
-        // submission (see queries/assignments.ts); excluded here so it
-        // doesn't hide an assignment nothing has really been submitted for.
-        submissions: { none: { enrollmentId: enrollment.id, status: { not: "NOT_STARTED" } } },
-      },
-      orderBy: { dueAt: "asc" },
-      select: { id: true, title: true, dueAt: true, estimatedMins: true },
-    }),
     prisma.lessonProgress.findMany({
       where: { enrollmentId: enrollment.id, completed: true, completedAt: { not: null } },
       orderBy: { completedAt: "desc" },
@@ -130,15 +114,7 @@ export async function getDashboardData(userId: string): Promise<DashboardData> {
     nextLesson: next
       ? { moduleId: next.moduleId, lessonId: next.lesson.id, lessonTitle: next.lesson.title }
       : null,
-    nextAssignment:
-      nextAssignment && nextAssignment.dueAt
-        ? {
-            id: nextAssignment.id,
-            title: nextAssignment.title,
-            dueAt: nextAssignment.dueAt,
-            estimatedMins: nextAssignment.estimatedMins,
-          }
-        : null,
+    nextStep: pickNextStep(pendingWork, next, now),
     recentActivity,
   };
 }

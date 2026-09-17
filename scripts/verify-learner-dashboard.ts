@@ -1,5 +1,6 @@
 // Phase A learner-experience checks against the real local seeded DB:
 //   step 2 — getPendingWork / sortPendingWork per seeded learner
+//   step 3 — getDashboardData().nextStep priority
 // Read-only. Assumes a FRESH seed (the SQL Optimization assignment is seeded
 // one week past due; batch elapsed% drifts by the day, so pace assertions
 // live in scripts/verify-learner-logic.ts with a fixed `now`, not here).
@@ -15,6 +16,7 @@ import {
   deriveAssessmentPending,
   type PendingWorkItem,
 } from "../src/lib/queries/pending-work";
+import { getDashboardData } from "../src/lib/queries/dashboard";
 
 // First, before the client exists — never against a non-local DB.
 assertLocalDatabase();
@@ -136,6 +138,31 @@ async function main(): Promise<void> {
   record(
     "deriveAssessmentPending: IN_PROGRESS attempt → Continue → /learn/attempts/{id}",
     deriveAssessmentPending("a3", [{ id: "live", status: "IN_PROGRESS", passed: null }], 1, 70)?.href === "/learn/attempts/live",
+  );
+
+  // ---- Step 3: next step priority (through the real getDashboardData) -----
+  async function nextStepFor(email: string) {
+    const user = await prisma.user.findUniqueOrThrow({ where: { email }, select: { id: true } });
+    const data = await getDashboardData(user.id);
+    return data?.nextStep ?? null;
+  }
+  const marcusStep = await nextStepFor("marcus.wei@example.com");
+  record(
+    "Marcus: next step is the revision-requested Data Cleaning Assignment (beats his overdue item) → Continue",
+    marcusStep?.kind === "assignment" && marcusStep.reason === "revision_requested" && marcusStep.action === "continue",
+    JSON.stringify(marcusStep),
+  );
+  const priyaStep = await nextStepFor("priya.sharma@example.com");
+  record(
+    "Priya: next step is the overdue SQL Optimization → Start",
+    priyaStep?.kind === "assignment" && priyaStep.reason === "overdue" && priyaStep.action === "start",
+    JSON.stringify(priyaStep),
+  );
+  const alexStep = await nextStepFor("alex.morgan@example.com");
+  record(
+    "Alex: nothing urgent (Data Cleaning due in 2 weeks) → next incomplete lesson with its durationMins",
+    alexStep?.kind === "lesson" && alexStep.reason === "next_lesson" && alexStep.href.startsWith("/learn/lessons/"),
+    JSON.stringify(alexStep),
   );
 
   console.log("verify-learner-dashboard results:\n");

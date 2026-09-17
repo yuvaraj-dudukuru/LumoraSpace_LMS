@@ -49,7 +49,7 @@ only the pure predicates above them are callable from a script (see
 - `getLessonDetail(lessonId: string, enrollmentId: string): Promise<LessonDetail | null>` — full content + this enrollment's notes/completed + `assessmentId` (M4.5, nullable). Call only after a guard produced `enrollmentId`. Does NOT itself fetch assessment details — callers with a non-null `assessmentId` call `getAssessmentOverview` separately (reused verbatim, not re-derived).
 
 ### `src/lib/queries/dashboard.ts`
-- `getDashboardData(userId: string): Promise<DashboardData>` — `DashboardData` is `null` when no GRANTED+ACTIVE enrollment exists (render empty state). Otherwise: learner name/streak, `ProgramProgress`, `learnerStatus` (Phase A, from the enrollment's batch dates + status), next incomplete lesson, next unsubmitted assignment by nearest `dueAt`, last-5 merged activity feed (completed lessons + submitted assignments).
+- `getDashboardData(userId: string): Promise<DashboardData>` — `DashboardData` is `null` when no GRANTED+ACTIVE enrollment exists (render empty state). Otherwise: learner name/streak, `ProgramProgress`, `learnerStatus` (Phase A, from the enrollment's batch dates + status), `pendingWork` (unsorted `getPendingWork` result), next incomplete lesson, `nextStep` (Phase A — `pickNextStep` over the pending work and the next lesson; the old nearest-`dueAt` assignment query is gone), last-5 merged activity feed (completed lessons + submitted assignments).
 
 ### `src/lib/queries/pending-work.ts` — Phase A
 - `getPendingWork(enrollmentId, now): Promise<PendingWorkItem[]>` — ONE query: the enrollment's program → PUBLISHED modules → every assignment (with this enrollment's latest real submission, NOT_STARTED excluded) + every PUBLISHED **GRADED** assessment (with this enrollment's attempts). `PendingWorkItem = { kind: "assignment" | "assessment", id, title, moduleTitle, moduleOrder, assignmentType, dueAt, estimatedMins, state, action, href }`. `state ∈ not_started | overdue | submitted | under_review | revision_requested | completed`; `action ∈ start | continue | view_feedback | resubmit`.
@@ -129,6 +129,9 @@ only the pure predicates above them are callable from a script (see
 - `LearnerStatus = "NOT_STARTED" | "ON_TRACK" | "BEHIND" | "COMPLETED"`, `ON_TRACK_TOLERANCE_PERCENT = 10`.
 - `elapsedPercent(batchStart, batchEnd, now): number` — 0..100, clamped; 100 when `end <= start`.
 - `deriveLearnerStatus({ batchStart, batchEnd, now, progressPercent, enrollmentStatus }): LearnerStatus` — in order: enrollment `COMPLETED` or progress ≥ 100 → COMPLETED; `now < batchStart` → NOT_STARTED; progress ≥ elapsed − 10 → ON_TRACK; else BEHIND. Callers pass `now`. Rendered by `components/learner-status-pill.tsx` (`LEARNER_STATUS_LABEL` + one style map) on `/learn`, `/learn/progress` and `/mentor/learners`. Checked without a DB by `scripts/verify-learner-logic.ts`.
+
+### `src/lib/next-step.ts` — pure, no DB (Phase A)
+- `DUE_SOON_DAYS = 3`; `pickNextStep(pending: PendingWorkItem[], nextLesson, now): NextStep` — revision requested (Continue) → overdue (Start) → an assignment with nothing submitted due within 3 days (Start) → the next incomplete lesson (Start) → `null`. Ties by due date, then module order. Assessments never become the next step (no due date to rank by). Lessons always say "Start": the progress tree carries no "started" signal. Consumed only by `getDashboardData`; checked without a DB by `scripts/verify-learner-logic.ts`.
 
 ### `src/lib/streak.ts` — pure, no DB
 - `STREAK_TIMEZONE = "Asia/Kolkata"` — the one fixed zone that defines "a day".

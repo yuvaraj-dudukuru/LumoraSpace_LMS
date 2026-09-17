@@ -7,6 +7,14 @@ import { LearnerStatusPill } from "@/components/learner-status-pill";
 import { PendingWorkList } from "@/components/pending-work-list";
 import { sortPendingWork } from "@/lib/queries/pending-work";
 import { formatRelativeTime, formatDate } from "@/lib/format";
+import type { NextStepReason } from "@/lib/next-step";
+
+const NEXT_STEP_REASON_LABEL: Record<NextStepReason, string> = {
+  revision_requested: "Revision requested",
+  overdue: "Overdue",
+  due_soon: "Due soon",
+  next_lesson: "Up next",
+};
 
 export default async function LearnHomePage() {
   const user = await requireUser();
@@ -26,7 +34,9 @@ export default async function LearnHomePage() {
     );
   }
 
-  const { progress, learnerStatus, pendingWork, nextLesson, nextAssignment, recentActivity, streakDays } = data;
+  const { progress, learnerStatus, pendingWork, nextLesson, nextStep, recentActivity, streakDays } = data;
+  const nextStepModuleTitle =
+    nextStep?.kind === "lesson" ? (progress.modules.find((m) => m.moduleId === nextStep.moduleId)?.title ?? null) : null;
   // Top 3 open items; completed work belongs on /learn/progress, not here.
   const topPendingWork = sortPendingWork(pendingWork)
     .filter((item) => item.state !== "completed")
@@ -106,24 +116,46 @@ export default async function LearnHomePage() {
             />
           </section>
 
-          {nextAssignment ? (
-            <section className="flex flex-col gap-md rounded-2xl bg-error-container p-xl text-on-error-container shadow-sm">
+          {nextStep ? (
+            <section
+              className={`flex flex-col gap-md rounded-2xl p-xl shadow-sm ${
+                nextStep.kind === "assignment"
+                  ? "bg-error-container text-on-error-container"
+                  : "bg-primary-container text-on-primary-container"
+              }`}
+            >
               <div className="flex items-center gap-sm">
                 <CalendarClock className="h-5 w-5" />
                 <h3 className="font-title-lg text-title-lg">Your Next Step</h3>
               </div>
               <div className="flex flex-col gap-xs">
-                <h4 className="font-headline-md text-headline-md">{nextAssignment.title}</h4>
+                <span className="font-label-sm text-label-sm uppercase tracking-wider opacity-90">
+                  {NEXT_STEP_REASON_LABEL[nextStep.reason]}
+                </span>
+                <h4 className="font-headline-md text-headline-md">{nextStep.title}</h4>
                 <p className="font-body-md text-body-md opacity-90">
-                  Due {formatDate(nextAssignment.dueAt)}
-                  {nextAssignment.estimatedMins ? ` • Est. ${nextAssignment.estimatedMins} mins` : ""}
+                  {nextStep.kind === "assignment"
+                    ? [
+                        nextStep.moduleTitle,
+                        nextStep.dueAt ? `Due ${formatDate(nextStep.dueAt)}` : "No due date",
+                        nextStep.estimatedMins ? `Est. ${nextStep.estimatedMins} mins` : null,
+                      ]
+                        .filter((part): part is string => part !== null)
+                        .join(" • ")
+                    : [nextStepModuleTitle, nextStep.durationMins ? `${nextStep.durationMins} min lesson` : null]
+                        .filter((part): part is string => part !== null)
+                        .join(" • ")}
                 </p>
               </div>
               <Link
-                href={`/learn/assignments/${nextAssignment.id}`}
-                className="mt-auto flex w-fit items-center justify-center gap-sm rounded-lg bg-on-error-container px-md py-sm font-label-md text-label-md text-error-container transition-colors hover:bg-error hover:text-on-error"
+                href={nextStep.href}
+                className={`mt-auto flex w-fit items-center justify-center gap-sm rounded-lg px-md py-sm font-label-md text-label-md transition-colors ${
+                  nextStep.kind === "assignment"
+                    ? "bg-on-error-container text-error-container hover:bg-error hover:text-on-error"
+                    : "bg-on-primary-container text-primary-container hover:opacity-90"
+                }`}
               >
-                View Assignment
+                {nextStep.action === "continue" ? "Continue" : "Start"}
               </Link>
             </section>
           ) : null}
