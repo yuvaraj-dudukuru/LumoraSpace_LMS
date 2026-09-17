@@ -30,11 +30,14 @@ async function nextCertificateNumber(year: number): Promise<string> {
 }
 
 /** Idempotent: issues a certificate once an enrollment's progressPercent
- * hits 100 and no VALID certificate already exists for (userId, programId).
- * Re-issuing after a REVOKED certificate is intentionally allowed — only a
- * second VALID one is refused. Called from refreshEnrollmentProgress
- * (src/lib/progress-rollup.ts) — the ONE rollup call site; do not add a
- * second one. */
+ * is 100 and NO certificate of ANY status already exists for that
+ * enrollment. A REVOKED certificate therefore blocks auto re-issuance —
+ * revocation is an admin decision and must stick; the learner's next
+ * completion event must not silently undo it. (Re-issuing after a
+ * revocation, if ever wanted, is a deliberate admin action, not something
+ * this function does.) Called from refreshEnrollmentProgress
+ * (src/lib/progress-rollup.ts) — the ONE rollup call site, and only on the
+ * <100 → 100 transition; do not add a second one. */
 export async function issueCertificateIfEligible(enrollmentId: string): Promise<Certificate | null> {
   const enrollment = await prisma.enrollment.findUnique({
     where: { id: enrollmentId },
@@ -42,10 +45,13 @@ export async function issueCertificateIfEligible(enrollmentId: string): Promise<
   });
   if (!enrollment || enrollment.progressPercent !== 100) return null;
 
-  const existingValid = await prisma.certificate.findFirst({
-    where: { userId: enrollment.userId, programId: enrollment.programId, status: "VALID" },
+  // Any status — VALID *or* REVOKED. Scoped to the enrollment (every
+  // certificate this app or the seed creates carries enrollmentId).
+  const existingAnyStatus = await prisma.certificate.findFirst({
+    where: { enrollmentId: enrollment.id },
+    select: { id: true },
   });
-  if (existingValid) return null;
+  if (existingAnyStatus) return null;
 
   if (enrollment.status !== "COMPLETED") {
     await prisma.enrollment.update({

@@ -1,7 +1,10 @@
 // Exercises M5c's certificate issuance and self-lockout guards against the
 // real seeded DB — read-only except for issueCertificateIfEligible, which is
-// itself idempotent (calling it on an enrollment that already has a VALID
-// certificate, or that isn't at 100%, is a guaranteed no-op).
+// itself idempotent (calling it on an enrollment that already has a
+// certificate of ANY status, or that isn't at 100%, is a guaranteed no-op),
+// and check 7, which temporarily REVOKES one seeded certificate to prove the
+// rollup won't re-issue it, then restores every field it touched in a
+// try/finally (the only writes in this file).
 //
 // certificates.ts imports "server-only", which throws outside Next's bundler
 // unless the "react-server" export condition is set.
@@ -15,6 +18,7 @@
 // auth-guards.ts and runs WITHOUT this condition.
 import { PrismaClient } from "@prisma/client";
 import { issueCertificateIfEligible } from "../src/lib/certificates";
+import { refreshEnrollmentProgress } from "../src/lib/progress-rollup";
 import { wouldSelfDemote, wouldSelfDeactivate } from "../src/lib/validations/admin";
 
 const prisma = new PrismaClient();
@@ -55,13 +59,14 @@ async function main(): Promise<void> {
 
   // 2. Idempotent: calling it twice on an already-COMPLETED, already-VALID
   // enrollment (Noah Andersen, real seeded certificate LUM-2026-00201) both
-  // times yields no NEW certificate — refuses a second VALID cert.
-  const noahCertsBefore = await prisma.certificate.count({ where: { userId: noah.id, status: "VALID" } });
+  // times yields no NEW certificate — a certificate of any status for the
+  // enrollment refuses issuance.
+  const noahCertsBefore = await prisma.certificate.count({ where: { enrollmentId: noahEnrollment.id } });
   const noahFirstCall = await issueCertificateIfEligible(noahEnrollment.id);
   const noahSecondCall = await issueCertificateIfEligible(noahEnrollment.id);
-  const noahCertsAfter = await prisma.certificate.count({ where: { userId: noah.id, status: "VALID" } });
+  const noahCertsAfter = await prisma.certificate.count({ where: { enrollmentId: noahEnrollment.id } });
   record(
-    "issueCertificateIfEligible refuses a second VALID cert for the same user+program (Noah Andersen)",
+    "issueCertificateIfEligible refuses a second cert for an enrollment that already has one (Noah Andersen)",
     noahFirstCall === null && noahSecondCall === null && noahCertsAfter === noahCertsBefore,
     `before=${noahCertsBefore} after=${noahCertsAfter}`,
   );
@@ -115,6 +120,69 @@ async function main(): Promise<void> {
   record(
     "wouldSelfDeactivate(admin, someone else, INACTIVE) is false",
     wouldSelfDeactivate(admin.id, otherAdminCandidate.id, "INACTIVE") === false,
+  );
+
+  // 7. Revocation sticks. Temporarily REVOKE Grace's real seeded certificate
+  // (LUM-2026-00202), then re-run the rollup two ways:
+  //   (a) with her cached percent still 100 — no <100→100 transition, so
+  //       issuance isn't even consulted;
+  //   (b) with her cached percent forced to 99 — the transition DOES fire,
+  //       and the any-status check is the only thing standing in the way.
+  // Either way the enrollment must end with exactly as many certificates
+  // as it started with. Everything touched is restored in `finally`.
+  const graceCert = await prisma.certificate.findFirstOrThrow({
+    where: { enrollmentId: graceEnrollment.id },
+    select: { id: true, status: true, revokedAt: true, revokedReason: true },
+  });
+  const graceCertCountBefore = await prisma.certificate.count({ where: { enrollmentId: graceEnrollment.id } });
+  let countAfterNoTransition = -1;
+  let countAfterTransition = -1;
+  let percentAfterTransition = -1;
+  try {
+    await prisma.certificate.update({
+      where: { id: graceCert.id },
+      data: { status: "REVOKED", revokedAt: new Date(), revokedReason: "verify-admin check 7 (temporary)" },
+    });
+
+    await refreshEnrollmentProgress(graceEnrollment.id);
+    countAfterNoTransition = await prisma.certificate.count({ where: { enrollmentId: graceEnrollment.id } });
+
+    await prisma.enrollment.update({ where: { id: graceEnrollment.id }, data: { progressPercent: 99 } });
+    const rolled = await refreshEnrollmentProgress(graceEnrollment.id);
+    percentAfterTransition = rolled.overallPercent;
+    countAfterTransition = await prisma.certificate.count({ where: { enrollmentId: graceEnrollment.id } });
+  } finally {
+    await prisma.certificate.update({
+      where: { id: graceCert.id },
+      data: { status: graceCert.status, revokedAt: graceCert.revokedAt, revokedReason: graceCert.revokedReason },
+    });
+    await prisma.enrollment.update({
+      where: { id: graceEnrollment.id },
+      data: {
+        progressPercent: graceEnrollment.progressPercent,
+        status: graceEnrollment.status,
+        completedAt: graceEnrollment.completedAt,
+      },
+    });
+  }
+  record(
+    "Revoked cert + re-run rollup (already at 100, no transition) issues no new cert (Grace Mwangi)",
+    countAfterNoTransition === graceCertCountBefore,
+    `before=${graceCertCountBefore} after=${countAfterNoTransition}`,
+  );
+  record(
+    "Revoked cert + re-run rollup crossing 99→100 issues no new cert (Grace Mwangi)",
+    percentAfterTransition === 100 && countAfterTransition === graceCertCountBefore,
+    `rollup=${percentAfterTransition} before=${graceCertCountBefore} after=${countAfterTransition}`,
+  );
+  const graceCertRestored = await prisma.certificate.findUniqueOrThrow({
+    where: { id: graceCert.id },
+    select: { status: true },
+  });
+  record(
+    "Check 7 restored Grace's certificate status afterwards",
+    graceCertRestored.status === graceCert.status,
+    `status=${graceCertRestored.status}`,
   );
 
   // Note: the "requireGrantedEnrollment blocks SUSPENDED, not just AWAITING"
