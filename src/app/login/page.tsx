@@ -72,12 +72,7 @@ function LoginForm() {
               />
             </div>
             <div className="flex flex-col gap-xs">
-              <div className="flex items-center justify-between">
-                <Label htmlFor="password">Password</Label>
-                <Link href="/forgot-password" className="text-label-sm text-primary underline">
-                  Forgot password?
-                </Link>
-              </div>
+              <Label htmlFor="password">Password</Label>
               <Input
                 id="password"
                 name="password"
@@ -91,6 +86,11 @@ function LoginForm() {
             <Button type="submit" className="w-full" disabled={isPending}>
               {isPending ? "Signing in…" : "Sign in"}
             </Button>
+            {/* No self-service reset flow exists (no reset-token model) — an
+                admin sets a new password from /admin/users/[userId]. */}
+            <p className="text-center text-label-sm text-on-surface-variant">
+              Forgot your password? Contact your program admin.
+            </p>
           </form>
 
           <div className="flex items-center gap-sm text-label-sm text-on-surface-variant">

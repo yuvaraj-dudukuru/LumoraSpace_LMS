@@ -4,6 +4,7 @@ import { getUserDetailForAdmin, getAllBatchesForAdmin } from "@/lib/queries/admi
 import { formatDate } from "@/lib/format";
 import { RoleStatusControls } from "./role-status-controls";
 import { MentorAssignmentForm } from "./mentor-assignment-form";
+import { ResetPasswordForm } from "./reset-password-form";
 
 const ACCESS_STATE_STYLES: Record<string, string> = {
   GRANTED: "bg-success-container text-success",
@@ -38,6 +39,16 @@ export default async function AdminUserDetailPage({ params }: { params: Promise<
       {user.role === "MENTOR" ? (
         <MentorAssignmentForm mentorId={user.id} assignments={user.mentorAssignments} batchOptions={batchOptions} />
       ) : null}
+
+      <section className="flex flex-col gap-md rounded-xl border border-outline-variant/40 bg-surface-container-low p-lg">
+        <div>
+          <h2 className="font-title-lg text-title-lg text-on-surface">Reset password</h2>
+          <p className="font-body-md text-body-md text-on-surface-variant">
+            There is no self-service reset — this is how a locked-out user gets back in.
+          </p>
+        </div>
+        <ResetPasswordForm userId={user.id} />
+      </section>
 
       <section className="flex flex-col gap-md">
         <h2 className="font-headline-md text-headline-md text-on-surface">Enrollments</h2>

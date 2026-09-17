@@ -12,8 +12,12 @@ import { z } from "zod";
 import authConfig from "@/auth.config";
 import { prisma } from "@/lib/prisma";
 
+// Email is trimmed + lowercased here too (not only in loginSchema on the
+// client) — User.email is unique and stored lowercase (signupSchema,
+// createUserSchema, bootstrap all normalise the same way), so the lookup
+// must normalise identically or "Name@Example.com" would never match.
 const credentialsSchema = z.object({
-  email: z.string().email(),
+  email: z.string().trim().toLowerCase().email(),
   password: z.string().min(1),
 });
 

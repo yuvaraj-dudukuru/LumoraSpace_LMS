@@ -10,9 +10,17 @@ export const updateEnrollmentStatusSchema = z.object({
 
 export const createUserSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(120),
-  email: z.string().trim().email("Enter a valid email address"),
+  email: z.string().trim().toLowerCase().email("Enter a valid email address"),
   password: z.string().min(8, "Password must be at least 8 characters"),
   role: z.enum(["LEARNER", "MENTOR", "ADMIN"]),
+});
+
+/** Admin-set password for another account. There is no self-service
+ * forgot-password flow (no email verification/reset-token model in the
+ * schema) — the login page tells learners to contact their program admin,
+ * and this is what the admin uses. Same 8-char floor as signup/createUser. */
+export const resetUserPasswordSchema = z.object({
+  newPassword: z.string().min(8, "Password must be at least 8 characters").max(200),
 });
 
 export const updateUserRoleSchema = z.object({

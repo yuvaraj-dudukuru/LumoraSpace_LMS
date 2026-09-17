@@ -10,6 +10,7 @@ import {
   updateUserRoleSchema,
   setUserStatusSchema,
   assignMentorSchema,
+  resetUserPasswordSchema,
   wouldSelfDemote,
   wouldSelfDeactivate,
 } from "@/lib/validations/admin";
@@ -89,6 +90,28 @@ export async function setUserStatus(userId: string, input: { status: string }): 
   if (!user) return { ok: false, error: "User not found." };
 
   await prisma.user.update({ where: { id: userId }, data: { status: parsed.data.status } });
+
+  revalidateUsers(userId);
+  return { ok: true };
+}
+
+/** The only password-reset path in the app: there is no self-service
+ * forgot-password flow. ADMIN-only, min 8 chars (resetUserPasswordSchema),
+ * bcrypt cost 10 — same hashing discipline as signupAction/createUser. The
+ * new password is never logged or returned. Works for an OAuth-only account
+ * too (passwordHash was null) — that deliberately enables credentials login
+ * for it, since an admin is choosing to. */
+export async function resetUserPassword(userId: string, newPassword: string): Promise<UserActionResult> {
+  await requireRole("ADMIN");
+
+  const parsed = resetUserPasswordSchema.safeParse({ newPassword });
+  if (!parsed.success) return { ok: false, error: parsed.error.issues[0]?.message ?? "Invalid password." };
+
+  const user = await prisma.user.findUnique({ where: { id: userId }, select: { id: true } });
+  if (!user) return { ok: false, error: "User not found." };
+
+  const passwordHash = await bcrypt.hash(parsed.data.newPassword, 10);
+  await prisma.user.update({ where: { id: userId }, data: { passwordHash } });
 
   revalidateUsers(userId);
   return { ok: true };

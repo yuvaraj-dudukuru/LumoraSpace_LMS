@@ -21,7 +21,11 @@ import { createCurriculum, loadBootstrapData } from "./bootstrap-schema";
 const prisma = new PrismaClient();
 
 const envSchema = z.object({
-  BOOTSTRAP_ADMIN_EMAIL: z.string().trim().email("BOOTSTRAP_ADMIN_EMAIL must be a valid email address"),
+  BOOTSTRAP_ADMIN_EMAIL: z
+    .string()
+    .trim()
+    .toLowerCase()
+    .email("BOOTSTRAP_ADMIN_EMAIL must be a valid email address"),
   BOOTSTRAP_ADMIN_PASSWORD: z.string().min(12, "BOOTSTRAP_ADMIN_PASSWORD must be at least 12 characters"),
   BOOTSTRAP_ADMIN_NAME: z.string().trim().min(1, "BOOTSTRAP_ADMIN_NAME is required"),
 });
