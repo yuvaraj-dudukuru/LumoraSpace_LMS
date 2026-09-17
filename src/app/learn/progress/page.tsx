@@ -10,6 +10,8 @@ import { formatDate } from "@/lib/format";
 import { buttonVariants } from "@/components/ui/button";
 import { deriveLearnerStatus, type LearnerStatus } from "@/lib/learner-status";
 import { LearnerStatusPill } from "@/components/learner-status-pill";
+import { PendingWorkList } from "@/components/pending-work-list";
+import { getPendingWork, sortPendingWork, type PendingWorkItem } from "@/lib/queries/pending-work";
 import { WeeklyActivityChart } from "./weekly-activity-chart";
 
 type ActiveCourseCard = {
@@ -18,6 +20,7 @@ type ActiveCourseCard = {
   programName: string;
   progress: ProgramProgress;
   learnerStatus: LearnerStatus | null;
+  pendingWork: PendingWorkItem[];
   currentModuleTitle: string | null;
   nextLessonId: string | null;
   nextLessonTitle: string | null;
@@ -55,7 +58,11 @@ export default async function ProgressPage() {
 
   const progressResults = await Promise.all(
     grantedEnrollments.map(async (enrollment) => {
-      const progress = await getProgramProgress(enrollment.id);
+      // Two queries per enrollment, same wave — no extra round trip.
+      const [progress, pendingWork] = await Promise.all([
+        getProgramProgress(enrollment.id),
+        getPendingWork(enrollment.id, now),
+      ]);
       const next = findNextIncompleteLesson(progress);
       const currentModule = next
         ? progress.modules.find((m) => m.moduleId === next.moduleId)
@@ -76,6 +83,7 @@ export default async function ProgressPage() {
         programName: enrollment.program.name,
         progress,
         learnerStatus,
+        pendingWork: sortPendingWork(pendingWork),
         currentModuleTitle: currentModule?.title ?? null,
         nextLessonId: next?.lesson.id ?? null,
         nextLessonTitle: next?.lesson.title ?? null,
@@ -152,7 +160,16 @@ export default async function ProgressPage() {
             </p>
           ) : (
             progressResults.map((card) => (
-              <CourseProgressCard key={card.enrollmentId} card={card} />
+              <div key={card.enrollmentId} className="flex flex-col gap-md">
+                <CourseProgressCard card={card} />
+                <div className="flex flex-col gap-sm rounded-xl border border-outline-variant/30 p-md">
+                  <h3 className="font-title-lg text-title-lg text-on-surface">Pending work</h3>
+                  <PendingWorkList
+                    items={card.pendingWork}
+                    emptyMessage="No assignments or graded assessments in this program yet."
+                  />
+                </div>
+              </div>
             ))
           )}
         </section>

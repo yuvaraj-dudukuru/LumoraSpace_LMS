@@ -4,6 +4,8 @@ import { requireUser } from "@/lib/auth-guards";
 import { getDashboardData } from "@/lib/queries/dashboard";
 import { buttonVariants } from "@/components/ui/button";
 import { LearnerStatusPill } from "@/components/learner-status-pill";
+import { PendingWorkList } from "@/components/pending-work-list";
+import { sortPendingWork } from "@/lib/queries/pending-work";
 import { formatRelativeTime, formatDate } from "@/lib/format";
 
 export default async function LearnHomePage() {
@@ -24,7 +26,11 @@ export default async function LearnHomePage() {
     );
   }
 
-  const { progress, learnerStatus, nextLesson, nextAssignment, recentActivity, streakDays } = data;
+  const { progress, learnerStatus, pendingWork, nextLesson, nextAssignment, recentActivity, streakDays } = data;
+  // Top 3 open items; completed work belongs on /learn/progress, not here.
+  const topPendingWork = sortPendingWork(pendingWork)
+    .filter((item) => item.state !== "completed")
+    .slice(0, 3);
 
   return (
     <div className="flex flex-col gap-3xl">
@@ -85,6 +91,19 @@ export default async function LearnHomePage() {
                 Review Curriculum
               </Link>
             )}
+          </section>
+
+          <section className="flex flex-col gap-md rounded-2xl bg-surface-container-low p-xl shadow-sm">
+            <div className="flex items-center justify-between gap-md">
+              <h3 className="font-title-lg text-title-lg text-on-surface">Pending Work</h3>
+              <Link href="/learn/progress" className="font-label-md text-label-md text-primary hover:underline">
+                View all
+              </Link>
+            </div>
+            <PendingWorkList
+              items={topPendingWork}
+              emptyMessage="Nothing pending — every assignment and graded assessment in this program is done."
+            />
           </section>
 
           {nextAssignment ? (

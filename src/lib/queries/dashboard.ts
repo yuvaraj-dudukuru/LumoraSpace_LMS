@@ -3,6 +3,7 @@ import { AccessState, EnrollmentStatus } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { getProgramProgress, findNextIncompleteLesson, type ProgramProgress } from "@/lib/queries/progress";
 import { deriveLearnerStatus, type LearnerStatus } from "@/lib/learner-status";
+import { getPendingWork, type PendingWorkItem } from "@/lib/queries/pending-work";
 
 export type NextAssignment = {
   id: string;
@@ -23,6 +24,9 @@ export type DashboardData = {
   /** Pace vs the batch calendar (src/lib/learner-status.ts); null only for a
    * batch-less enrollment, which the schema allows and the MVP never creates. */
   learnerStatus: LearnerStatus | null;
+  /** Every assignment / unpassed GRADED assessment in this program, unsorted
+   * (queries/pending-work.ts); the page sorts and slices. */
+  pendingWork: PendingWorkItem[];
   nextLesson: { moduleId: string; lessonId: string; lessonTitle: string } | null;
   nextAssignment: NextAssignment | null;
   recentActivity: ActivityItem[];
@@ -53,10 +57,12 @@ export async function getDashboardData(userId: string): Promise<DashboardData> {
 
   if (!enrollment) return null;
 
+  const now = new Date();
   const progress = await getProgramProgress(enrollment.id);
   const next = findNextIncompleteLesson(progress);
 
-  const [nextAssignment, completedLessons, submissions] = await Promise.all([
+  const [pendingWork, nextAssignment, completedLessons, submissions] = await Promise.all([
+    getPendingWork(enrollment.id, now),
     prisma.assignment.findFirst({
       where: {
         module: { programId: enrollment.programId },
@@ -115,11 +121,12 @@ export async function getDashboardData(userId: string): Promise<DashboardData> {
       ? deriveLearnerStatus({
           batchStart: enrollment.batch.startDate,
           batchEnd: enrollment.batch.endDate,
-          now: new Date(),
+          now,
           progressPercent: progress.overallPercent,
           enrollmentStatus: enrollment.status,
         })
       : null,
+    pendingWork,
     nextLesson: next
       ? { moduleId: next.moduleId, lessonId: next.lesson.id, lessonTitle: next.lesson.title }
       : null,

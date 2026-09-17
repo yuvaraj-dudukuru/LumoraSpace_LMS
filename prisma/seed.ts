@@ -827,7 +827,9 @@ async function main(): Promise<void> {
         { step: 4, title: "Submit", description: "Submit your SQL file and a short writeup." },
       ],
       estimatedMins: 90,
-      dueAt: weeksFromNow(1),
+      // Phase A — already past due, so the learners who never submitted it
+      // (Marcus Wei, Priya Sharma) show a real "Overdue" item on a fresh seed.
+      dueAt: weeksAgo(1),
       maxAttempts: 2,
       allowGithubUrl: true,
     },
