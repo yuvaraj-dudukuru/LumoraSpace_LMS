@@ -41,11 +41,11 @@ export async function grantAccess(enrollmentId: string): Promise<EnrollmentActio
 
   // Fire-and-forget-safe: sendAccessGrantedEmail never throws (see mail.ts),
   // so an email/Resend failure here can't roll back the grant that already
-  // committed above or fail this action.
+  // committed above or fail this action. The login link is built inside
+  // mail.ts from APP_URL — absolute, or the send is skipped with a log.
   await sendAccessGrantedEmail(enrollment.user.email, {
     learnerName: enrollment.user.name,
     programName: enrollment.program.name,
-    loginUrl: "/login",
   });
 
   return { ok: true };
@@ -92,20 +92,52 @@ export async function updateEnrollmentStatus(
 
 export type BulkGrantResult = { ok: true; grantedCount: number } | { ok: false; error: string };
 
-/** One updateMany, not a per-row loop. Filtering accessState: "AWAITING"
- * inside the query itself means a stale selection (a row someone else
- * already granted between page load and click) is silently skipped rather
- * than erroring. */
+/** Read the AWAITING rows first (so we know WHO to email), then one
+ * updateMany over exactly those ids — still filtered on accessState:
+ * "AWAITING" inside the query, so a stale selection (a row someone else
+ * granted between page load and click) is silently skipped rather than
+ * erroring — then one access-granted email per granted row. Emails go out
+ * AFTER the grant has committed, via Promise.allSettled: sendAccessGrantedEmail
+ * never throws (see mail.ts), and allSettled means even an unexpected
+ * rejection in one send can't stop the others or fail this action. */
 export async function bulkGrantAccess(enrollmentIds: string[]): Promise<BulkGrantResult> {
   await requireRole("ADMIN");
 
   if (enrollmentIds.length === 0) return { ok: false, error: "No enrollments selected." };
 
-  const result = await prisma.enrollment.updateMany({
+  const awaiting = await prisma.enrollment.findMany({
     where: { id: { in: enrollmentIds }, accessState: "AWAITING" },
+    select: {
+      id: true,
+      user: { select: { name: true, email: true } },
+      program: { select: { name: true } },
+    },
+  });
+  if (awaiting.length === 0) {
+    revalidateEnrollments();
+    return { ok: true, grantedCount: 0 };
+  }
+
+  const result = await prisma.enrollment.updateMany({
+    where: { id: { in: awaiting.map((row) => row.id) }, accessState: "AWAITING" },
     data: { accessState: "GRANTED", status: "ACTIVE" },
   });
 
   revalidateEnrollments();
+
+  const sends = await Promise.allSettled(
+    awaiting.map((row) =>
+      sendAccessGrantedEmail(row.user.email, {
+        learnerName: row.user.name,
+        programName: row.program.name,
+      }),
+    ),
+  );
+  for (const [index, outcome] of sends.entries()) {
+    if (outcome.status === "rejected") {
+      console.error("bulkGrantAccess: access-granted email rejected", { enrollmentId: awaiting[index]?.id, reason: outcome.reason });
+    }
+  }
+
   return { ok: true, grantedCount: result.count };
 }

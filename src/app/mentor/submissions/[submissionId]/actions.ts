@@ -188,11 +188,13 @@ export async function submitReview(
   // already committed above or fail this action. submission.learner.email
   // comes from getSubmissionForReview's own DB read, not the caller's
   // session (the caller here is the mentor, not the learner, anyway).
+  // The feedback link is built inside mail.ts from APP_URL — absolute, or
+  // the send is skipped with a log.
   await sendAssignmentReviewedEmail(submission.learner.email, {
     learnerName: submission.learner.name,
     assignmentTitle: submission.assignment.title,
     outcome: parsed.data.outcome,
-    reviewUrl: `/learn/submissions/${submissionId}`,
+    submissionId,
   });
 
   return { ok: true };
