@@ -3,6 +3,7 @@
 //   step 3 — getDashboardData().nextStep priority
 //   step 4 — getDashboardData().recentActivity kinds (derived only, newest 10)
 //   step 5 — getDashboardData().achievements (four derived kinds, zero omitted)
+//   step 7 — getPracticeAssessments grouping, attempts used, best score
 // Read-only. Assumes a FRESH seed (the SQL Optimization assignment is seeded
 // one week past due; batch elapsed% drifts by the day, so pace assertions
 // live in scripts/verify-learner-logic.ts with a fixed `now`, not here).
@@ -19,6 +20,7 @@ import {
   type PendingWorkItem,
 } from "../src/lib/queries/pending-work";
 import { getDashboardData } from "../src/lib/queries/dashboard";
+import { getPracticeAssessments } from "../src/lib/queries/practice";
 
 // First, before the client exists — never against a non-local DB.
 assertLocalDatabase();
@@ -245,6 +247,29 @@ async function main(): Promise<void> {
     alexAchievements.every((a) => a.label.startsWith(String(a.count))),
     alexAchievements.map((a) => a.label).join(" | "),
   );
+
+  // ---- Step 7: practice hub -------------------------------------------------
+  async function userIdFor(email: string): Promise<string> {
+    return (await prisma.user.findUniqueOrThrow({ where: { email }, select: { id: true } })).id;
+  }
+  const weiPractice = await getPracticeAssessments(await userIdFor("wei.zhang@example.com"));
+  const weiItem = weiPractice[0]?.modules[0]?.items[0];
+  record(
+    "Wei Zhang: one program group (Forge Full Stack Developer) → Foundations → Foundations Quiz",
+    weiPractice.length === 1 && weiPractice[0].programName === "Forge Full Stack Developer" &&
+      weiPractice[0].modules.length === 1 && weiItem?.title === "Foundations Quiz",
+    JSON.stringify(weiPractice.map((p) => ({ program: p.programName, modules: p.modules.map((m) => `${m.moduleTitle}:${m.items.length}`) }))),
+  );
+  record(
+    "Wei Zhang: Foundations Quiz — 1 attempt taken, unlimited attempts, best score 100, not in progress, not exhausted",
+    weiItem?.attemptsUsed === 1 && weiItem.allowedAttempts === 0 && weiItem.bestScorePercent === 100 &&
+      weiItem.inProgress === false && weiItem.attemptsExhausted === false && weiItem.href === `/learn/assessments/${weiItem.id}`,
+    JSON.stringify(weiItem),
+  );
+  const alexPractice = await getPracticeAssessments(await userIdFor("alex.morgan@example.com"));
+  record("Alex: Forge Data Analyst has no PRACTICE assessment → empty list (its GRADED one is excluded)", alexPractice.length === 0);
+  const danielPractice = await getPracticeAssessments(await userIdFor("daniel.osei@example.com"));
+  record("Daniel (AWAITING access only): no practice items — GRANTED enrollments only", danielPractice.length === 0);
 
   console.log("verify-learner-dashboard results:\n");
   for (const check of checks) {

@@ -9,6 +9,7 @@ import {
   ClipboardCheck,
   UserCheck,
   Award,
+  Target,
 } from "lucide-react";
 
 export type NavItem = {
@@ -25,6 +26,8 @@ export type NavItem = {
 export const LEARNER_NAV_ITEMS: NavItem[] = [
   { label: "Home", href: "/learn", icon: Home },
   { label: "My Learning", href: "/learn/my-learning", icon: GraduationCap },
+  // Phase A — PUBLISHED kind=PRACTICE assessments across GRANTED enrollments.
+  { label: "Practice", href: "/learn/practice", icon: Target },
   { label: "Progress", href: "/learn/progress", icon: LineChart },
   { label: "Settings", href: "/learn/settings", icon: Settings },
 ];
