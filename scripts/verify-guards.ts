@@ -100,6 +100,27 @@ async function main(): Promise<void> {
     isEnrollmentGranted(suspendedEnrollment) === false,
   );
 
+  // 8. An ARCHIVED program's existing GRANTED learner is NOT locked out:
+  // isEnrollmentGranted only looks at Enrollment.accessState, never at
+  // Program.status. Flips Forge Data Analyst to ARCHIVED for the check and
+  // restores it in `finally` (local seeded DB only — assertLocalDatabase
+  // above guarantees that). The enroll-side rule (an archived program can't
+  // be JOINED) lives in scripts/verify-enroll.ts, which needs the
+  // react-server condition this script can't run under.
+  const programStatusBefore = forgeDataAnalyst.status;
+  let grantedWhileArchived: boolean | null = null;
+  try {
+    await prisma.program.update({ where: { id: forgeDataAnalyst.id }, data: { status: "ARCHIVED" } });
+    grantedWhileArchived = isEnrollmentGranted(await findEnrollment(alex.id, forgeDataAnalyst.id));
+  } finally {
+    await prisma.program.update({ where: { id: forgeDataAnalyst.id }, data: { status: programStatusBefore } });
+  }
+  record(
+    "GRANTED learner (Alex Morgan) still passes requireGrantedEnrollment while Forge Data Analyst is ARCHIVED",
+    grantedWhileArchived === true,
+    `programStatusRestoredTo=${programStatusBefore}`,
+  );
+
   console.log("verify-guards results:\n");
   for (const check of checks) {
     console.log(`${check.pass ? "PASS" : "FAIL"}  ${check.name}${check.detail ? ` (${check.detail})` : ""}`);

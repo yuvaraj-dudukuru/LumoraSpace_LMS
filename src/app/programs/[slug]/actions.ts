@@ -1,9 +1,10 @@
 "use server";
 
-import { Prisma, Role, BatchStatus, EnrollmentStatus, AccessState } from "@prisma/client";
+import { Prisma, Role, EnrollmentStatus, AccessState } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { requireRole } from "@/lib/auth-guards";
 import { prisma } from "@/lib/prisma";
+import { findOpenBatchForEnrollment } from "@/lib/queries/programs";
 import { enrollSchema } from "@/lib/validations/enroll";
 
 export type EnrollResult = { ok: true } | { ok: false; error: string };
@@ -16,17 +17,13 @@ export async function enrollAction(programId: string, formData: FormData): Promi
     return { ok: false, error: parsed.error.issues[0]?.message ?? "Invalid selection" };
   }
 
-  // Re-verify server-side — the batchId came from the client.
-  const batch = await prisma.batch.findFirst({
-    where: {
-      id: parsed.data.batchId,
-      programId,
-      status: { in: [BatchStatus.UPCOMING, BatchStatus.ACTIVE] },
-    },
-    select: { id: true, capacity: true },
-  });
+  // Re-verify server-side — both ids came from the client. One shared rule
+  // (queries/programs.ts): batch belongs to the program, batch is
+  // UPCOMING/ACTIVE, and the program is PUBLISHED — an archived program
+  // can't be joined even with a batch id saved from before it was archived.
+  const batch = await findOpenBatchForEnrollment(programId, parsed.data.batchId);
   if (!batch) {
-    return { ok: false, error: "This cohort is not currently open for enrollment." };
+    return { ok: false, error: "This program or cohort is not currently open for enrollment." };
   }
 
   if (batch.capacity !== null) {

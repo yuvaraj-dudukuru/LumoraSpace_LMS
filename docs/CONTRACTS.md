@@ -29,7 +29,8 @@ only the pure predicates above them are callable from a script (see
 ### `src/lib/queries/programs.ts`
 - `getPublishedPrograms(): Promise<PublishedProgram[]>` — catalog grid, `status: PUBLISHED`. Server-only, no auth needed.
 - `getProgramForCatalog(slug: string): Promise<ProgramForCatalog | null>` — program + outcomes + modules + lessons, no progress.
-- `getEnrollableBatches(programId: string): Promise<EnrollableBatch[]>` — UPCOMING/ACTIVE batches with live seat counts.
+- `getEnrollableBatches(programId: string): Promise<EnrollableBatch[]>` — UPCOMING/ACTIVE batches with live seat counts. Does not check program status itself — only reached from the detail page after `getProgramForCatalog` already required PUBLISHED.
+- `findOpenBatchForEnrollment(programId, batchId): Promise<{ id; capacity } | null>` — THE enroll rule, shared by `enrollAction` and `scripts/verify-enroll.ts`: the batch belongs to the program, is UPCOMING/ACTIVE, **and the program is PUBLISHED**. An ARCHIVED/DRAFT program can't be joined even with a batch id kept from before. Never consults existing enrollments — a GRANTED learner of an archived program keeps their content, because `requireGrantedEnrollment`/`resolveLessonProgram`/`getProgramProgress` never look at `Program.status` (proven by `verify-guards.ts` check 9 and `verify-enroll.ts`). `prisma/set-program-status.ts` is the only tool that changes a program's status; archiving also closes its UPCOMING/ACTIVE batches.
 
 ### `src/lib/queries/enrollments.ts`
 - `getEnrollmentsForUser(userId: string): Promise<EnrollmentWithProgram[]>` — all enrollments + program + batch.
@@ -136,7 +137,7 @@ only the pure predicates above them are callable from a script (see
 |---|---|---|
 | `/programs` | none (public) | `getPublishedPrograms` |
 | `/programs/[slug]` | none (public); `auth()` read-only for CTA state | `getProgramForCatalog`, `getEnrollableBatches` |
-| `/programs/[slug]` → `enrollAction` | `requireRole(LEARNER)` | re-verifies batch server-side, `prisma.enrollment.count` for capacity, `prisma.enrollment.create` (catches P2002) |
+| `/programs/[slug]` → `enrollAction` | `requireRole(LEARNER)` | `findOpenBatchForEnrollment` (batch ∈ program, batch UPCOMING/ACTIVE, program PUBLISHED), `prisma.enrollment.count` for capacity, `prisma.enrollment.create` (catches P2002) |
 | `/learn` (layout) | `requireRole(LEARNER, ADMIN)` | — |
 | `/learn` (page) | `requireUser` | `getDashboardData` |
 | `/learn/my-learning` | `requireUser` | `getEnrollmentsForUser`, then `getProgramProgress` per GRANTED enrollment |

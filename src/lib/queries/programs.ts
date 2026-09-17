@@ -55,6 +55,30 @@ export type EnrollableBatch = {
   enrolledCount: number;
 };
 
+export type OpenBatchForEnrollment = { id: string; capacity: number | null };
+
+/** THE enroll rule, shared by enrollAction and scripts/verify-enroll.ts:
+ * a learner may enroll only when the batch belongs to `programId`, the
+ * batch is UPCOMING or ACTIVE, AND the program itself is PUBLISHED. An
+ * ARCHIVED (or DRAFT) program can't be joined even by someone who still has
+ * a batch id from before it was archived. Existing enrollments are not
+ * consulted here — a GRANTED learner of an archived program keeps their
+ * access (requireGrantedEnrollment never looks at program status). */
+export async function findOpenBatchForEnrollment(
+  programId: string,
+  batchId: string,
+): Promise<OpenBatchForEnrollment | null> {
+  return prisma.batch.findFirst({
+    where: {
+      id: batchId,
+      programId,
+      status: { in: [BatchStatus.UPCOMING, BatchStatus.ACTIVE] },
+      program: { status: ContentStatus.PUBLISHED },
+    },
+    select: { id: true, capacity: true },
+  });
+}
+
 /** Batches open for enrollment on a program, with a live seat count for the
  * capacity check in enrollAction and for display in the picker. */
 export async function getEnrollableBatches(programId: string): Promise<EnrollableBatch[]> {
