@@ -1,11 +1,15 @@
 // No-DB checks for the pure learner-facing logic in src/lib:
 //   - learner-status.ts   deriveLearnerStatus / elapsedPercent (Phase A step 1)
 //   - next-step.ts        pickNextStep priority               (Phase A step 3)
-// Fixed `now`, hand-built inputs, no Prisma, no env vars. (Only `import type`
-// from the server-only query modules, so "server-only" is never evaluated.)
+//   - scripts/assert-local-db.ts  ALLOW_SEED_HOST staging exception (step 9)
+// Fixed `now`, hand-built inputs, no Prisma. The step-9 cases set
+// DATABASE_URL / ALLOW_SEED_HOST in process.env for the duration of the check
+// and restore them; nothing is ever connected to. (Only `import type` from
+// the server-only query modules, so "server-only" is never evaluated.)
 // Run: npx tsx scripts/verify-learner-logic.ts
 import { deriveLearnerStatus, elapsedPercent, ON_TRACK_TOLERANCE_PERCENT } from "../src/lib/learner-status";
 import { pickNextStep, DUE_SOON_DAYS } from "../src/lib/next-step";
+import { assertLocalDatabase, productionHostFromEnvNeon } from "./assert-local-db";
 import type { PendingWorkItem } from "../src/lib/queries/pending-work";
 import type { LessonProgressSummary } from "../src/lib/queries/progress";
 
@@ -119,6 +123,51 @@ function main(): void {
   record("completed work + no lesson left → null", s6 === null);
   const s7 = pickNextStep([item({ title: "Submitted", state: "submitted", action: "continue", dueAt: inDays(1) })], lesson, now);
   record("a submitted assignment due tomorrow is not 'due soon' (nothing left to submit) → lesson", s7?.kind === "lesson");
+
+  // ---- Step 9: assertLocalDatabase + ALLOW_SEED_HOST --------------------------
+  const savedDatabaseUrl = process.env.DATABASE_URL;
+  const savedAllowHost = process.env.ALLOW_SEED_HOST;
+  function guardOutcome(databaseUrl: string, allowSeedHost: string | undefined): { ok: boolean; message: string } {
+    process.env.DATABASE_URL = databaseUrl;
+    if (allowSeedHost === undefined) delete process.env.ALLOW_SEED_HOST;
+    else process.env.ALLOW_SEED_HOST = allowSeedHost;
+    try {
+      assertLocalDatabase();
+      return { ok: true, message: "accepted" };
+    } catch (error) {
+      return { ok: false, message: error instanceof Error ? error.message : String(error) };
+    }
+  }
+  try {
+    const local = guardOutcome("postgresql://postgres:postgres@localhost:5432/lumoraspace", undefined);
+    record("guard: localhost is accepted", local.ok, local.message);
+    const remote = guardOutcome("postgresql://u:secret@db.example.com:5432/x", undefined);
+    record("guard: a non-local host is refused and named (never the password)", !remote.ok && remote.message.includes('"db.example.com"') && !remote.message.includes("secret"), remote.message);
+    const allowed = guardOutcome("postgresql://u:secret@db.example.com:5432/x", "db.example.com");
+    record("guard: the same host is accepted when ALLOW_SEED_HOST names it exactly", allowed.ok, allowed.message);
+    const pooledAllowed = guardOutcome("postgresql://u:secret@ep-staging-pooler.aws.neon.tech/x", "ep-staging.aws.neon.tech");
+    record("guard: ALLOW_SEED_HOST matches the pooled and direct forms of one Neon host", pooledAllowed.ok, pooledAllowed.message);
+    const other = guardOutcome("postgresql://u:secret@other.example.com:5432/x", "db.example.com");
+    record("guard: a different host is still refused while ALLOW_SEED_HOST is set", !other.ok, other.message);
+    const malformed = guardOutcome("postgresql://u:secret@db.example.com:5432/x", "https://db.example.com");
+    record("guard: ALLOW_SEED_HOST with a scheme/path is refused as a config mistake", !malformed.ok && malformed.message.includes("bare hostname"), malformed.message);
+
+    const productionHost = productionHostFromEnvNeon();
+    if (productionHost === null) {
+      record("guard: production host refused even when ALLOW_SEED_HOST names it — SKIPPED (.env.neon not present on this machine)", true, "no .env.neon");
+    } else {
+      const prod = guardOutcome(`postgresql://u:secret@${productionHost}/neondb?sslmode=require`, productionHost);
+      record("guard: the .env.neon production host is refused even when ALLOW_SEED_HOST names it", !prod.ok && prod.message.includes("PRODUCTION"), prod.message.replace(productionHost, "<production-host>"));
+      const prodDirect = productionHost.replace("-pooler", "");
+      const prodUnpooled = guardOutcome(`postgresql://u:secret@${prodDirect}/neondb`, prodDirect);
+      record("guard: the production host's direct (non-pooler) form is refused too", !prodUnpooled.ok && prodUnpooled.message.includes("PRODUCTION"), prodUnpooled.message.replace(prodDirect, "<production-host>"));
+    }
+  } finally {
+    if (savedDatabaseUrl === undefined) delete process.env.DATABASE_URL;
+    else process.env.DATABASE_URL = savedDatabaseUrl;
+    if (savedAllowHost === undefined) delete process.env.ALLOW_SEED_HOST;
+    else process.env.ALLOW_SEED_HOST = savedAllowHost;
+  }
 
   console.log("verify-learner-logic results:\n");
   for (const check of checks) {

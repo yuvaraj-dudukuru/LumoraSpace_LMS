@@ -47,7 +47,11 @@ Certificate  = issued on 100% completion, publicly verifiable by number
   `.env` points at the docker-compose DB; the Neon URL lives only in `.env.neon`
   and is loaded per-command. `prisma/seed.ts` and every DB-using script under
   `scripts/` call `assertLocalDatabase()` first and refuse any host other than
-  localhost/127.0.0.1. Only `prisma/bootstrap*.ts` may target Neon.
+  localhost/127.0.0.1. Only `prisma/bootstrap*.ts` (and `prisma/set-program-status.ts`)
+  may target Neon. The one exception is a Neon *staging* branch for testers: set
+  `ALLOW_SEED_HOST=<that branch's host>` for a single command (DEPLOYMENT.md,
+  "Staging branch for testers"); the production host in `.env.neon` is refused
+  even then.
 - **Never copy Stitch HTML into the app.** It is flat, non-componentized markup with
   duplicated classes. Read it for layout intent, match the PNG visually, then write
   clean React components.

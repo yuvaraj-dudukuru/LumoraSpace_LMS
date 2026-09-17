@@ -97,6 +97,22 @@ Both browser requests are cross-origin (app origin → `*.r2.cloudflarestorage.c
 
 Accepted upload types: PDF, PNG, JPEG, `.doc`, `.docx` — 10 MB max (`src/lib/validations/assignment.ts`). The object key is `assignment-submissions/{uuid}-{sanitized file name}`; the original name is sanitized (basename only, no spaces, `[A-Za-z0-9._-]` only, 100-char cap) before it ever reaches the key.
 
+## Staging branch for testers (Neon branch + Vercel Preview)
+
+Testers need realistic data without touching production. Use a Neon **branch** and a Vercel **Preview** environment:
+
+1. **Neon → Branches → create `staging`** from `main`. A branch gets its own endpoint, so its hostname (`ep-<something-else>.<region>.aws.neon.tech`) differs from production's — that difference is what the seed guard keys on.
+2. **Migrate the branch** with its unpooled URL: `DATABASE_URL="<staging unpooled url>" npx prisma migrate deploy`.
+3. **Seed the branch from your own machine.** `prisma/seed.ts` refuses any non-local host unless `ALLOW_SEED_HOST` names that exact host for the one command:
+   ```bash
+   ALLOW_SEED_HOST="ep-xxxx.region.aws.neon.tech" DATABASE_URL="<staging unpooled url>" npx prisma db seed
+   ```
+   `ALLOW_SEED_HOST` must be a bare hostname (pooled or direct form — the guard treats them as one host). The **production** host — the `DATABASE_URL` host in your local `.env.neon` — is refused even when `ALLOW_SEED_HOST` names it, in both its `-pooler` and direct forms. Every `scripts/verify-*.ts` that uses a DB honours the same rule.
+4. **Vercel → Settings → Environment Variables:** set `DATABASE_URL` for the **Preview** environment only to the branch's *pooled* URL (production keeps its own). Never set `ALLOW_SEED_HOST` in Vercel — it is a shell-only, per-command override for seeding, and the app never reads it.
+5. Push a branch / open a PR; the Preview deployment now runs against seeded staging data. Seeded accounts and the dev password are printed at the end of the seed run.
+
+Reseeding staging is fine at any time (the seed is idempotent and destructive by design). To refresh from production data instead, reset the Neon branch from `main` in the Neon console and re-run steps 2–3.
+
 ## Generating `AUTH_SECRET`
 
 ```bash
