@@ -28,18 +28,21 @@ with an HTML file (Tailwind markup) and a PNG render. This is design reference o
 ## Domain model
 
 ```
-Program → Course → Module → Lesson → content blocks
-Batch = a dated cohort instance of a Program
-Enrollment links Learner ↔ Batch
-Session = live class within a Batch
-Assessment → Question → Attempt → Answer
-Assignment → Submission → Review (mentor feedback)
-Certificate issued on completion, publicly verifiable by ID
-Payment links to Enrollment
+Program → Module → Lesson            (no Course level; Lesson.assessmentId links a
+                                      QUIZ lesson to its Assessment → Question →
+                                      Attempt → Answer)
+Batch        = a dated cohort instance of a Program
+Enrollment   = Learner ↔ Program + Batch (programId, batchId, accessState:
+               AWAITING | GRANTED | SUSPENDED — content is gated on GRANTED)
+Assignment   → Submission → Review / RubricScore   (module-level, mentor-graded)
+Certificate  = issued on 100% completion, publicly verifiable by number
 ```
 
 ## Hard rules
 
+- **Read `docs/CONTRACTS.md` before touching `src/lib`.** It is the index of
+  every query/guard/action contract and the rules behind them; if the source
+  and the doc disagree, fix the doc in the same change.
 - **Never copy Stitch HTML into the app.** It is flat, non-componentized markup with
   duplicated classes. Read it for layout intent, match the PNG visually, then write
   clean React components.

@@ -46,3 +46,9 @@ next-env.d.ts
 .swarm/
 ruvector.db
 .mcp.json
+
+# python venv used by local tooling (graphify)
+.venv/
+
+# Windows Explorer folder metadata
+desktop.ini

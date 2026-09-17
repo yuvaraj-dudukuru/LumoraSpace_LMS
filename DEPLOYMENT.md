@@ -2,9 +2,32 @@
 
 Environment variables, first-deploy bootstrap, and OAuth setup for running LumoraSpace LMS outside local dev.
 
+## Deploy order (first production deploy: Neon + Vercel)
+
+`npm run build` is `prisma generate && next build` — it never runs migrations. Migrations and the bootstrap are run **by hand, from your own machine, before** the first deploy (and migrations again before any later deploy that ships a new migration). Do them in this order:
+
+1. **Neon** — create the project/database. Copy both connection strings: the **pooled** one (host contains `-pooler`) and the **unpooled/direct** one.
+2. **Migrate, with the UNPOOLED URL** — Prisma migrations use advisory locks and long transactions that the pooler can't proxy:
+   ```bash
+   DATABASE_URL="postgresql://…@ep-xxxx.region.aws.neon.tech/neondb?sslmode=require" npx prisma migrate deploy
+   ```
+3. **Bootstrap, same UNPOOLED URL** — replace the placeholder content in `prisma/bootstrap-data.json`, delete its `"_template": true` key, check it without a database (`npx tsx scripts/verify-bootstrap-data.ts`), then:
+   ```bash
+   DATABASE_URL="<unpooled url>" APP_URL="https://learn.yourdomain.com" \
+   BOOTSTRAP_ADMIN_EMAIL=you@yourcompany.com \
+   BOOTSTRAP_ADMIN_PASSWORD='a-real-password-12-chars-min' \
+   BOOTSTRAP_ADMIN_NAME='Your Name' \
+   npm run bootstrap
+   ```
+   It ends with `Sign in at <APP_URL>/login, then remove BOOTSTRAP_ADMIN_PASSWORD from your shell/env.` — do that.
+4. **Vercel env vars** — `DATABASE_URL` = the **pooled** URL, `AUTH_SECRET`, `APP_URL` (the exact production origin, no trailing slash), and whichever of `AUTH_GOOGLE_ID`/`AUTH_GOOGLE_SECRET`, `RESEND_API_KEY`/`EMAIL_FROM_ADDRESS`, `S3_*` you're using. Never the `BOOTSTRAP_*` vars. Deploy.
+5. **Google redirect URI** — once the production origin exists, add `https://<origin>/api/auth/callback/google` under the OAuth client's authorized redirect URIs (details below). If you use R2, add the CORS rule for that same origin (below).
+
+Later deploys: run step 2 again only when `prisma/migrations/` gained a new migration, then push.
+
 ## Environment variables
 
-**Only `DATABASE_URL` and `AUTH_SECRET` are required for the app to build, deploy, and serve every core LMS flow** (enrollment, lessons, quizzes, assignments via GitHub URL/notes, certificates, admin, mentor review). Google OAuth, Resend, and S3 are genuinely optional — each gates one specific enhancement and fails loud-but-contained (never a crashed page, never a failed build) when unset. This was re-verified directly as part of the pre-deployment audit: `getPresignedUploadUrl`/`getResend` both validate lazily (on first real use, not at import/build time — see the note at the bottom of this file), and every call site either already caught the resulting error (`mail.ts`) or has been fixed to (`assignment-file-upload.tsx`, this pass).
+**Only `DATABASE_URL` and `AUTH_SECRET` are required for the app to build, deploy, and serve every core LMS flow** (enrollment, lessons, quizzes, assignments via GitHub URL/notes, certificates, admin, mentor review). Add `APP_URL` if you want any email to actually be sent. Google OAuth, Resend, and S3 are genuinely optional — each gates one specific enhancement and fails loud-but-contained (never a crashed page, never a failed build) when unset. This was re-verified directly as part of the pre-deployment audit: `getPresignedUploadUrl`/`getResend` both validate lazily (on first real use, not at import/build time — see the note at the bottom of this file), and every call site either already caught the resulting error (`mail.ts`) or has been fixed to (`assignment-file-upload.tsx`, this pass).
 
 | Variable | Required for the app to run? | Used in | If missing |
 |---|---|---|---|
@@ -34,7 +57,7 @@ Environment variables, first-deploy bootstrap, and OAuth setup for running Lumor
 
 Never run `npm run seed` against a production database — it deletes every row in every table it owns before reseeding (see `prisma/seed.ts`'s own top-of-file comment). It exists for local dev only.
 
-For a real deployment, after running migrations against the new database:
+For a real deployment, after running migrations against the new database (see **Deploy order** above — use the unpooled URL for both):
 
 ```bash
 BOOTSTRAP_ADMIN_EMAIL=you@yourcompany.com \
