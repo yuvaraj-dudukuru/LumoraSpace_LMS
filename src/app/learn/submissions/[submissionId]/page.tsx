@@ -3,7 +3,9 @@ import { notFound, forbidden } from "next/navigation";
 import { ArrowLeft, Link2, MessageSquare } from "lucide-react";
 import { requireUser } from "@/lib/auth-guards";
 import { getSubmissionWithReview } from "@/lib/queries/assignments";
+import { getSubmissionFileLink } from "@/lib/submission-file";
 import { formatDate } from "@/lib/format";
+import { SubmissionFileLink } from "@/components/submission-file-link";
 
 const STATUS_LABEL: Record<string, string> = {
   SUBMITTED: "Submitted",
@@ -33,6 +35,10 @@ export default async function SubmissionDetailPage({
   // rather than rendering a status this page has no copy for.
   if (!submission || submission.status === "NOT_STARTED") notFound();
   if (submission.userId !== user.id) forbidden();
+
+  // Only after the ownership check — the presigned GET is minted for this render only.
+  const file = await getSubmissionFileLink(submission.fileUrl);
+  const hasSubmittedWork = Boolean(submission.githubUrl || submission.notes || file);
 
   return (
     <div className="mx-auto flex max-w-3xl flex-col gap-xl">
@@ -121,6 +127,7 @@ export default async function SubmissionDetailPage({
               <span className="truncate font-label-md text-label-md text-primary">{submission.githubUrl}</span>
             </a>
           ) : null}
+          {file ? <SubmissionFileLink file={file} /> : null}
           {submission.notes ? (
             <div className="rounded-xl bg-surface-container-low p-md">
               <p className="mb-xs font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">
@@ -129,7 +136,7 @@ export default async function SubmissionDetailPage({
               <p className="whitespace-pre-wrap font-body-md text-body-md text-on-surface">{submission.notes}</p>
             </div>
           ) : null}
-          {!submission.githubUrl && !submission.notes ? (
+          {!hasSubmittedWork ? (
             <p className="font-body-md text-body-md text-on-surface-variant">No submitted work on file.</p>
           ) : null}
         </div>

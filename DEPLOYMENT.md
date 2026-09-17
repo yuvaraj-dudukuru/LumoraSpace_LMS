@@ -44,6 +44,30 @@ npm run bootstrap
 
 This creates exactly one admin account, plus curriculum and a batch from `prisma/bootstrap-data.json`. It refuses outright (exit code 1, no writes) if the `User` table already has any rows — safe to run in CI on every deploy, since it's a no-op after the first successful run. Edit `prisma/bootstrap-data.json` before your first deploy to replace the placeholder program/lessons/questions with real content.
 
+## Cloudflare R2: bucket CORS rule (required for file uploads)
+
+The browser uploads directly to the bucket with a presigned `PUT` (`src/components/assignment-file-upload.tsx` → `getPresignedUploadUrl`), and opens files through a presigned `GET` (`getPresignedDownloadUrl`, 5-minute expiry, generated server-side at render time on `/mentor/submissions/[id]` and `/learn/submissions/[id]`). Objects stay **private** — nothing in this app makes the bucket public, and the stored `Submission.fileUrl` is an identifier, not a link that works on its own.
+
+Both browser requests are cross-origin (app origin → `*.r2.cloudflarestorage.com`), so the bucket needs a CORS rule or the `PUT` fails preflight and the upload control shows "Upload failed". In the Cloudflare dashboard: **R2 → your bucket → Settings → CORS policy**, add:
+
+```json
+[
+  {
+    "AllowedOrigins": ["https://yourdomain.com"],
+    "AllowedMethods": ["PUT", "GET"],
+    "AllowedHeaders": ["Content-Type", "Content-Length"],
+    "ExposeHeaders": ["ETag"],
+    "MaxAgeSeconds": 3600
+  }
+]
+```
+
+- `AllowedOrigins` is the **exact** app origin (scheme + host, no trailing slash, no wildcard) — the value you set as `APP_URL`. Add a second entry for `http://localhost:3000` if you want uploads to work in local dev against the same bucket.
+- `PUT` is the upload; `GET` is the presigned download. Nothing else is needed.
+- `Content-Type` and `Content-Length` must be allowed because both are **signed into** the presigned PUT (see `storage.ts`) and the browser sends them on the actual request.
+
+Accepted upload types: PDF, PNG, JPEG, `.doc`, `.docx` — 10 MB max (`src/lib/validations/assignment.ts`). The object key is `assignment-submissions/{uuid}-{sanitized file name}`; the original name is sanitized (basename only, no spaces, `[A-Za-z0-9._-]` only, 100-char cap) before it ever reaches the key.
+
 ## Generating `AUTH_SECRET`
 
 ```bash

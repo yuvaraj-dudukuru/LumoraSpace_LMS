@@ -8,7 +8,17 @@ import { Label } from "@/components/ui/label";
 import { AssignmentFileUpload } from "@/components/assignment-file-upload";
 import { submitAssignment } from "./actions";
 
-export function SubmitAssignmentForm({ assignmentId, allowGithubUrl }: { assignmentId: string; allowGithubUrl: boolean }) {
+export function SubmitAssignmentForm({
+  assignmentId,
+  allowGithubUrl,
+  fileUploadEnabled,
+}: {
+  assignmentId: string;
+  allowGithubUrl: boolean;
+  /** Decided server-side (isStorageConfigured) — when false the upload
+   * control isn't rendered at all, rather than rendering and failing. */
+  fileUploadEnabled: boolean;
+}) {
   const router = useRouter();
   const [githubUrl, setGithubUrl] = useState("");
   const [notes, setNotes] = useState("");
@@ -62,12 +72,14 @@ export function SubmitAssignmentForm({ assignmentId, allowGithubUrl }: { assignm
       </div>
 
       {/* D1 resolved — presigned-upload storage now exists. No per-assignment
-          allow flag in the schema (unlike allowGithubUrl), so this is always
-          available, same as notes. */}
-      <div className="flex flex-col gap-xs">
-        <Label>Attach a file (optional)</Label>
-        <AssignmentFileUpload assignmentId={assignmentId} onUploadComplete={setFileUrl} />
-      </div>
+          allow flag in the schema (unlike allowGithubUrl); availability is a
+          deployment-level fact (all S3_* vars set), decided by the server. */}
+      {fileUploadEnabled ? (
+        <div className="flex flex-col gap-xs">
+          <Label>Attach a file (optional)</Label>
+          <AssignmentFileUpload assignmentId={assignmentId} onUploadComplete={setFileUrl} />
+        </div>
+      ) : null}
 
       {error ? <p className="font-label-sm text-label-sm text-error">{error}</p> : null}
 

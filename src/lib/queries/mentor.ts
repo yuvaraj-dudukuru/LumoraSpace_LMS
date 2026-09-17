@@ -307,6 +307,7 @@ export type SubmissionForReview = {
   attemptNumber: number;
   status: SubmissionStatus;
   githubUrl: string | null;
+  fileUrl: string | null;
   notes: string | null;
   submittedAt: Date | null;
   batchId: string;
@@ -346,6 +347,7 @@ export async function getSubmissionForReview(submissionId: string): Promise<Subm
       attemptNumber: true,
       status: true,
       githubUrl: true,
+      fileUrl: true,
       notes: true,
       submittedAt: true,
       enrollment: {
@@ -404,6 +406,7 @@ export async function getSubmissionForReview(submissionId: string): Promise<Subm
     attemptNumber: submission.attemptNumber,
     status: submission.status,
     githubUrl: submission.githubUrl,
+    fileUrl: submission.fileUrl,
     notes: submission.notes,
     submittedAt: submission.submittedAt,
     batchId: submission.enrollment.batchId,

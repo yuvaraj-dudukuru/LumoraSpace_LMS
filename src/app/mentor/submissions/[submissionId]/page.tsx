@@ -3,7 +3,9 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, Link2, CheckCircle2, MessageSquare } from "lucide-react";
 import { requireMentorForBatch } from "@/lib/auth-guards";
 import { getSubmissionForReview } from "@/lib/queries/mentor";
+import { getSubmissionFileLink } from "@/lib/submission-file";
 import { formatDate, formatRelativeTime } from "@/lib/format";
+import { SubmissionFileLink } from "@/components/submission-file-link";
 import { ClaimButton } from "./claim-button";
 import { RubricScoringForm } from "./rubric-scoring-form";
 
@@ -25,6 +27,10 @@ export default async function MentorSubmissionReviewPage({
   if (!submission) notFound();
 
   const mentor = await requireMentorForBatch(submission.batchId);
+
+  // Only after the guard — the presigned GET is minted for this render only.
+  const file = await getSubmissionFileLink(submission.fileUrl);
+  const hasSubmittedWork = Boolean(submission.githubUrl || submission.notes || file);
 
   // "Claimable" covers both a fresh SUBMITTED row and a legacy UNDER_REVIEW
   // row with no tracked Review owner (see actions.ts's claimForReview).
@@ -84,6 +90,7 @@ export default async function MentorSubmissionReviewPage({
                   <span className="truncate font-label-md text-label-md text-primary">{submission.githubUrl}</span>
                 </a>
               ) : null}
+              {file ? <SubmissionFileLink file={file} /> : null}
               {submission.notes ? (
                 <div className="rounded-xl bg-surface-container-low p-md">
                   <p className="mb-xs font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">
@@ -92,7 +99,7 @@ export default async function MentorSubmissionReviewPage({
                   <p className="whitespace-pre-wrap font-body-md text-body-md text-on-surface">{submission.notes}</p>
                 </div>
               ) : null}
-              {!submission.githubUrl && !submission.notes ? (
+              {!hasSubmittedWork ? (
                 <p className="font-body-md text-body-md text-on-surface-variant">No submitted work on file.</p>
               ) : null}
               {submission.submittedAt ? (

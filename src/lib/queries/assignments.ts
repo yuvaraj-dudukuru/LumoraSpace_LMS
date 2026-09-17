@@ -154,6 +154,7 @@ export type SubmissionWithReview = {
   attemptNumber: number;
   status: SubmissionStatus;
   githubUrl: string | null;
+  fileUrl: string | null;
   notes: string | null;
   submittedAt: Date | null;
   review: {
@@ -180,6 +181,7 @@ export async function getSubmissionWithReview(submissionId: string): Promise<Sub
       attemptNumber: true,
       status: true,
       githubUrl: true,
+      fileUrl: true,
       notes: true,
       submittedAt: true,
       assignment: { select: { title: true } },
@@ -214,6 +216,7 @@ export async function getSubmissionWithReview(submissionId: string): Promise<Sub
     attemptNumber: submission.attemptNumber,
     status: submission.status,
     githubUrl: submission.githubUrl,
+    fileUrl: submission.fileUrl,
     notes: submission.notes,
     submittedAt: submission.submittedAt,
     review: submission.review

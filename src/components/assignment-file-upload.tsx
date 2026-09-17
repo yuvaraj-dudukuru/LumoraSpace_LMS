@@ -33,7 +33,7 @@ export function AssignmentFileUpload({
     // exact Content-Type/Content-Length S3 will accept (see storage.ts).
     if (!ALLOWED_UPLOAD_FILE_TYPES.includes(file.type as (typeof ALLOWED_UPLOAD_FILE_TYPES)[number])) {
       setState("error");
-      setError("Unsupported file type. Allowed: PDF, PNG, JPEG, or Word document.");
+      setError("Unsupported file type. Allowed: PDF, PNG, JPEG, or Word document (.doc/.docx).");
       return;
     }
     if (file.size > MAX_UPLOAD_FILE_SIZE_BYTES) {
@@ -106,7 +106,7 @@ export function AssignmentFileUpload({
           <UploadCloud className="h-6 w-6 text-on-surface-variant" />
           <span className="font-label-md text-label-md text-on-surface">Click to upload a file</span>
           <span className="font-label-sm text-label-sm text-on-surface-variant">
-            PDF, PNG, JPEG, or Word — up to {MAX_SIZE_LABEL}
+            PDF, PNG, JPEG, or Word (.doc/.docx) — up to {MAX_SIZE_LABEL}
           </span>
           <input
             ref={inputRef}

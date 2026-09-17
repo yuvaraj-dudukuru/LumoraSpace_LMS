@@ -7,6 +7,7 @@ export const ALLOWED_UPLOAD_FILE_TYPES = [
   "image/png",
   "image/jpeg",
   "application/msword",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .docx
 ] as const;
 export type AllowedUploadFileType = (typeof ALLOWED_UPLOAD_FILE_TYPES)[number];
 

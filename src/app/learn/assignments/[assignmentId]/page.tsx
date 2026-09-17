@@ -4,6 +4,7 @@ import { ChevronRight, Clock, CalendarClock, CheckCircle2, FileDown, AlertTriang
 import { requireGrantedEnrollment } from "@/lib/auth-guards";
 import { resolveAssignmentProgram, getAssignmentDetail, canSubmitNewAttempt } from "@/lib/queries/assignments";
 import { formatDate } from "@/lib/format";
+import { isStorageConfigured } from "@/lib/storage";
 import { SubmitAssignmentForm } from "./submit-assignment-form";
 
 const STATUS_LABEL: Record<string, string> = {
@@ -30,6 +31,8 @@ export default async function AssignmentDetailPage({
   const isPastDue = assignment.dueAt !== null && assignment.dueAt.getTime() < Date.now();
   const canSubmit = canSubmitNewAttempt(assignment.submissions, assignment.maxAttempts);
   const latestSubmission = assignment.submissions.at(-1) ?? null;
+  // Server-side only — the client never sees the S3_* vars, just this boolean.
+  const fileUploadEnabled = isStorageConfigured();
 
   return (
     <div className="mx-auto flex max-w-5xl flex-col gap-xl">
@@ -202,7 +205,11 @@ export default async function AssignmentDetailPage({
           <div className="sticky top-lg rounded-2xl border border-outline-variant/30 bg-surface-container-low p-lg">
             <h2 className="mb-md font-title-lg text-title-lg text-on-surface">Submit Your Work</h2>
             {canSubmit ? (
-              <SubmitAssignmentForm assignmentId={assignmentId} allowGithubUrl={assignment.allowGithubUrl} />
+              <SubmitAssignmentForm
+                assignmentId={assignmentId}
+                allowGithubUrl={assignment.allowGithubUrl}
+                fileUploadEnabled={fileUploadEnabled}
+              />
             ) : (
               <div className="flex flex-col gap-sm">
                 <p className="font-body-md text-body-md text-on-surface-variant">
