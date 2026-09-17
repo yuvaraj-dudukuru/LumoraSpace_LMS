@@ -43,7 +43,11 @@ BOOTSTRAP_ADMIN_NAME='Your Name' \
 npm run bootstrap
 ```
 
-This creates exactly one admin account, plus curriculum and a batch from `prisma/bootstrap-data.json`. It refuses outright (exit code 1, no writes) if the `User` table already has any rows — safe to run in CI on every deploy, since it's a no-op after the first successful run. Edit `prisma/bootstrap-data.json` before your first deploy to replace the placeholder program/lessons/questions with real content.
+This creates exactly one admin account, plus every program (modules, lessons, assessments, assignments, batches) listed in `prisma/bootstrap-data.json`. It refuses outright (exit code 1, no writes) if the `User` table already has any rows. Run it once, by hand, from your own machine against the production `DATABASE_URL` — it is **not** part of the build or deploy.
+
+`prisma/bootstrap-data.json` has the shape `{ "_template": true, "programs": [ { program, modules, assessments, assignments, batches } ] }`. The checked-in file is placeholder content and carries `"_template": true`; **both** bootstrap scripts refuse to load it while that key is present. Replace the placeholders with real content and delete the `_template` key first. The whole file is validated before the first database call (valid ISO dates with `endDate` after `startDate`, every `moduleOrder`/`linkedLessonId` resolving, only `QUIZ` lessons carrying an assessment and every `QUIZ` lesson having one, unique lesson ids and module orders, every `MULTIPLE_CHOICE`/`TRUE_FALSE` question having a correct option) — check a file without touching a database with `npx tsx scripts/verify-bootstrap-data.ts`.
+
+If real users already exist (signups happened before curriculum was loaded), use `npm run bootstrap:curriculum` instead — it never touches `User`, and refuses per program slug that already exists.
 
 ## Cloudflare R2: bucket CORS rule (required for file uploads)
 

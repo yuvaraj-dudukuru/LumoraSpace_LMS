@@ -16,7 +16,15 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { z } from "zod";
-import { createCurriculum, loadBootstrapData } from "./bootstrap-schema";
+import {
+  BOOTSTRAP_TRANSACTION_TIMEOUT_MS,
+  TEMPLATE_REFUSAL_MESSAGE,
+  createCurriculum,
+  isTemplateData,
+  loadBootstrapData,
+  loginUrlHint,
+  printCurriculumSummary,
+} from "./bootstrap-schema";
 
 const prisma = new PrismaClient();
 
@@ -55,7 +63,12 @@ async function main(): Promise<void> {
   }
   const { BOOTSTRAP_ADMIN_EMAIL, BOOTSTRAP_ADMIN_PASSWORD, BOOTSTRAP_ADMIN_NAME } = env.data;
 
+  // Validated (shape + every cross-reference rule) before any write.
   const data = loadBootstrapData();
+  if (isTemplateData(data)) {
+    console.error(TEMPLATE_REFUSAL_MESSAGE);
+    process.exit(1);
+  }
 
   const passwordHash = await bcrypt.hash(BOOTSTRAP_ADMIN_PASSWORD, 10);
 
@@ -72,21 +85,23 @@ async function main(): Promise<void> {
         },
       });
 
-      const curriculum = await createCurriculum(tx, data);
-      return { adminEmail: admin.email, ...curriculum };
+      const programs = [];
+      for (const programDef of data.programs) {
+        programs.push(await createCurriculum(tx, programDef));
+      }
+      return { adminEmail: admin.email, programs };
     },
-    { timeout: 30_000 },
+    { timeout: BOOTSTRAP_TRANSACTION_TIMEOUT_MS },
   );
 
   console.log("Bootstrap complete:\n");
   console.log(`  Admin account:  ${summary.adminEmail}`);
-  console.log(`  Program:        ${summary.programName} (/${summary.programSlug})`);
-  console.log(`  Modules:        ${summary.moduleCount}`);
-  console.log(`  Lessons:        ${summary.lessonCount}`);
-  console.log(`  Assessments:    ${summary.assessmentCount} (${summary.questionCount} questions total)`);
-  console.log(`  Assignments:    ${summary.assignmentCount} (${summary.rubricCriterionCount} rubric criteria total)`);
-  console.log(`  Batches:        ${summary.batches.map((b) => `${b.code} (${b.name})`).join(", ")}`);
+  for (const program of summary.programs) {
+    console.log("");
+    printCurriculumSummary(program);
+  }
   console.log("\nNothing was deleted. This script will refuse to run again while any User row exists.");
+  console.log(`Sign in at ${loginUrlHint()}, then remove BOOTSTRAP_ADMIN_PASSWORD from your shell/env.`);
 }
 
 main()
