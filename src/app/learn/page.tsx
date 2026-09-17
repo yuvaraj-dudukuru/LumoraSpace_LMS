@@ -1,5 +1,13 @@
 import Link from "next/link";
-import { Flame, History, CalendarClock } from "lucide-react";
+import { Flame, History, CalendarClock, Layers, BadgeCheck, Award, type LucideIcon } from "lucide-react";
+import type { AchievementKind } from "@/lib/achievements";
+
+const ACHIEVEMENT_ICON: Record<AchievementKind, LucideIcon> = {
+  streak: Flame,
+  modules_completed: Layers,
+  graded_assessments_passed: BadgeCheck,
+  certificates: Award,
+};
 import { requireUser } from "@/lib/auth-guards";
 import { getDashboardData, type ActivityItem } from "@/lib/queries/dashboard";
 import { buttonVariants } from "@/components/ui/button";
@@ -55,7 +63,7 @@ export default async function LearnHomePage() {
     );
   }
 
-  const { progress, learnerStatus, pendingWork, nextLesson, nextStep, recentActivity, streakDays } = data;
+  const { progress, learnerStatus, pendingWork, nextLesson, nextStep, achievements, recentActivity } = data;
   const nextStepModuleTitle =
     nextStep?.kind === "lesson" ? (progress.modules.find((m) => m.moduleId === nextStep.moduleId)?.title ?? null) : null;
   // Top 3 open items; completed work belongs on /learn/progress, not here.
@@ -216,12 +224,26 @@ export default async function LearnHomePage() {
               <Flame className="h-5 w-5 text-tertiary" />
               Achievements
             </h3>
-            <div className="flex flex-wrap gap-sm">
-              <div className="flex items-center gap-sm rounded-lg bg-surface px-md py-sm shadow-sm">
-                <Flame className="h-4 w-4 text-tertiary" />
-                <span className="font-label-md text-label-md text-on-surface">{streakDays}-Day Streak</span>
-              </div>
-            </div>
+            {achievements.length === 0 ? (
+              <p className="font-body-md text-body-md text-on-surface-variant">
+                Complete a lesson to earn your first achievement.
+              </p>
+            ) : (
+              <ul className="flex flex-wrap gap-sm">
+                {achievements.map((achievement) => {
+                  const Icon = ACHIEVEMENT_ICON[achievement.kind];
+                  return (
+                    <li
+                      key={achievement.kind}
+                      className="flex items-center gap-sm rounded-lg bg-surface px-md py-sm shadow-sm"
+                    >
+                      <Icon className="h-4 w-4 text-tertiary" />
+                      <span className="font-label-md text-label-md text-on-surface">{achievement.label}</span>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
           </section>
 
           <section className="flex flex-col gap-md rounded-2xl bg-surface-container p-xl shadow-sm">

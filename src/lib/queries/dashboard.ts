@@ -5,6 +5,7 @@ import { getProgramProgress, findNextIncompleteLesson, type ProgramProgress } fr
 import { deriveLearnerStatus, type LearnerStatus } from "@/lib/learner-status";
 import { getPendingWork, type PendingWorkItem } from "@/lib/queries/pending-work";
 import { pickNextStep, type NextStep } from "@/lib/next-step";
+import { deriveAchievements, type Achievement } from "@/lib/achievements";
 
 /** Phase A — every kind is derived from a row that already exists; nothing
  * is logged separately. `module_completed` is derived from the progress
@@ -44,6 +45,8 @@ export type DashboardData = {
   /** Priority pick (src/lib/next-step.ts): revision requested > overdue >
    * due within 3 days > next incomplete lesson; null when nothing is left. */
   nextStep: NextStep;
+  /** Derived only, four kinds max, zero-count kinds omitted (src/lib/achievements.ts). */
+  achievements: Achievement[];
   recentActivity: ActivityItem[];
 } | null; // null => learner has no GRANTED/ACTIVE enrollment (empty state)
 
@@ -91,7 +94,7 @@ export async function getDashboardData(user: DashboardViewer): Promise<Dashboard
 
   // One parallel wave. Each activity source is capped at RECENT_ACTIVITY_LIMIT
   // rows so the merge below can never need more than it shows.
-  const [pendingWork, completedLessons, submissions, gradedAttempts] = await Promise.all([
+  const [pendingWork, completedLessons, submissions, gradedAttempts, passedGradedAssessments, validCertificateCount] = await Promise.all([
     getPendingWork(enrollment.id, now),
     prisma.lessonProgress.findMany({
       where: { enrollmentId: enrollment.id, completed: true, completedAt: { not: null } },
@@ -116,6 +119,16 @@ export async function getDashboardData(user: DashboardViewer): Promise<Dashboard
       take: RECENT_ACTIVITY_LIMIT,
       select: { submittedAt: true, scorePercent: true, passed: true, assessment: { select: { title: true } } },
     }),
+    // Achievements (Phase A): distinct GRADED assessments this enrollment has
+    // passed — a count can't express DISTINCT, so this is a tiny id list.
+    prisma.attempt.findMany({
+      where: { enrollmentId: enrollment.id, passed: true, assessment: { kind: "GRADED" } },
+      distinct: ["assessmentId"],
+      select: { assessmentId: true },
+    }),
+    // Learner-level, not enrollment-level: a certificate from an earlier
+    // completed program still counts as an achievement.
+    prisma.certificate.count({ where: { userId, status: "VALID" } }),
   ]);
 
   // "Module completed" is derived from the progress tree already in hand:
@@ -203,6 +216,12 @@ export async function getDashboardData(user: DashboardViewer): Promise<Dashboard
       ? { moduleId: next.moduleId, lessonId: next.lesson.id, lessonTitle: next.lesson.title }
       : null,
     nextStep: pickNextStep(pendingWork, next, now),
+    achievements: deriveAchievements({
+      streakDays: user.streakDays,
+      progress,
+      passedGradedAssessmentCount: passedGradedAssessments.length,
+      validCertificateCount,
+    }),
     recentActivity,
   };
 }

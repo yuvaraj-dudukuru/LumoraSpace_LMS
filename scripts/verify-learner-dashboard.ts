@@ -2,6 +2,7 @@
 //   step 2 — getPendingWork / sortPendingWork per seeded learner
 //   step 3 — getDashboardData().nextStep priority
 //   step 4 — getDashboardData().recentActivity kinds (derived only, newest 10)
+//   step 5 — getDashboardData().achievements (four derived kinds, zero omitted)
 // Read-only. Assumes a FRESH seed (the SQL Optimization assignment is seeded
 // one week past due; batch elapsed% drifts by the day, so pace assertions
 // live in scripts/verify-learner-logic.ts with a fixed `now`, not here).
@@ -220,6 +221,29 @@ async function main(): Promise<void> {
   record(
     "Noah: activity has 4 module_completed items (every Full Stack module is at 100%)",
     noahActivity.filter((a) => a.kind === "module_completed").length === 4,
+  );
+
+  // ---- Step 5: achievements (derived only) ----------------------------------
+  const alexAchievements = alexDash?.achievements ?? [];
+  const byKind = (kind: string) => alexAchievements.find((a) => a.kind === kind)?.count ?? 0;
+  record(
+    "Alex: achievements = 9-day streak, 2 modules completed, 1 graded assessment passed; no certificates chip",
+    byKind("streak") === 9 && byKind("modules_completed") === 2 && byKind("graded_assessments_passed") === 1 &&
+      !alexAchievements.some((a) => a.kind === "certificates"),
+    alexAchievements.map((a) => `${a.kind}=${a.count}`).join(","),
+  );
+  const noahAchievements = noahDash?.achievements ?? [];
+  record(
+    "Noah: achievements include 1 certificate and 4 modules completed; no graded-assessment chip (Full Stack has none)",
+    noahAchievements.find((a) => a.kind === "certificates")?.count === 1 &&
+      noahAchievements.find((a) => a.kind === "modules_completed")?.count === 4 &&
+      !noahAchievements.some((a) => a.kind === "graded_assessments_passed"),
+    noahAchievements.map((a) => `${a.kind}=${a.count}`).join(","),
+  );
+  record(
+    "Achievement labels are built from their counts only (no invented badge names)",
+    alexAchievements.every((a) => a.label.startsWith(String(a.count))),
+    alexAchievements.map((a) => a.label).join(" | "),
   );
 
   console.log("verify-learner-dashboard results:\n");
