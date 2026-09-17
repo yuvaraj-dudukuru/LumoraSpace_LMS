@@ -819,8 +819,6 @@
   "817": "Quick Start",
   "818": "Data Model",
   "819": ".agents/skills/graphify/references/extraction-spec.md",
-  "820": "Monitoring & Rollback",
-  "821": "Integration Examples",
   "822": "github-setup.sh",
   "823": "guidance-hook.sh",
   "824": "guidance-hooks.sh",
@@ -838,7 +836,6 @@
   "836": "SCREEN_INVENTORY.md",
   "837": "next.config.ts",
   "838": "prisma",
-  "839": "Issue Swarm Commands",
   "840": "Core Features",
   "841": "postcss.config.mjs",
   "842": "admin/certificates/[id]/loading.tsx",
@@ -885,6 +882,5 @@
   "883": "Session Sharing",
   "884": "Multi-Session Management",
   "885": "Troubleshooting",
-  "886": "TDD Workflows",
   "887": "💬 Intelligent Comment Generation"
 }
