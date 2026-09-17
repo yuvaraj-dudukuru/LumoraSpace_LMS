@@ -11,6 +11,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { deriveLearnerStatus, type LearnerStatus } from "@/lib/learner-status";
 import { LearnerStatusPill } from "@/components/learner-status-pill";
 import { PendingWorkList } from "@/components/pending-work-list";
+import { ModuleProgressList } from "@/components/module-progress-list";
 import { getPendingWork, sortPendingWork, type PendingWorkItem } from "@/lib/queries/pending-work";
 import { WeeklyActivityChart } from "./weekly-activity-chart";
 
@@ -189,7 +190,7 @@ export default async function ProgressPage() {
               <h2 className="font-title-lg text-title-lg">Next Milestone</h2>
               <p className="mt-xs font-body-md text-body-md opacity-90">
                 Complete {remainingModules} more module{remainingModules !== 1 ? "s" : ""} in
-                &lsquo;{nextMilestoneCourse.programName}&rsquo; to earn your next badge.
+                &lsquo;{nextMilestoneCourse.programName}&rsquo; to finish the program.
               </p>
             </div>
             <Link
@@ -240,14 +241,9 @@ function CourseProgressCard({ card }: { card: ActiveCourseCard }) {
         : HelpCircle;
 
   return (
-    <Link
-      href={
-        card.nextLessonId
-          ? `/learn/lessons/${card.nextLessonId}`
-          : `/learn/programs/${card.programId}`
-      }
-      className="group cursor-pointer rounded-xl bg-surface-container-low p-lg transition-colors hover:bg-surface-container"
-    >
+    // A block, not one big Link: the module rows below live inside it and the
+    // card keeps a single explicit Continue / View curriculum link instead.
+    <div className="rounded-xl bg-surface-container-low p-lg">
       <div className="mb-md flex items-start justify-between">
         <div>
           <h3 className="font-title-lg text-title-lg text-on-surface transition-colors group-hover:text-primary">
@@ -293,7 +289,23 @@ function CourseProgressCard({ card }: { card: ActiveCourseCard }) {
           All lessons completed
         </p>
       )}
-    </Link>
+
+      <p className="mt-sm font-label-sm text-label-sm text-on-surface-variant">
+        {card.progress.completedLessons} of {card.progress.totalLessons} lessons completed overall
+      </p>
+
+      <div className="mt-md flex flex-col gap-sm">
+        <h4 className="font-label-md text-label-md text-on-surface">Modules</h4>
+        <ModuleProgressList modules={card.progress.modules} />
+      </div>
+
+      <Link
+        href={card.nextLessonId ? `/learn/lessons/${card.nextLessonId}` : `/learn/programs/${card.programId}`}
+        className={buttonVariants({ variant: "outline", size: "sm", className: "mt-md w-fit" })}
+      >
+        {card.nextLessonId ? "Continue" : "View curriculum"}
+      </Link>
+    </div>
   );
 }
 

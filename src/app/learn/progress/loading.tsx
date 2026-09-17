@@ -28,7 +28,7 @@ export default function ProgressLoading() {
         <div className="flex flex-col gap-md lg:col-span-2">
           <div className="mb-sm h-7 w-36 animate-pulse rounded-lg bg-surface-container" />
           {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="h-44 animate-pulse rounded-xl bg-surface-container-low" />
+            <div key={i} className="h-96 animate-pulse rounded-xl bg-surface-container-low" />
           ))}
         </div>
         <div className="flex flex-col gap-xl">
