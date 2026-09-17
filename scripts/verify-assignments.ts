@@ -9,12 +9,16 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { PrismaClient } from "@prisma/client";
+import { assertLocalDatabase } from "./assert-local-db";
 import {
   getAssignmentDetail,
   getSubmissionWithReview,
   nextAttemptNumber,
   canSubmitNewAttempt,
 } from "../src/lib/queries/assignments";
+
+// First, before the client exists — never against a non-local DB.
+assertLocalDatabase();
 
 const prisma = new PrismaClient();
 

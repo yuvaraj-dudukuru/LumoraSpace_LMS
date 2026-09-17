@@ -43,6 +43,11 @@ Certificate  = issued on 100% completion, publicly verifiable by number
 - **Read `docs/CONTRACTS.md` before touching `src/lib`.** It is the index of
   every query/guard/action contract and the rules behind them; if the source
   and the doc disagree, fix the doc in the same change.
+- **Never run seed or verify scripts against a non-local DB. Neon is production.**
+  `.env` points at the docker-compose DB; the Neon URL lives only in `.env.neon`
+  and is loaded per-command. `prisma/seed.ts` and every DB-using script under
+  `scripts/` call `assertLocalDatabase()` first and refuse any host other than
+  localhost/127.0.0.1. Only `prisma/bootstrap*.ts` may target Neon.
 - **Never copy Stitch HTML into the app.** It is flat, non-componentized markup with
   duplicated classes. Read it for layout intent, match the PNG visually, then write
   clean React components.

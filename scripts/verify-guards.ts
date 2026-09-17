@@ -6,7 +6,11 @@
 // Run: npx tsx scripts/verify-guards.ts  (needs the seeded dev DB up — see
 // docker-compose.yml / `npx prisma db seed`)
 import { PrismaClient } from "@prisma/client";
+import { assertLocalDatabase } from "./assert-local-db";
 import { findEnrollment, isEnrollmentGranted, isMentorForBatch } from "../src/lib/auth-guards";
+
+// First, before the client exists — never against a non-local DB.
+assertLocalDatabase();
 
 const prisma = new PrismaClient();
 

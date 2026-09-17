@@ -17,9 +17,13 @@
 // instead extends scripts/verify-guards.ts, which already imports
 // auth-guards.ts and runs WITHOUT this condition.
 import { PrismaClient } from "@prisma/client";
+import { assertLocalDatabase } from "./assert-local-db";
 import { issueCertificateIfEligible } from "../src/lib/certificates";
 import { refreshEnrollmentProgress } from "../src/lib/progress-rollup";
 import { wouldSelfDemote, wouldSelfDeactivate } from "../src/lib/validations/admin";
+
+// First, before the client exists — never against a non-local DB.
+assertLocalDatabase();
 
 const prisma = new PrismaClient();
 

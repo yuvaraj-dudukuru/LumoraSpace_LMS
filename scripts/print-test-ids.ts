@@ -10,6 +10,9 @@
 // Run: npx tsx scripts/print-test-ids.ts
 import { PrismaClient } from "@prisma/client";
 import { DEV_PASSWORD } from "../prisma/dev-password";
+import { assertLocalDatabase } from "./assert-local-db";
+
+assertLocalDatabase();
 
 const prisma = new PrismaClient();
 

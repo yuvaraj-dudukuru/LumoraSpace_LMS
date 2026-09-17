@@ -25,6 +25,10 @@ import {
 } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { DEV_PASSWORD } from "./dev-password";
+import { assertLocalDatabase } from "../scripts/assert-local-db";
+
+// FIRST, before the client exists: this script deletes everything it owns.
+assertLocalDatabase();
 
 const prisma = new PrismaClient();
 

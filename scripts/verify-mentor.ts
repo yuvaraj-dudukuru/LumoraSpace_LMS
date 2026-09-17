@@ -6,8 +6,12 @@
 // bundler unless the "react-server" export condition is set.
 // Run: NODE_OPTIONS="--conditions=react-server" npx tsx scripts/verify-mentor.ts
 import { PrismaClient } from "@prisma/client";
+import { assertLocalDatabase } from "./assert-local-db";
 import { getMentorBatchIds, getLearnerDetail, getReviewQueue } from "../src/lib/queries/mentor";
 import { validateRubricScoreEntries, validateRubricScoresComplete } from "../src/lib/validations/review";
+
+// First, before the client exists — never against a non-local DB.
+assertLocalDatabase();
 
 const prisma = new PrismaClient();
 

@@ -9,11 +9,15 @@
 // bundler unless the "react-server" export condition is set.
 // Run: NODE_OPTIONS="--conditions=react-server" npx tsx scripts/verify-certificates.ts
 import { PrismaClient } from "@prisma/client";
+import { assertLocalDatabase } from "./assert-local-db";
 import {
   getCertificatesForUser,
   getCertificateDetailForUser,
   getCertificateForVerification,
 } from "../src/lib/queries/certificates";
+
+// First, before the client exists — never against a non-local DB.
+assertLocalDatabase();
 
 const prisma = new PrismaClient();
 
