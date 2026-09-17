@@ -3,9 +3,9 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, LogOut } from "lucide-react";
+import { Menu, X, LogOut, Users, ExternalLink } from "lucide-react";
 import { signOutAction } from "@/lib/actions/sign-out";
-import { LEARNER_NAV_ITEMS, MENTOR_NAV_ITEMS, ADMIN_NAV_ITEMS } from "./nav-items";
+import { LEARNER_NAV_ITEMS, MENTOR_NAV_ITEMS, ADMIN_NAV_ITEMS, type NavItem } from "./nav-items";
 
 // Icon components can't cross the Server->Client prop boundary (they're
 // functions, not serializable), so this Client Component imports the nav
@@ -27,21 +27,45 @@ const ROLE_LABEL: Record<ShellRole, string> = {
 type AppShellProps = {
   role: ShellRole;
   userName: string;
+  /** Phase A — an absolute http(s) URL already validated by the server
+   * layout from COMMUNITY_URL; when present the learner nav gains a
+   * "Community" item that opens it in a new tab. Plain string only: icon
+   * components can't cross the server→client boundary. */
+  communityUrl?: string;
   children: React.ReactNode;
 };
 
-export function AppShell({ role, userName, children }: AppShellProps) {
+export function AppShell({ role, userName, communityUrl, children }: AppShellProps) {
   const pathname = usePathname();
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const navItems = NAV_ITEMS_BY_ROLE[role];
+  const navItems: NavItem[] =
+    role === "learner" && communityUrl
+      ? [...NAV_ITEMS_BY_ROLE[role], { label: "Community", href: communityUrl, icon: Users, external: true }]
+      : [...NAV_ITEMS_BY_ROLE[role]];
   const roleLabel = ROLE_LABEL[role];
 
   function renderNav(onNavigate?: () => void) {
     return (
       <nav className="flex flex-1 flex-col gap-xs px-md">
         {navItems.map((item) => {
-          const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
           const Icon = item.icon;
+          if (item.external) {
+            return (
+              <a
+                key={item.href}
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={onNavigate}
+                className="flex items-center gap-md rounded-lg px-md py-sm font-label-md text-label-md text-on-surface-variant transition-colors hover:bg-surface-container-high hover:text-on-surface"
+              >
+                <Icon className="h-5 w-5" />
+                {item.label}
+                <ExternalLink className="ml-auto h-4 w-4" aria-hidden="true" />
+              </a>
+            );
+          }
+          const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
           return (
             <Link
               key={item.href}

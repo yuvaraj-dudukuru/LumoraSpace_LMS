@@ -16,6 +16,9 @@ export type NavItem = {
   label: string;
   href: string;
   icon: LucideIcon;
+  /** Opens in a new tab (rel="noopener noreferrer") and is never marked
+   * active. Only AppShell adds such an item, from a server-validated URL. */
+  external?: boolean;
 };
 
 // MVP-pruned per design/stitch/{student_dashboard_home,mentor_dashboard_desktop,

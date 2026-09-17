@@ -158,7 +158,7 @@ only the pure predicates above them are callable from a script (see
 | `/programs` | none (public) | `getPublishedPrograms` |
 | `/programs/[slug]` | none (public); `auth()` read-only for CTA state | `getProgramForCatalog`, `getEnrollableBatches` |
 | `/programs/[slug]` → `enrollAction` | `requireRole(LEARNER)` | `findOpenBatchForEnrollment` (batch ∈ program, batch UPCOMING/ACTIVE, program PUBLISHED), `prisma.enrollment.count` for capacity, `prisma.enrollment.create` (catches P2002) |
-| `/learn` (layout) | `requireRole(LEARNER, ADMIN)` | — |
+| `/learn` (layout) | `requireRole(LEARNER, ADMIN)` | no DB reads; resolves `COMMUNITY_URL` server-side (absolute http(s) only) and passes it to `AppShell` as a plain string, which appends an external "Community" nav item (new tab, `rel="noopener noreferrer"`) only when set (Phase A) |
 | `/learn` (page) | `requireUser` | `getDashboardData` (which runs `getProgramProgress` + `getPendingWork` + its own activity queries — see the entry) |
 | `/learn/my-learning` | `requireUser` | `getEnrollmentsForUser`, then `getProgramProgress` per GRANTED enrollment |
 | `/learn/programs/[programId]` | `requireGrantedEnrollment(programId)` | `getProgramProgress` |
