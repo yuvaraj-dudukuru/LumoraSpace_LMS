@@ -40,6 +40,14 @@ export const revokeCertificateSchema = z.object({
   reason: z.string().trim().min(1, "A reason is required to revoke a certificate"),
 });
 
+export const refundPaymentSchema = z.object({
+  reason: z.string().trim().min(1, "A reason is required to refund a payment").max(300),
+});
+
+export const setProgramStatusSchema = z.object({
+  status: z.enum(["DRAFT", "PUBLISHED", "ARCHIVED"]),
+});
+
 /** Pure, DB-free — true iff this change would remove ADMIN from the caller's
  * OWN account (the only way to lock everyone out, since updateUserRole is
  * requireRole(ADMIN)-gated already). Testable directly, no DB needed. */

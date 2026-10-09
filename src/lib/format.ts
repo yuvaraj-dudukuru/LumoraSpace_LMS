@@ -14,3 +14,17 @@ export function formatRelativeTime(date: Date): string {
 export function formatDate(date: Date): string {
   return new Date(date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 }
+
+export function formatDateTime(date: Date): string {
+  return new Date(date).toLocaleString("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
+}
+
+/** Whole amounts print without decimals (₹4,999); en-IN gives INR its lakh grouping. */
+export function formatMoney(amount: number, currency: string): string {
+  return new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency,
+    minimumFractionDigits: Number.isInteger(amount) ? 0 : 2,
+    maximumFractionDigits: 2,
+  }).format(amount);
+}

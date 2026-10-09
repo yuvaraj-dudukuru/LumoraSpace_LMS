@@ -1,6 +1,7 @@
-// Sets a Program's status — the one curriculum-lifecycle write the app has
-// no admin UI for (docs/CONTRACTS.md, Known gaps). Like bootstrap.ts, this
-// is MEANT to run against Neon, so it deliberately has NO local-DB guard.
+// Sets a Program's status from the command line. The admin UI does the same
+// write (setProgramStatus, src/app/admin/programs/[id]/actions.ts) under the
+// same rules — change one, change the other. Like bootstrap.ts, this is
+// MEANT to run against Neon, so it deliberately has NO local-DB guard.
 //
 // Usage: npx tsx prisma/set-program-status.ts <slug> <DRAFT|PUBLISHED|ARCHIVED> [--apply]
 //

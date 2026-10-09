@@ -6,6 +6,7 @@ import { requireRole } from "@/lib/auth-guards";
 import { prisma } from "@/lib/prisma";
 import { findOpenBatchForEnrollment } from "@/lib/queries/programs";
 import { enrollSchema } from "@/lib/validations/enroll";
+import { notifyAdmins, NOTIFICATION_TYPE } from "@/lib/notifications";
 
 export type EnrollResult = { ok: true } | { ok: false; error: string };
 
@@ -56,5 +57,20 @@ export async function enrollAction(programId: string, formData: FormData): Promi
 
   revalidatePath("/learn/my-learning");
   revalidatePath("/learn");
+
+  // Tell the admins there is an enrollment waiting for access. Never throws
+  // (notifications.ts), so it can't fail an enrollment that already committed.
+  const names = await prisma.batch.findUnique({
+    where: { id: batch.id },
+    select: { name: true, program: { select: { name: true } } },
+  });
+  await notifyAdmins({
+    type: NOTIFICATION_TYPE.ENROLLMENT_REQUEST,
+    title: `${user.name} requested to join ${names?.program.name ?? "a program"}`,
+    body: `A new enrollment${names ? ` in ${names.name}` : ""} is waiting for access.`,
+    actionUrl: "/admin/enrollments?accessState=AWAITING",
+  });
+  revalidatePath("/admin", "layout");
+
   return { ok: true };
 }

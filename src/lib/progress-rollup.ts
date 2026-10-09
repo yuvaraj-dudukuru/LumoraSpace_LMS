@@ -28,3 +28,29 @@ export async function refreshEnrollmentProgress(enrollmentId: string): Promise<P
   }
   return progress;
 }
+
+/** After an ADMIN changes what a program contains (a module published or
+ * unpublished, a lesson added or removed), every live enrollment's cached
+ * percentage is stale. This recomputes and stores it — and deliberately does
+ * NOT issue certificates: a curriculum edit must never mint (or appear to
+ * revoke) a credential as a side effect. An enrollment an edit leaves at
+ * exactly 100% with no certificate shows up on /admin/certificates
+ * ("Eligible"), where an admin issues it on purpose. Returns how many
+ * enrollments changed. */
+export async function recalculateProgramProgress(programId: string): Promise<number> {
+  const enrollments = await prisma.enrollment.findMany({
+    where: { programId, status: { notIn: ["CANCELLED", "DROPPED"] } },
+    select: { id: true, progressPercent: true },
+  });
+  let changed = 0;
+  for (const enrollment of enrollments) {
+    const progress = await getProgramProgress(enrollment.id);
+    if (progress.overallPercent === enrollment.progressPercent) continue;
+    await prisma.enrollment.update({
+      where: { id: enrollment.id },
+      data: { progressPercent: progress.overallPercent },
+    });
+    changed += 1;
+  }
+  return changed;
+}
