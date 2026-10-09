@@ -1,131 +1,137 @@
-import Link from "next/link";
-import { Search } from "lucide-react";
+import { CircleCheck, CircleX, ClipboardList, Plus, UserCheck, Users } from "lucide-react";
 import type { AccessState, EnrollmentStatus } from "@prisma/client";
 import { requireRole } from "@/lib/auth-guards";
-import { getEnrollmentsForAdmin } from "@/lib/queries/admin";
+import { getEnrollmentCounts, getEnrollmentsForAdmin } from "@/lib/queries/admin";
+import { getLearnerOptions, getOpenBatchOptions } from "@/lib/queries/admin-options";
+import { buildHref, paginate } from "@/lib/pagination";
+import { ModalForm } from "@/components/admin/modal-form";
+import { CheckboxField, SelectField } from "@/components/admin/fields";
+import { EmptyState, FilterTabs, PageHeader, Pagination, Panel, SearchForm, StatCard } from "@/components/admin/ui";
 import { EnrollmentTable } from "./enrollment-table";
+import { createEnrollment } from "./actions";
 
-const ACCESS_TABS: { value: AccessState | "all"; label: string }[] = [
-  { value: "AWAITING", label: "Awaiting" },
-  { value: "GRANTED", label: "Granted" },
-  { value: "SUSPENDED", label: "Suspended" },
-  { value: "all", label: "All" },
-];
-
+// One "Cancelled" tab covers CANCELLED and DROPPED (getEnrollmentsForAdmin).
 const STATUS_TABS: { value: EnrollmentStatus | "all"; label: string }[] = [
   { value: "all", label: "All" },
   { value: "ACTIVE", label: "Active" },
-  { value: "COMPLETED", label: "Completed" },
   { value: "PENDING", label: "Pending" },
+  { value: "COMPLETED", label: "Completed" },
   { value: "CANCELLED", label: "Cancelled" },
-  { value: "DROPPED", label: "Dropped" },
+];
+
+const ACCESS_TABS: { value: AccessState | "all"; label: string }[] = [
+  { value: "all", label: "Any access" },
+  { value: "AWAITING", label: "Awaiting" },
+  { value: "GRANTED", label: "Granted" },
+  { value: "SUSPENDED", label: "Suspended" },
 ];
 
 export default async function AdminEnrollmentsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ accessState?: string; status?: string; search?: string }>;
+  searchParams: Promise<{ accessState?: string; status?: string; search?: string; page?: string }>;
 }) {
   await requireRole("ADMIN");
   const params = await searchParams;
 
-  // Default view (no query params at all) shows AWAITING first — that's the
-  // queue an admin actually works. Once any filter is explicitly chosen
-  // (including "All"), respect it as given.
   const accessState: AccessState | "all" = ACCESS_TABS.some((tab) => tab.value === params.accessState)
     ? (params.accessState as AccessState | "all")
-    : params.status || params.search
-      ? "all"
-      : "AWAITING";
+    : "all";
   const status: EnrollmentStatus | "all" = STATUS_TABS.some((tab) => tab.value === params.status)
     ? (params.status as EnrollmentStatus | "all")
     : "all";
   const search = params.search?.trim() || undefined;
 
-  const rows = await getEnrollmentsForAdmin({ accessState, status, search });
+  const [counts, rows, learnerOptions, batchOptions] = await Promise.all([
+    getEnrollmentCounts(),
+    getEnrollmentsForAdmin({ accessState, status, search }),
+    getLearnerOptions(),
+    getOpenBatchOptions(),
+  ]);
+  const page = paginate(rows, params.page);
 
-  function tabHref(nextAccessState?: AccessState | "all", nextStatus?: EnrollmentStatus | "all"): string {
-    const query = new URLSearchParams();
-    const a = nextAccessState ?? accessState;
-    const s = nextStatus ?? status;
-    if (a !== "all") query.set("accessState", a);
-    if (s !== "all") query.set("status", s);
-    if (search) query.set("search", search);
-    const qs = query.toString();
-    return qs ? `/admin/enrollments?${qs}` : "/admin/enrollments";
-  }
+  const href = (next: { accessState?: AccessState | "all"; status?: EnrollmentStatus | "all"; page?: number }) =>
+    buildHref(
+      "/admin/enrollments",
+      { accessState: next.accessState ?? accessState, status: next.status ?? status, search, page: next.page },
+      { accessState: "all", status: "all", page: 1 },
+    );
 
   return (
     <div className="flex flex-col gap-xl">
-      <header className="flex flex-col gap-sm">
-        <h1 className="font-display-lg-mobile text-display-lg-mobile text-on-surface lg:font-display-lg lg:text-display-lg">
-          Enrollments
-        </h1>
-        <p className="max-w-2xl font-body-lg text-body-lg text-on-surface-variant">
-          Grant access, suspend, and manage learner enrollment status.
-        </p>
-      </header>
+      <PageHeader title="Enrollments" description="Manage learner access to LumoraSpace programs and batches.">
+        <ModalForm
+          trigger={
+            <>
+              <Plus className="h-4 w-4" /> Create Enrollment
+            </>
+          }
+          title="Create Enrollment"
+          description="Place a learner into an upcoming or active batch."
+          submitLabel="Create Enrollment"
+          pendingLabel="Creating..."
+          action={createEnrollment}
+        >
+          <SelectField name="userId" label="Learner" required placeholder="Select a learner" options={learnerOptions} />
+          <SelectField name="batchId" label="Batch" required placeholder="Select a batch" options={batchOptions} />
+          <CheckboxField
+            name="grantAccess"
+            label="Grant access now"
+            hint="Leave unticked to create it as Pending, awaiting access."
+            defaultChecked
+          />
+        </ModalForm>
+      </PageHeader>
 
-      <div className="flex flex-col gap-md">
-        <div className="flex flex-wrap items-center justify-between gap-md">
-          <div className="flex flex-wrap gap-sm">
-            {ACCESS_TABS.map((tab) => (
-              <Link
-                key={tab.value}
-                href={tabHref(tab.value, undefined)}
-                className={`rounded-full px-lg py-sm font-label-md text-label-md transition-colors ${
-                  accessState === tab.value
-                    ? "bg-primary text-on-primary"
-                    : "bg-surface-container text-on-surface-variant hover:bg-surface-container-high"
-                }`}
-              >
-                {tab.label}
-              </Link>
-            ))}
-          </div>
-
-          <form method="GET" action="/admin/enrollments" className="flex items-center gap-sm">
-            {accessState !== "all" ? <input type="hidden" name="accessState" value={accessState} /> : null}
-            {status !== "all" ? <input type="hidden" name="status" value={status} /> : null}
-            <div className="relative">
-              <Search className="pointer-events-none absolute left-md top-1/2 h-4 w-4 -translate-y-1/2 text-on-surface-variant" />
-              <input
-                type="text"
-                name="search"
-                defaultValue={search ?? ""}
-                placeholder="Search learner name or email..."
-                className="w-full rounded-lg border border-outline-variant bg-surface py-sm pl-2xl pr-md font-body-md text-body-md text-on-surface outline-none focus:ring-2 focus:ring-primary/20 sm:w-72"
-              />
-            </div>
-          </form>
-        </div>
-
-        <div className="flex flex-wrap gap-sm">
-          {STATUS_TABS.map((tab) => (
-            <Link
-              key={tab.value}
-              href={tabHref(undefined, tab.value)}
-              className={`rounded-full px-md py-xs font-label-sm text-label-sm transition-colors ${
-                status === tab.value
-                  ? "bg-secondary-container text-on-secondary-container"
-                  : "bg-surface-container text-on-surface-variant hover:bg-surface-container-high"
-              }`}
-            >
-              {tab.label}
-            </Link>
-          ))}
-        </div>
+      <div className="grid grid-cols-2 gap-lg lg:grid-cols-5">
+        <StatCard label="Total" value={counts.total} icon={<ClipboardList className="h-4 w-4" />} />
+        <StatCard label="Active" value={counts.active} icon={<UserCheck className="h-4 w-4 text-primary" />} href={href({ status: "ACTIVE", accessState: "all" })} />
+        <StatCard
+          label="Pending"
+          value={counts.pending}
+          icon={<Users className="h-4 w-4 text-secondary" />}
+          hint={counts.awaitingAccess > 0 ? `${counts.awaitingAccess} awaiting access` : undefined}
+          href={href({ status: "PENDING", accessState: "all" })}
+        />
+        <StatCard label="Completed" value={counts.completed} icon={<CircleCheck className="h-4 w-4 text-primary" />} href={href({ status: "COMPLETED", accessState: "all" })} />
+        <StatCard label="Cancelled" value={counts.cancelled} icon={<CircleX className="h-4 w-4 text-error" />} href={href({ status: "CANCELLED", accessState: "all" })} />
       </div>
 
-      {rows.length === 0 ? (
-        <div className="rounded-xl border border-outline-variant/40 bg-surface-container-low p-2xl text-center">
-          <p className="font-body-md text-body-md text-on-surface-variant">
-            {search ? `No enrollments match "${search}".` : "No enrollments match this filter."}
-          </p>
+      <section className="flex flex-col gap-md">
+        <div className="flex flex-wrap items-center justify-between gap-md">
+          <SearchForm
+            action="/admin/enrollments"
+            placeholder="Search learner, program, or batch..."
+            defaultValue={search}
+            hidden={{
+              accessState: accessState === "all" ? undefined : accessState,
+              status: status === "all" ? undefined : status,
+            }}
+          />
+          <FilterTabs
+            label="Enrollment status"
+            tabs={STATUS_TABS.map((tab) => ({ label: tab.label, href: href({ status: tab.value }), active: status === tab.value }))}
+          />
         </div>
-      ) : (
-        <EnrollmentTable rows={rows} />
-      )}
+        <FilterTabs
+          label="Access state"
+          variant="segment"
+          tabs={ACCESS_TABS.map((tab) => ({
+            label: tab.value === "AWAITING" && counts.awaitingAccess > 0 ? `${tab.label} (${counts.awaitingAccess})` : tab.label,
+            href: href({ accessState: tab.value }),
+            active: accessState === tab.value,
+          }))}
+        />
+
+        {page.total === 0 ? (
+          <EmptyState>{search ? `No enrollments match "${search}".` : "No enrollments match this filter."}</EmptyState>
+        ) : (
+          <Panel className="overflow-hidden">
+            <EnrollmentTable rows={page.rows} />
+            <Pagination {...page} noun="enrollments" hrefFor={(next) => href({ page: next })} />
+          </Panel>
+        )}
+      </section>
     </div>
   );
 }

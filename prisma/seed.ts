@@ -22,6 +22,7 @@ import {
   SubmissionStatus,
   ReviewOutcome,
   CertificateStatus,
+  PaymentStatus,
 } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { DEV_PASSWORD } from "./dev-password";
@@ -33,6 +34,8 @@ assertLocalDatabase();
 const prisma = new PrismaClient();
 
 async function resetDomainData(): Promise<void> {
+  await prisma.paymentEvent.deleteMany();
+  await prisma.payment.deleteMany();
   await prisma.rubricScore.deleteMany();
   await prisma.review.deleteMany();
   await prisma.submission.deleteMany();
@@ -454,8 +457,8 @@ async function main(): Promise<void> {
       enrolledAt: weeksAgo(0),
     },
   });
-  void danielEnrollment;
-  void hannahEnrollment;
+  enrollmentByLearner.set("Daniel Osei", danielEnrollment);
+  enrollmentByLearner.set("Hannah Cohen", hannahEnrollment);
 
   // Completed, with certificates
   const completedLearners = ["Noah Andersen", "Grace Mwangi"] as const;
@@ -984,6 +987,102 @@ async function main(): Promise<void> {
       enrollmentId: enrollmentByLearner.get("Priya Sharma")!.id,
       attemptNumber: 1,
       status: SubmissionStatus.NOT_STARTED,
+    },
+  });
+
+  // ── Payments (/admin/payments) ─────────────────────────────────
+  // Demo rows only — the gateway is stubbed (schema.prisma), so nothing here
+  // was ever charged. Amounts mirror Program.price; Payment.currency is the
+  // schema default (INR). One row per enrolled learner, covering all four
+  // PaymentStatus values and both sides of the 30-day revenue comparison.
+  const daysAgo = (days: number) => new Date(now.getTime() - days * 24 * 60 * 60 * 1000);
+  const minutesAfter = (date: Date, minutes: number) => new Date(date.getTime() + minutes * 60 * 1000);
+
+  type PaymentPlan = { name: string; amount: number; method: string; status: PaymentStatus; paidDaysAgo: number };
+  const FDA_PRICE = 899;
+  const FSD_PRICE = 1299;
+  const paymentPlans: PaymentPlan[] = [
+    { name: "Noah Andersen", amount: FSD_PRICE, method: "Net Banking", status: PaymentStatus.SUCCESSFUL, paidDaysAgo: 44 },
+    { name: "Grace Mwangi", amount: FSD_PRICE, method: "UPI", status: PaymentStatus.SUCCESSFUL, paidDaysAgo: 43 },
+    { name: "Wei Zhang", amount: FSD_PRICE, method: "Credit Card ending 4421", status: PaymentStatus.SUCCESSFUL, paidDaysAgo: 41 },
+    { name: "Lucas Silva", amount: FSD_PRICE, method: "UPI", status: PaymentStatus.REFUNDED, paidDaysAgo: 20 },
+    { name: "Fatima Al-Sayed", amount: FSD_PRICE, method: "Debit Card ending 1187", status: PaymentStatus.SUCCESSFUL, paidDaysAgo: 29 },
+    { name: "Alex Morgan", amount: FDA_PRICE, method: "UPI", status: PaymentStatus.SUCCESSFUL, paidDaysAgo: 28 },
+    { name: "Aisha Patel", amount: FDA_PRICE, method: "Credit Card ending 9032", status: PaymentStatus.SUCCESSFUL, paidDaysAgo: 28 },
+    { name: "Marcus Wei", amount: FDA_PRICE, method: "Net Banking", status: PaymentStatus.SUCCESSFUL, paidDaysAgo: 27 },
+    { name: "David Kim", amount: FDA_PRICE, method: "UPI", status: PaymentStatus.SUCCESSFUL, paidDaysAgo: 26 },
+    { name: "Priya Sharma", amount: FDA_PRICE, method: "Debit Card ending 5560", status: PaymentStatus.SUCCESSFUL, paidDaysAgo: 5 },
+    { name: "Hannah Cohen", amount: FSD_PRICE, method: "Credit Card ending 7714", status: PaymentStatus.FAILED, paidDaysAgo: 2 },
+    { name: "Daniel Osei", amount: FDA_PRICE, method: "Bank Transfer", status: PaymentStatus.PENDING, paidDaysAgo: 1 },
+  ];
+
+  for (let i = 0; i < paymentPlans.length; i++) {
+    const plan = paymentPlans[i];
+    const enrollment = enrollmentByLearner.get(plan.name);
+    if (!enrollment) throw new Error(`Seed error: no enrollment for payment learner "${plan.name}"`);
+    const sequence = String(101 + i).padStart(5, "0");
+    const orderId = `ORD-2026-${sequence}`;
+    const createdAt = daysAgo(plan.paidDaysAgo);
+    const programName = enrollment.programId === forgeDataAnalyst.id ? forgeDataAnalyst.name : forgeFullStack.name;
+    const settled = plan.status === PaymentStatus.SUCCESSFUL || plan.status === PaymentStatus.REFUNDED;
+    const refundedAt = plan.status === PaymentStatus.REFUNDED ? minutesAfter(createdAt, 3 * 24 * 60) : null;
+
+    const events: { eventType: string; description: string; occurredAt: Date }[] = [
+      { eventType: "ORDER_CREATED", description: `System generated ${orderId} for ${programName}.`, occurredAt: createdAt },
+      { eventType: "PAYMENT_INITIATED", description: `Learner started payment via ${plan.method}.`, occurredAt: minutesAfter(createdAt, 1) },
+    ];
+    if (settled) {
+      events.push(
+        { eventType: "PAYMENT_SUCCESSFUL", description: "Payment confirmed.", occurredAt: minutesAfter(createdAt, 4) },
+        { eventType: "ENROLLMENT_CREATED", description: `Learner enrolled in ${programName}.`, occurredAt: minutesAfter(createdAt, 5) },
+      );
+    }
+    if (plan.status === PaymentStatus.FAILED) {
+      events.push({ eventType: "PAYMENT_FAILED", description: "Payment was declined.", occurredAt: minutesAfter(createdAt, 3) });
+    }
+    if (refundedAt) {
+      events.push({ eventType: "REFUNDED", description: "Refund recorded: learner withdrew before the first session.", occurredAt: refundedAt });
+    }
+
+    await prisma.payment.create({
+      data: {
+        enrollmentId: enrollment.id,
+        userId: learner(plan.name).id,
+        orderId,
+        providerRef: settled ? `pay_DEMO${sequence}` : null,
+        amount: plan.amount,
+        method: plan.method,
+        status: plan.status,
+        createdAt,
+        refundedAt,
+        events: { create: events },
+      },
+    });
+  }
+
+  // ── Notifications (/admin/notifications, /learn/notifications) ──
+  // Rows that match real seeded state, so every action link leads somewhere
+  // true: the two AWAITING enrollments for the admin, and the two finalised
+  // reviews for their learners. (User deletion cascades these on re-seed.)
+  for (const name of ["Daniel Osei", "Hannah Cohen"] as const) {
+    const programName = name === "Daniel Osei" ? forgeDataAnalyst.name : forgeFullStack.name;
+    await prisma.notification.create({
+      data: {
+        userId: admin.id,
+        type: "ENROLLMENT_REQUEST",
+        title: `${name} requested to join ${programName}`,
+        body: "A new enrollment is waiting for access.",
+        actionUrl: "/admin/enrollments?accessState=AWAITING",
+      },
+    });
+  }
+  await prisma.notification.create({
+    data: {
+      userId: learner("Marcus Wei").id,
+      type: "ASSIGNMENT_FEEDBACK",
+      title: "Revision requested on Data Cleaning Assignment",
+      body: "Your mentor left feedback and asked for a revision. You can resubmit from the assignment page.",
+      actionUrl: `/learn/submissions/${marcusSubmission.id}`,
     },
   });
 

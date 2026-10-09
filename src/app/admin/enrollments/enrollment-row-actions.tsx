@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import type { AccessState, EnrollmentStatus } from "@prisma/client";
-import { grantAccess, suspendAccess, updateEnrollmentStatus } from "./actions";
+import { grantAccess, restoreAccess, suspendAccess, updateEnrollmentStatus } from "./actions";
 
 export function EnrollmentRowActions({
   enrollmentId,
@@ -28,7 +28,7 @@ export function EnrollmentRowActions({
 
   return (
     <div className="flex flex-col items-end gap-xs">
-      <div className="flex items-center gap-sm">
+      <div className="flex w-24 flex-wrap items-center justify-end gap-xs">
         {accessState === "AWAITING" ? (
           <button
             type="button"
@@ -47,6 +47,16 @@ export function EnrollmentRowActions({
             className="rounded-full bg-error-container px-md py-xs font-label-sm text-label-sm text-on-error-container transition-opacity hover:opacity-90 disabled:opacity-50"
           >
             Suspend
+          </button>
+        ) : null}
+        {accessState === "SUSPENDED" ? (
+          <button
+            type="button"
+            disabled={isPending}
+            onClick={() => run(() => restoreAccess(enrollmentId))}
+            className="rounded-full bg-primary px-md py-xs font-label-sm text-label-sm text-on-primary transition-opacity hover:opacity-90 disabled:opacity-50"
+          >
+            Restore
           </button>
         ) : null}
         {canCancelOrDrop ? (

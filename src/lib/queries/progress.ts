@@ -107,6 +107,12 @@ export async function getProgramProgress(enrollmentId: string): Promise<ProgramP
         select: {
           name: true,
           modules: {
+            // PUBLISHED only: now that admins author curriculum in the app
+            // (/admin/curriculum), a DRAFT module is work in progress — it
+            // must not appear in a learner's tree or count toward their
+            // percentage. Publishing/unpublishing recalculates the cached
+            // percentages (recalculateProgramProgress, progress-rollup.ts).
+            where: { status: "PUBLISHED" },
             orderBy: { order: "asc" },
             select: {
               id: true,

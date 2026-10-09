@@ -12,6 +12,7 @@ import {
 } from "@/lib/validations/review";
 import { prisma } from "@/lib/prisma";
 import { sendAssignmentReviewedEmail } from "@/lib/mail";
+import { notify, NOTIFICATION_TYPE } from "@/lib/notifications";
 
 type AuthorizedSubmission = Awaited<ReturnType<typeof getSubmissionForReview>>;
 
@@ -196,6 +197,21 @@ export async function submitReview(
     outcome: parsed.data.outcome,
     submissionId,
   });
+
+  // In-app counterpart of the email — also never throws (notifications.ts).
+  await notify([submission.learner.id], {
+    type: NOTIFICATION_TYPE.ASSIGNMENT_FEEDBACK,
+    title:
+      parsed.data.outcome === "APPROVED"
+        ? `Your ${submission.assignment.title} has been reviewed`
+        : `Revision requested on ${submission.assignment.title}`,
+    body:
+      parsed.data.outcome === "APPROVED"
+        ? `Your mentor scored it ${totalScore} / ${totalMaxScore} and left feedback.`
+        : "Your mentor left feedback and asked for a revision. You can resubmit from the assignment page.",
+    actionUrl: `/learn/submissions/${submissionId}`,
+  });
+  revalidatePath("/learn", "layout");
 
   return { ok: true };
 }

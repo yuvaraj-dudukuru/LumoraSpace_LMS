@@ -14,10 +14,14 @@ import {
   wouldSelfDemote,
   wouldSelfDeactivate,
 } from "@/lib/validations/admin";
+import { addMentorSchema, firstIssue, formObject } from "@/lib/validations/admin-content";
+import type { ActionResult } from "@/lib/action-result";
 
 function revalidateUsers(userId?: string): void {
   revalidatePath("/admin/users");
   if (userId) revalidatePath(`/admin/users/${userId}`);
+  revalidatePath("/admin/mentors");
+  revalidatePath("/admin/batches", "layout");
   revalidatePath("/admin");
 }
 
@@ -47,6 +51,45 @@ export async function createUser(input: {
 
   revalidateUsers();
   return { ok: true };
+}
+
+/** The "Add User" dialog posts FormData; same action, same checks. */
+export async function createUserFromForm(formData: FormData): Promise<UserActionResult> {
+  return createUser({
+    name: String(formData.get("name") ?? ""),
+    email: String(formData.get("email") ?? ""),
+    password: String(formData.get("password") ?? ""),
+    role: String(formData.get("role") ?? ""),
+  });
+}
+
+/** "Add Mentor" on /admin/mentors: a MENTOR account with its displayed title,
+ * then straight to the user page, where batches are assigned. */
+export async function addMentor(formData: FormData): Promise<ActionResult> {
+  await requireRole("ADMIN");
+
+  const parsed = addMentorSchema.safeParse(formObject(formData));
+  if (!parsed.success) return { ok: false, error: firstIssue(parsed.error) };
+
+  const existing = await prisma.user.findUnique({ where: { email: parsed.data.email }, select: { id: true } });
+  if (existing) return { ok: false, error: "An account with this email already exists." };
+
+  const passwordHash = await bcrypt.hash(parsed.data.password, 10);
+  const mentor = await prisma.user.create({
+    data: {
+      name: parsed.data.name,
+      email: parsed.data.email,
+      passwordHash,
+      role: "MENTOR",
+      title: parsed.data.title ?? null,
+      onboardingComplete: true, // onboarding is a learner-only flow
+    },
+    select: { id: true },
+  });
+
+  revalidateUsers();
+  revalidatePath("/admin/mentors");
+  return { ok: true, redirectTo: `/admin/users/${mentor.id}` };
 }
 
 /** Blocks an admin from demoting themselves — see
